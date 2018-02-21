@@ -39,7 +39,11 @@ ENV PHP_INI_DATE_TIMEZONE 'UTC'
 
 RUN apt-get update -q; \
 	apt-get upgrade -yq; \
+	# install the PHP extensions we need
+	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apt-get install -y --no-install-recommends \
+		libcurl4-openssl-dev \
+		libfreetype6-dev \
 		libjpeg-dev \
 		libldap2-dev \
 		libpng-dev \
@@ -50,8 +54,8 @@ RUN apt-get update -q; \
 	rm -rf /var/lib/apt/lists/*; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
-	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd mysqli pgsql pdo_mysql pdo_pgsql ldap soap zip;
+	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
+	docker-php-ext-install gd ldap mysqli pgsql soap zip;
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
