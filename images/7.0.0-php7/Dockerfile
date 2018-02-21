@@ -37,16 +37,21 @@ ENV WWW_GROUP_ID 33
 
 ENV PHP_INI_DATE_TIMEZONE 'UTC'
 
-RUN apt-get update -q && apt-get upgrade -yq \
-	&& apt-get install -yq \
-		libpng-dev \
+RUN apt-get update -q; \
+	apt-get upgrade -yq; \
+	apt-get install -y --no-install-recommends \
 		libjpeg-dev \
-    	libxml2-dev \
-		postgresql-dev \
+		libldap2-dev \
+		libpng-dev \
+		libpq-dev \
+		libxml2-dev \
 		unzip \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-	&& docker-php-ext-install gd mysqli pgsql ldap soap zip
+	; \
+	rm -rf /var/lib/apt/lists/*; \
+	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
+	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
+	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
+	docker-php-ext-install gd mysqli pgsql pdo_mysql pdo_pgsql ldap soap zip;
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
