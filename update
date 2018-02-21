@@ -27,8 +27,8 @@ for version in ${versions[@]}; do
     mkdir -p $dir
 
     sed '
-          s/%PHP_VERSION%/'"$php_version"'-apache/;
-          s/%VERSION%/'"$archive"'/;
+          s/%%PHP_VERSION%%/'"$php_version"'-apache/;
+          s/%%VERSION%%/'"$archive"'/;
     ' Dockerfile.template > $dir/Dockerfile
 
     cp entrypoint.sh $dir/
