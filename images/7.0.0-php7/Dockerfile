@@ -39,9 +39,10 @@ ENV PHP_INI_DATE_TIMEZONE 'UTC'
 
 RUN apt-get update -q && apt-get upgrade -yq \
 	&& apt-get install -yq \
-		libpng12-dev \
+		libpng-dev \
 		libjpeg-dev \
     	libxml2-dev \
+		postgresql-dev \
 		unzip \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
