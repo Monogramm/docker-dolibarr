@@ -1,0 +1,25 @@
+sudo: required
+
+language: bash
+
+services:
+  - docker
+
+env:
+  - VERSION=5.0.7
+  - VERSION=5.0.7 VARIANT=php7
+  - VERSION=6.0.5
+  - VERSION=6.0.5 VARIANT=php7
+  - VERSION=7.0
+  - VERSION=7.0 VARIANT=php7
+  - VERSION=latest
+  - VERSION=latest VARIANT=php7
+
+script:
+  - v="${VERSION}${VARIANT:+-$VARIANT}"
+  - cd "images/$v"
+  - docker build -t "madmath03/dolibarr:$v" .
+  - docker images
+
+notifications:
+  email: false
