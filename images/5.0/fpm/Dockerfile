@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:7.1-fpm
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 

@@ -1,8 +1,8 @@
-FROM php:7-apache
+FROM php:7.1-fpm
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 
-ENV DOLI_VERSION 5.0.7
+ENV DOLI_VERSION 6.0.5
 
 ENV DOLI_DB_TYPE mysqli
 ENV DOLI_DB_HOST mysql

@@ -1,4 +1,4 @@
-FROM php:%%PHP_VERSION%%
+FROM php:7.1-%%VARIANT%%
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 
