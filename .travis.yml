@@ -1,9 +1,13 @@
+dist: trusty
 sudo: required
+
+services: docker
 
 language: bash
 
-services:
-  - docker
+branches:
+  only:
+    - master
 
 env:
   - VERSION=5.0.7
