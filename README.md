@@ -123,7 +123,7 @@ versions=( "latest" )
 ...
 ```
 
-Then simply call
+Then simply call [update](update) script.
 
 ## Environment variables summary
 
