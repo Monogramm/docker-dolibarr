@@ -1,8 +1,8 @@
-FROM php:5.6-apache
+FROM php:7.1-fpm
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 
-ENV DOLI_VERSION 5.0.7
+ENV DOLI_VERSION 6.0.5
 
 ENV DOLI_DB_TYPE mysqli
 ENV DOLI_DB_HOST mysql
@@ -37,7 +37,12 @@ ENV WWW_GROUP_ID 33
 
 ENV PHP_INI_DATE_TIMEZONE 'UTC'
 
-RUN apt-get update -q; \
+RUN set -ex; \
+	apt-get update -q; \
+	# install the packages we need
+	apt-get install -y --no-install-recommends \
+		rsync \
+	; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apt-get install -y --no-install-recommends \
@@ -54,16 +59,24 @@ RUN apt-get update -q; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd ldap mysqli pgsql soap zip;
+	docker-php-ext-install gd ldap mysqli pgsql soap zip; \
+    \
+    chown -R www-data:root /var/www/html; \
+    chmod -R g=u /var/www/html
+
+VOLUME /var/www/html
+VOLUME /var/www/documents
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
-RUN unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr
-RUN cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && ln -s /var/www/html /var/www/htdocs
-RUN cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/scripts /var/www/
-RUN rm -rf /tmp/dolibarr
-
-EXPOSE 80
+RUN set -ex; \
+	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
+	rm /tmp/dolibarr.zip; \
+	mkdir -p /usr/src/dolibarr; \
+	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
+	rm -rf /tmp/dolibarr; \
+	chmod +x /usr/src/dolibarr/scripts/*
 
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["php-fpm"]

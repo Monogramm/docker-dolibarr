@@ -8,12 +8,12 @@ Provides full database configuration, LDAP support, debug configuration and HTTP
 
 ## Supported tags
 
-* `7.0.0` `7.0` `7` `latest`
-* `7.0.0-php7` `7.0-php7` `7-php7` `php7`
-* `6.0.5` `6.0` `6`
-* `6.0.5-php7` `6.0-php7` `6-php7`
-* `5.0.7` `5.0` `5`
-* `5.0.7-php7` `5.0-php7` `5-php7`
+* `7.0.0-apache` `7.0.0` `7.0-apache` `7.0` `7-apache` `7` `apache` `latest`
+* `7.0.0-fpm` `7.0-fpm` `7-fpm` `fpm`
+* `6.0.5-apache` `6.0.5` `6.0-apache` `6.0` `6-apache` `6`
+* `6.0.5-fpm` `6.0-fpm` `6-fpm`
+* `5.0.7-apache` `5.0.7` `5.0-apache` `5.0` `5-apache` `5`
+* `5.0.7-fpm` `5.0-fpm` `5-fpm`
 
 ## What is Dolibarr ?
 
@@ -110,7 +110,7 @@ dolibarr:
 
 ## Create your own image
 
-You can clone this repository and use the [update](update) shell script to generate a new Dockerfile based on your own needs.
+You can clone this repository and use the [update.sh](update.sh) shell script to generate a new Dockerfile based on your own needs.
 
 For instance, you could build a container on Dolibarr develop branch by setting the versions like this:
 ```bash
@@ -119,7 +119,7 @@ versions=( "latest" )
 ...
 ```
 
-Then simply call [update](update) script.
+Then simply call [update.sh](update.sh) script.
 
 ## Environment variables summary
 

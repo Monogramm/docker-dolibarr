@@ -9,19 +9,23 @@ branches:
   only:
     - master
 
-env:
-  - VERSION=5.0.7
-  - VERSION=5.0.7 VARIANT=php7
-  - VERSION=6.0.5
-  - VERSION=6.0.5 VARIANT=php7
-  - VERSION=7.0.0
-  - VERSION=7.0.0 VARIANT=php7
+before_script:
+  - env | sort
+  - image="madmath03/docker-dolibarr:${VERSION}${VARIANT:+-$VARIANT}"
 
 script:
-  - v="${VERSION}${VARIANT:+-$VARIANT}"
-  - cd "images/$v"
-  - docker build -t "madmath03/docker-dolibarr:$v" .
+  - travis_retry docker build -t "$image" "images/${VERSION}/${VARIANT}"
+
+after_script:
   - docker images
 
 notifications:
   email: false
+
+env: # Environments
+    - VERSION=7.0 VARIANT=fpm
+    - VERSION=7.0 VARIANT=apache
+    - VERSION=6.0 VARIANT=fpm
+    - VERSION=6.0 VARIANT=apache
+    - VERSION=5.0 VARIANT=fpm
+    - VERSION=5.0 VARIANT=apache
