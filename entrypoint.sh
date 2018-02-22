@@ -19,9 +19,12 @@ fi
 if [ ! -f /var/www/html/conf/conf.php ]; then
 	cat <<EOF > /var/www/html/conf/conf.php
 <?php
-###################
-# Main parameters #
-###################
+// Config file for Dolibarr.
+// Dolibarr version: '${DOLI_VERSION}'
+
+// ###################
+// # Main parameters #
+// ###################
 \$dolibarr_main_url_root='${DOLI_URL_ROOT}';
 \$dolibarr_main_document_root='/var/www/html';
 \$dolibarr_main_url_root_alt='/custom';
@@ -34,9 +37,10 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_db_user='${DOLI_DB_USER}';
 \$dolibarr_main_db_pass='${DOLI_DB_PASSWORD}';
 \$dolibarr_main_db_type='${DOLI_DB_TYPE}';
-##################
-# Login          #
-##################
+
+// ##################
+// # Login          #
+// ##################
 \$dolibarr_main_authentication='${DOLI_AUTH}';
 \$dolibarr_main_auth_ldap_host='${DOLI_LDAP_HOST}';
 \$dolibarr_main_auth_ldap_port='${DOLI_LDAP_PORT}';
@@ -48,9 +52,10 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_auth_ldap_admin_login='${DOLI_LDAP_ADMIN_LOGIN}';
 \$dolibarr_main_auth_ldap_admin_pass='${DOLI_LDAP_ADMIN_PASS}';
 \$dolibarr_main_auth_ldap_debug='${DOLI_LDAP_DEBUG}';
-##################
-# Security       #
-##################
+
+// ##################
+// # Security       #
+// ##################
 \$dolibarr_main_force_https='${DOLI_HTTPS}';
 \$dolibarr_main_prod='${DOLI_PROD}';
 EOF
