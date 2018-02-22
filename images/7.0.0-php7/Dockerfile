@@ -65,5 +65,5 @@ RUN rm -rf /tmp/dolibarr
 
 EXPOSE 80
 
-COPY entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["entrypoint.sh"]
+COPY entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
