@@ -3,7 +3,7 @@
 # Helper script to generate the Dockerfile
 # If any parameter is given, the Dockerfile will also be built and tagged
 
-versions=( "5.0.7" "6.0.5" "7.0.0" "latest" )
+versions=( "5.0.7" "6.0.5" "7.0.0" )
 variants=( "5.6" "7" )
 
 rm -rf images/

@@ -8,14 +8,12 @@ Provides full database configuration, LDAP support.
 
 ## Supported tags
 
-* `latest`
-* `latest-php7`
-* `7.0.0`
-* `7.0.0-php7`
-* `6.0.5`
-* `6.0.5-php7`
-* `5.0.7`
-* `5.0.7-php7`
+* `7.0.0` `7.0` `7` `latest`
+* `7.0.0-php7` `7.0-php7` `7-php7` `php7`
+* `6.0.5` `6.0` `6`
+* `6.0.5-php7` `6.0-php7` `6-php7`
+* `5.0.7` `5.0` `5`
+* `5.0.7-php7` `5.0-php7` `5-php7`
 
 ## What is Dolibarr ?
 
