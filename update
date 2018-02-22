@@ -35,7 +35,7 @@ for version in ${versions[@]}; do
 
     if [[ $1 ]]; then
       echo "Build Dockerfile for Dolibarr ${tag}"
-      docker build -t madmath03/dolibarr:${tag} $dir
+      docker build -t madmath03/docker-dolibarr:${tag} $dir
     fi
   done
 done

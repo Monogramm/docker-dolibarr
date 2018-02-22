@@ -20,7 +20,7 @@ env:
 script:
   - v="${VERSION}${VARIANT:+-$VARIANT}"
   - cd "images/$v"
-  - docker build -t "madmath03/dolibarr:$v" .
+  - docker build -t "madmath03/docker-dolibarr:$v" .
   - docker images
 
 notifications:

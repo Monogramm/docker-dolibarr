@@ -37,7 +37,7 @@ docker run -d \
     -e DOLI_DB_NAME=dolibarr \
     -e DOLI_DB_USER=dolibarr \
     -e DOLI_DB_PASSWORD=password \
-    madmath03/dolibarr
+    madmath03/docker-dolibarr
 ```
 
 ### Docker Compose
@@ -53,27 +53,23 @@ mariadb:
     image: mariadb:latest
     restart: always
     environment:
-        - MYSQL_ROOT_PASSWORD: root
-        - MYSQL_DATABASE: dolibarr
-        - MYSQL_USER: dolibarr
-        - MYSQL_PASSWORD: password
+        - MYSQL_ROOT_PASSWORD: 'root'
+        - MYSQL_DATABASE: 'dolibarr'
 
 dolibarr:
-    image: madmath03/dolibarr
+    image: madmath03/docker-dolibarr
     depends_on:
         - mariadb
     ports:
         - "80:80"
     environment:
-        - DOLI_DB_HOST: mariadb
-        - DOLI_DB_NAME: dolibarr
-        - DOLI_DB_USER: dolibarr
-        - DOLI_DB_PASSWORD: password
-        - DOLI_URL_ROOT: 'http://0.0.0.0'
-        - PHP_INI_DATE_TIMEZONE: 'Europe/Paris'
+        - DOLI_DB_HOST: 'mariadb'
+        - DOLI_DB_NAME: 'dolibarr'
+        - DOLI_DB_USER: 'root'
+        - DOLI_DB_PASSWORD: 'root'
 ```
 
-Then run all services `docker-compose up -d`. Now, go to http://0.0.0.0 to access the new Dolibarr installation.
+Then run all services `docker-compose up -d`. Now, go to http://localhost to access the new Dolibarr installation.
 
 #### Advanced usage: PostgreSQL with persistent data
 
@@ -93,18 +89,18 @@ postgres:
         - /srv/postgres/data:/var/lib/postgresql/data
 
 dolibarr:
-    image: madmath03/dolibarr
+    image: madmath03/docker-dolibarr
     depends_on:
         - postgres
     ports:
         - "80:80"
     environment:
-        - DOLI_DB_TYPE: pgsql
-        - DOLI_DB_HOST: postgres
+        - DOLI_DB_TYPE: 'pgsql'
+        - DOLI_DB_HOST: 'postgres'
         - DOLI_DB_PORT: 5432
-        - DOLI_DB_NAME: dolibarr
-        - DOLI_DB_USER: dolibarr
-        - DOLI_DB_PASSWORD: password
+        - DOLI_DB_NAME: 'dolibarr'
+        - DOLI_DB_USER: 'dolibarr'
+        - DOLI_DB_PASSWORD: 'password'
         - DOLI_URL_ROOT: 'http://0.0.0.0'
         - PHP_INI_DATE_TIMEZONE: 'Europe/Paris'
     volumes:
