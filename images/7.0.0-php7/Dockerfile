@@ -38,7 +38,6 @@ ENV WWW_GROUP_ID 33
 ENV PHP_INI_DATE_TIMEZONE 'UTC'
 
 RUN apt-get update -q; \
-	apt-get upgrade -yq; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apt-get install -y --no-install-recommends \
