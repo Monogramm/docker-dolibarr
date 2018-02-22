@@ -63,7 +63,9 @@ RUN cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && ln -
 RUN cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/scripts /var/www/
 RUN rm -rf /tmp/dolibarr
 
-EXPOSE 80
+VOLUME /var/www/html
+VOLUME /var/www/documents
 
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["apache2-foreground"]

@@ -6,11 +6,6 @@ declare -A cmd=(
 	[fpm]='php-fpm'
 )
 
-declare -A extras=(
-	[apache]='\nRUN a2enmod rewrite'
-	[fpm]=''
-)
-
 # version_greater_or_equal A B returns whether A >= B
 function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
@@ -53,7 +48,6 @@ for latest in "${latests[@]}"; do
 				s/%%VARIANT%%/'"$variant"'/g;
 				s/%%VERSION%%/'"$latest"'/g;
 				s/%%CMD%%/'"${cmd[$variant]}"'/g;
-				s/%%VARIANT_EXTRAS%%/'"${extras[$variant]}"'/g;
 			' "$dir/Dockerfile"
 
 			# Copy the shell scripts
