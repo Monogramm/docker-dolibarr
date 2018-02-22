@@ -12,8 +12,6 @@ env:
   - VERSION=6.0.5 VARIANT=php7
   - VERSION=7.0.0
   - VERSION=7.0.0 VARIANT=php7
-  - VERSION=latest
-  - VERSION=latest VARIANT=php7
 
 script:
   - v="${VERSION}${VARIANT:+-$VARIANT}"
