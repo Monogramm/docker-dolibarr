@@ -53,6 +53,7 @@ for latest in "${latests[@]}"; do
 			# Copy the shell scripts
 			for name in entrypoint; do
 				cp "docker-$name.sh" "$dir/$name.sh"
+				chmod 755 "$dir/$name.sh"
 			done
 
 			travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
