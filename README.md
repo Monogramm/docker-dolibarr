@@ -4,7 +4,7 @@
 
 Docker image for Dolibarr.
 
-Provides full database configuration, LDAP support, debug configuration and HTTPS enforcer (SSL must be provided by reverse proxy), handles upgrades, and so on...
+Provides full database configuration, production mode, HTTPS enforcer (SSL must be provided by reverse proxy), handles upgrades, and so on...
 
 ## What is Dolibarr ?
 
@@ -91,7 +91,7 @@ Overview of the folders that can be mounted as volumes:
 - `/var/www/html` Main folder, needed for updating
 - `/var/www/html/custom` installed / modified modules
 - `/var/www/html/conf` local configuration
-- `/var/www/html/theme/<YOU_CUSTOM_THEME>` theming/branding
+- `/var/www/html/theme/<YOUR_CUSTOM_THEME>` theming/branding
 
 If you want to use named volumes for all of these it would look like this
 ```console
@@ -208,32 +208,6 @@ Examples:
 DOLI_ADMIN_LOGIN=admin
 ```
 
-### DOLI_ADMIN_PASSWORD
-
-*Default value*: 
-
-This parameter contains the admin's password used in the first install.
-It requires `DOLI_AUTO_INSTALL` to be enabled in order to work.
-
-Examples:
-```
-DOLI_ADMIN_PASSWORD=myadminpass
-```
-
-### DOLI_AUTO_INSTALL
-
-*Default value*: `0`
-
-*Possible values*: `0` or `1`
-
-The installation will be automatically executed on first boot. If set to `0`, first install wizard will be initialized based on environment variables.
-
-Examples:
-```
-DOLI_AUTO_INSTALL=0
-DOLI_AUTO_INSTALL=1
-```
-
 ### DOLI_URL_ROOT
 
 *Default value*: `http://localhost`
@@ -252,105 +226,6 @@ DOLI_URL_ROOT=http://mydolibarrvirtualhost
 DOLI_URL_ROOT=http://myserver/dolibarr/htdocs
 DOLI_URL_ROOT=http://myserver/dolibarralias
 ```
-
-
-### DOLI_AUTH
-
-*Default value*: `dolibarr`
-
-*Possible values*: Any values found in files in htdocs/core/login directory after the `function_` string and before the `.php` string, **except forceuser**. You can also separate several values using a `,`. In this case, Dolibarr will check login/pass for each value in order defined into value. However, note that this can't work with all values.
-
-This parameter contains the way authentication is done.
-It requires `DOLI_AUTO_INSTALL` to be enabled to be used. Otherwise, install wizard will use ignore 
-
-If value `ldap` is used, you must also set parameters `DOLI_LDAP_*` and `DOLI_MODULES` must contain `modLdap`.
-
-Examples:
-```
-DOLI_AUTH=http
-DOLI_AUTH=dolibarr
-DOLI_AUTH=ldap
-DOLI_AUTH=openid,dolibarr
-```
-
-### DOLI_LDAP_HOST
-
-*Default value*: `127.0.0.1`
-
-You can define several servers here separated with a comma.
-
-Examples:
-```
-DOLI_LDAP_HOST=localhost
-DOLI_LDAP_HOST=ldap.company.com
-DOLI_LDAP_HOST=ldaps://ldap.company.com:636,ldap://ldap.company.com:389
-```
-
-### DOLI_LDAP_PORT
-
-*Default value*: `389`
-
-### DOLI_LDAP_VERSION
-
-*Default value*: `3`
-
-### DOLI_LDAP_SERVERTYPE
-
-*Default value*: `openldap`
-*Possible values*: `openldap`, `activedirectory` or `egroupware`
-
-### DOLI_LDAP_DN
-
-*Default value*: 
-
-Examples:
-```
-DOLI_LDAP_DN=ou=People,dc=company,dc=com
-```
-
-### DOLI_LDAP_LOGIN_ATTRIBUTE
-
-*Default value*: `uid`
-
-Ex: uid or samaccountname for active directory
-
-### DOLI_LDAP_FILTER
-
-*Default value*: 
-
-If defined, the two previous parameters are not used to find a user into LDAP.
-
-Examples:
-```
-DOLI_LDAP_FILTER=(uid=%1%)
-DOLI_LDAP_FILTER=(&(uid=%1%)(isMemberOf=cn=Sales,ou=Groups,dc=company,dc=com))
-```
-
-### DOLI_LDAP_ADMIN_LOGIN
-
-*Default value*: 
-
-Required only if anonymous bind disabled.
-
-Examples:
-```
-DOLI_LDAP_ADMIN_LOGIN=cn=admin,dc=company,dc=com
-```
-
-### DOLI_LDAP_ADMIN_PASS
-
-*Default value*: 
-
-Required only if anonymous bind disabled. Ex: 
-
-Examples:
-```
-DOLI_LDAP_ADMIN_PASS=secret
-```
-
-### DOLI_LDAP_DEBUG
-
-*Default value*: `false`
 
 
 ### DOLI_PROD
