@@ -4,7 +4,7 @@
 
 Docker image for Dolibarr.
 
-Provides full database configuration, LDAP support, debug configuration and HTTPS enforcer (SSL must be provided by reverse proxy), handles upgrades, and so on...
+Provides full database configuration, production mode, HTTPS enforcer (SSL must be provided by reverse proxy), handles upgrades, and so on...
 
 ## What is Dolibarr ?
 
@@ -91,7 +91,7 @@ Overview of the folders that can be mounted as volumes:
 - `/var/www/html` Main folder, needed for updating
 - `/var/www/html/custom` installed / modified modules
 - `/var/www/html/conf` local configuration
-- `/var/www/html/theme/<YOU_CUSTOM_THEME>` theming/branding
+- `/var/www/html/theme/<YOUR_CUSTOM_THEME>` theming/branding
 
 If you want to use named volumes for all of these it would look like this
 ```console
@@ -210,6 +210,8 @@ DOLI_ADMIN_LOGIN=admin
 
 ### DOLI_ADMIN_PASSWORD
 
+**NOT YET WORKING**
+
 *Default value*: 
 
 This parameter contains the admin's password used in the first install.
@@ -221,6 +223,8 @@ DOLI_ADMIN_PASSWORD=myadminpass
 ```
 
 ### DOLI_AUTO_INSTALL
+
+**NOT YET WORKING**
 
 *Default value*: `0`
 
@@ -256,6 +260,8 @@ DOLI_URL_ROOT=http://myserver/dolibarralias
 
 ### DOLI_AUTH
 
+**NOT YET WORKING**
+
 *Default value*: `dolibarr`
 
 *Possible values*: Any values found in files in htdocs/core/login directory after the `function_` string and before the `.php` string, **except forceuser**. You can also separate several values using a `,`. In this case, Dolibarr will check login/pass for each value in order defined into value. However, note that this can't work with all values.
@@ -275,6 +281,8 @@ DOLI_AUTH=openid,dolibarr
 
 ### DOLI_LDAP_HOST
 
+**NOT YET WORKING**
+
 *Default value*: `127.0.0.1`
 
 You can define several servers here separated with a comma.
@@ -288,18 +296,26 @@ DOLI_LDAP_HOST=ldaps://ldap.company.com:636,ldap://ldap.company.com:389
 
 ### DOLI_LDAP_PORT
 
+**NOT YET WORKING**
+
 *Default value*: `389`
 
 ### DOLI_LDAP_VERSION
+
+**NOT YET WORKING**
 
 *Default value*: `3`
 
 ### DOLI_LDAP_SERVERTYPE
 
+**NOT YET WORKING**
+
 *Default value*: `openldap`
 *Possible values*: `openldap`, `activedirectory` or `egroupware`
 
 ### DOLI_LDAP_DN
+
+**NOT YET WORKING**
 
 *Default value*: 
 
@@ -310,11 +326,15 @@ DOLI_LDAP_DN=ou=People,dc=company,dc=com
 
 ### DOLI_LDAP_LOGIN_ATTRIBUTE
 
+**NOT YET WORKING**
+
 *Default value*: `uid`
 
 Ex: uid or samaccountname for active directory
 
 ### DOLI_LDAP_FILTER
+
+**NOT YET WORKING**
 
 *Default value*: 
 
@@ -328,6 +348,8 @@ DOLI_LDAP_FILTER=(&(uid=%1%)(isMemberOf=cn=Sales,ou=Groups,dc=company,dc=com))
 
 ### DOLI_LDAP_ADMIN_LOGIN
 
+**NOT YET WORKING**
+
 *Default value*: 
 
 Required only if anonymous bind disabled.
@@ -339,6 +361,8 @@ DOLI_LDAP_ADMIN_LOGIN=cn=admin,dc=company,dc=com
 
 ### DOLI_LDAP_ADMIN_PASS
 
+**NOT YET WORKING**
+
 *Default value*: 
 
 Required only if anonymous bind disabled. Ex: 
@@ -349,6 +373,8 @@ DOLI_LDAP_ADMIN_PASS=secret
 ```
 
 ### DOLI_LDAP_DEBUG
+
+**NOT YET WORKING**
 
 *Default value*: `false`
 
