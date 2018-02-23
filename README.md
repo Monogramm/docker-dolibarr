@@ -346,7 +346,7 @@ This parameter allows to force the HTTPS mode.
 0 = No forced redirect
 1 = Force redirect to https, until SCRIPT_URI start with https into response
 2 = Force redirect to https, until SERVER["HTTPS"] is 'on' into response
-'https://my.domain.com' = Force reditect to https using this domain name.
+'https://my.domain.com' = Force redirect to https using this domain name.
 
 *Warning*: If you enable this parameter, your web server must be configured to
 respond URL with https protocol. 

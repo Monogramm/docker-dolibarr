@@ -62,7 +62,7 @@ if [ ! -f /usr/src/dolibarr/htdocs/conf/conf.php ]; then
 \$dolibarr_main_db_collation='utf8_unicode_ci';
 
 // ##################
-// # Login		  #
+// # Login		    #
 // ##################
 \$dolibarr_main_authentication='${DOLI_AUTH}';
 \$dolibarr_main_auth_ldap_host='${DOLI_LDAP_HOST}';
@@ -77,7 +77,7 @@ if [ ! -f /usr/src/dolibarr/htdocs/conf/conf.php ]; then
 \$dolibarr_main_auth_ldap_debug='${DOLI_LDAP_DEBUG}';
 
 // ##################
-// # Security	   #
+// # Security	    #
 // ##################
 \$dolibarr_main_prod='${DOLI_PROD}';
 \$dolibarr_main_force_https='${DOLI_HTTPS}';
@@ -88,7 +88,7 @@ if [ ! -f /usr/src/dolibarr/htdocs/conf/conf.php ]; then
 EOF
 
 	chown www-data:www-data /usr/src/dolibarr/htdocs/conf/conf.php
-	chmod 400 /usr/src/dolibarr/htdocs/conf/conf.php
+	chmod 755 /usr/src/dolibarr/htdocs/conf/conf.php
 fi
 
 # Detect installed version (docker specific solution)
@@ -144,8 +144,8 @@ if version_greater "$image_version" "$installed_version"; then
 		chmod 400 /var/www/documents/install.lock
 	else
 		# Create forced values for first install
-		if [ ! -f /usr/src/dolibarr/htdocs/install/install.forced.php ]; then
-			cat <<EOF > /usr/src/dolibarr/htdocs/install/install.forced.php
+		if [ ! -f /var/www/html/install/install.forced.php ]; then
+			cat <<EOF > /var/www/html/install/install.forced.php
 <?php
 \$force_install_nophpinfo = true;
 \$force_install_noedit = 2;
