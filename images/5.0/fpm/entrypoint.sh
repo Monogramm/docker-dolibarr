@@ -175,6 +175,8 @@ EOF
 	fi
 fi
 
-echo $image_version > /var/www/documents/install.version
+if [ -f /var/www/documents/install.lock ]; then
+	echo $image_version > /var/www/documents/install.version
+fi
 
 exec "$@"
