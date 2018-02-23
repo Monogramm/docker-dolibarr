@@ -37,13 +37,11 @@ sendmail_path = /usr/sbin/sendmail -t -i
 EOF
 fi
 
-# Create a default config 
+# Create a default config
 if [ ! -f /usr/src/dolibarr/htdocs/conf/conf.php ]; then
 	cat <<EOF > /usr/src/dolibarr/htdocs/conf/conf.php
 <?php
-// Config file for Dolibarr.
-// Dolibarr version
-\$dolibarr_main_installed_version = '${DOLI_VERSION}';
+// Config file for Dolibarr ${DOLI_VERSION}
 
 // ###################
 // # Main parameters #
@@ -95,10 +93,8 @@ fi
 
 # Detect installed version (docker specific solution)
 installed_version="0.0.0~unknown"
-if [ -f /var/www/documents/install.lock ]; then
-	installed_version=$(cat /var/www/documents/install.lock)
-elif [ -f /var/www/html/conf/conf.php ]; then
-	installed_version=$(php -r 'require "/var/www/html/conf/conf.php"; echo "$dolibarr_main_installed_version";')
+if [ -f /var/www/documents/install.version ]; then
+	installed_version=$(cat /var/www/documents/install.version)
 fi
 image_version=${DOLI_VERSION}
 
@@ -110,10 +106,6 @@ fi
 # Initialize image
 if version_greater "$image_version" "$installed_version"; then
 	echo "Dolibarr initialization..."
-	if [ -f /var/www/documents/install.lock ]; then
-		rm /var/www/documents/install.lock
-	fi
-
 	if [[ $EUID -eq 0 ]]; then
 		rsync_options="-rlDog --chown www-data:root"
 	else
@@ -132,7 +124,11 @@ if version_greater "$image_version" "$installed_version"; then
 	# Call upgrade scripts if needed
 	# https://wiki.dolibarr.org/index.php/Installation_-_Upgrade#With_Dolibarr_.28standard_.zip_package.29
 	if [ "$installed_version" != "0.0.0~unknown" ]; then
-		echo "Dolibarr upgrade needed from $installed_version to $image_version."
+		echo "Dolibarr upgrade from $installed_version to $image_version..."
+
+		if [ -f /var/www/documents/install.lock ]; then
+			rm /var/www/documents/install.lock
+		fi
 
 		base_version=(${installed_version//./ })
 		target_version=(${image_version//./ })
@@ -142,13 +138,43 @@ if version_greater "$image_version" "$installed_version"; then
 		run_as "php step5.php ${base_version[0]}.${base_version[1]}.0 ${target_version[0]}.${target_version[1]}.0" > /tmp/output3.html
 
 		rm -f /tmp/output1.html /tmp/output2.html /tmp/output3.html
+
+		echo 'This is a lock file to prevent use of install pages' > /var/www/documents/install.lock
+		chown www-data:www-data /var/www/documents/install.lock
+		chmod 400 /var/www/documents/install.lock
+	else
+		# Create forced values for first install
+		if [ ! -f /usr/src/dolibarr/htdocs/install/install.forced.php ]; then
+			cat <<EOF > /usr/src/dolibarr/htdocs/install/install.forced.php
+<?php
+\$force_install_nophpinfo = true;
+\$force_install_noedit = 2;
+\$force_install_message = 'Dolibarr installation';
+\$force_install_main_data_root = '/var/www/documents';
+\$force_install_mainforcehttps = ${DOLI_HTTPS} == 1;
+\$force_install_database = '${DOLI_DB_NAME}';
+\$force_install_type = '${DOLI_DB_TYPE}';
+\$force_install_dbserver = '${DOLI_DB_HOST}';
+\$force_install_port = ${DOLI_DB_PORT};
+\$force_install_prefix = '${DOLI_DB_PREFIX}';
+\$force_install_createdatabase = false;
+\$force_install_databaselogin = '${DOLI_DB_USER}';
+\$force_install_databasepass = '${DOLI_DB_PASSWORD}';
+\$force_install_createuser = false;
+\$force_install_databaserootlogin = '${DOLI_DB_USER}';
+\$force_install_databaserootpass = '${DOLI_DB_PASSWORD}';
+\$force_install_dolibarrlogin = '${DOLI_ADMIN_LOGIN}';
+\$force_install_lockinstall = true;
+\$force_install_module = 'modSociete,modFournisseur,modFacture';
+EOF
+
+			# XXX Would it be possible to call official install from command line?
+
+			echo "You shall complete Dolibarr install at '${DOLI_URL_ROOT}/install'"
+		fi
 	fi
-
-	# XXX Would it be possible to call install from command line?
-
-	echo $image_version > /var/www/documents/install.lock
-	chown www-data:www-data /var/www/documents/install.lock
-	chmod 400 /var/www/documents/install.lock
 fi
+
+echo $image_version > /var/www/documents/install.version
 
 exec "$@"
