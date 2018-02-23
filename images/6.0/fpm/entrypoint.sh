@@ -38,8 +38,8 @@ EOF
 fi
 
 # Create a default config
-if [ ! -f /usr/src/dolibarr/htdocs/conf/conf.php ]; then
-	cat <<EOF > /usr/src/dolibarr/htdocs/conf/conf.php
+if [ ! -f /var/www/html/conf/conf.php ]; then
+	cat <<EOF > /var/www/html/conf/conf.php
 <?php
 // Config file for Dolibarr ${DOLI_VERSION}
 
