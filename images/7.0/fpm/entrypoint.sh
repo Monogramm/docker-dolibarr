@@ -37,6 +37,10 @@ sendmail_path = /usr/sbin/sendmail -t -i
 EOF
 fi
 
+if [ ! -d /var/www/html/conf/ ]; then
+	mkdir /var/www/html/conf/
+fi
+
 # Create a default config
 if [ ! -f /var/www/html/conf/conf.php ]; then
 	cat <<EOF > /var/www/html/conf/conf.php
