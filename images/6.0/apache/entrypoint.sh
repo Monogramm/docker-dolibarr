@@ -72,8 +72,8 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_mailing_limit_sendbyweb='0';
 EOF
 
-	chown www-data:www-data /usr/src/dolibarr/htdocs/conf/conf.php
-	chmod 755 /usr/src/dolibarr/htdocs/conf/conf.php
+	chown www-data:www-data /var/www/html/conf/conf.php
+	chmod 766 /var/www/html/conf/conf.php
 fi
 
 # Detect installed version (docker specific solution)
@@ -133,7 +133,7 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_noedit = 2;
 \$force_install_message = 'Dolibarr installation';
 \$force_install_main_data_root = '/var/www/documents';
-\$force_install_mainforcehttps = ${DOLI_HTTPS} == 1;
+\$force_install_mainforcehttps = !empty('${DOLI_HTTPS}');
 \$force_install_database = '${DOLI_DB_NAME}';
 \$force_install_type = '${DOLI_DB_TYPE}';
 \$force_install_dbserver = '${DOLI_DB_HOST}';
