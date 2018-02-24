@@ -24,7 +24,7 @@ usermod -u $WWW_USER_ID www-data
 groupmod -g $WWW_GROUP_ID www-data
 
 if [ ! -d /var/www/documents ]; then
-	mkdir /var/www/documents
+	mkdir -p /var/www/documents
 fi
 
 chown -R www-data:www-data /var/www
@@ -38,7 +38,7 @@ EOF
 fi
 
 if [ ! -d /var/www/html/conf/ ]; then
-	mkdir /var/www/html/conf/
+	mkdir -p /var/www/html/conf/
 fi
 
 # Create a default config
