@@ -37,9 +37,13 @@ sendmail_path = /usr/sbin/sendmail -t -i
 EOF
 fi
 
+if [ ! -d /var/www/html/conf/ ]; then
+	mkdir /var/www/html/conf/
+fi
+
 # Create a default config
-if [ ! -f /usr/src/dolibarr/htdocs/conf/conf.php ]; then
-	cat <<EOF > /usr/src/dolibarr/htdocs/conf/conf.php
+if [ ! -f /var/www/html/conf/conf.php ]; then
+	cat <<EOF > /var/www/html/conf/conf.php
 <?php
 // Config file for Dolibarr ${DOLI_VERSION}
 
@@ -87,8 +91,8 @@ if [ ! -f /usr/src/dolibarr/htdocs/conf/conf.php ]; then
 \$dolibarr_mailing_limit_sendbyweb='0';
 EOF
 
-	chown www-data:www-data /usr/src/dolibarr/htdocs/conf/conf.php
-	chmod 755 /usr/src/dolibarr/htdocs/conf/conf.php
+	chown www-data:www-data /var/www/html/conf/conf.php
+	chmod 766 /var/www/html/conf/conf.php
 fi
 
 # Detect installed version (docker specific solution)
@@ -148,7 +152,7 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_noedit = 2;
 \$force_install_message = 'Dolibarr installation';
 \$force_install_main_data_root = '/var/www/documents';
-\$force_install_mainforcehttps = ${DOLI_HTTPS} == 1;
+\$force_install_mainforcehttps = !empty('${DOLI_HTTPS}');
 \$force_install_database = '${DOLI_DB_NAME}';
 \$force_install_type = '${DOLI_DB_TYPE}';
 \$force_install_dbserver = '${DOLI_DB_HOST}';
@@ -177,15 +181,8 @@ EOF
 		#run_as "cd /var/www/html/install/ && php fileconf.php"
 		#run_as "cd /var/www/html/install/ && php step1.php testpost=ok action=set"
 		#run_as "cd /var/www/html/install/ && php step2.php testpost=ok action=set dolibarr_main_db_character_set=utf8 dolibarr_main_db_collation=utf8_unicode_ci"
-		#run_as "cd /var/www/html/install/ && php step3.php testpost=ok action=set"
 		#run_as "cd /var/www/html/install/ && php step4.php testpost=ok action=set pass=${DOLI_ADMIN_PASSWORD} pass_verif=${DOLI_ADMIN_PASSWORD}"
-
-		# Install with CURL? Does not work because server is not online...
-		#curl -kL -X POST ${DOLI_URL_ROOT}/install/fileconf.php
-		#curl -kL -X POST ${DOLI_URL_ROOT}/install/step1.php --data "testpost=ok&action=set&selectlang=fr_FR"
-		#curl -kL -X POST ${DOLI_URL_ROOT}/install/step2.php --data "testpost=ok&action=set&dolibarr_main_db_character_set=utf8&dolibarr_main_db_collation=utf8_unicode_ci&selectlang=fr_FR"
-		#curl -kL -X POST ${DOLI_URL_ROOT}/install/step4.php --data "testpost=ok&action=set&selectlang=fr_FR"
-		#curl -kL -X POST ${DOLI_URL_ROOT}/install/step5.php --data "testpost=ok&action=set&selectlang=fr_FR&pass=${DOLI_ADMIN_PASSWORD}&pass_verif=${DOLI_ADMIN_PASSWORD}"
+		#run_as "cd /var/www/html/install/ && php step5.php testpost=ok action=set pass=${DOLI_ADMIN_PASSWORD} pass_verif=${DOLI_ADMIN_PASSWORD}"
 
 		# TODO Additional config
 
