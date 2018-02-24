@@ -197,6 +197,31 @@ Examples:
 DOLI_DB_PREFIX=llx_
 ```
 
+### DOLI_DB_CHARACTER_SET
+
+*Default value*: `utf8`
+
+Database character set used to store data (forced during database creation. value of database is then used).
+Depends on database driver used. See `DOLI_DB_TYPE`.
+
+Examples:
+```
+DOLI_DB_CHARACTER_SET=utf8
+```
+
+### DOLI_DB_COLLATION
+
+*Default value*: `utf8_unicode_ci`
+
+Database collation used to sort data (forced during database creation. value of database is then used).
+Depends on database driver used. See `DOLI_DB_TYPE`.
+
+Examples:
+```
+DOLI_DB_COLLATION=utf8_unicode_ci
+```
+
+
 ### DOLI_ADMIN_LOGIN
 
 *Default value*: `admin`
@@ -365,6 +390,22 @@ DOLI_HTTPS=0
 DOLI_HTTPS=1
 DOLI_HTTPS=2
 DOLI_HTTPS=https://my.domain.com
+```
+
+### DOLI_NO_CSRF_CHECK
+
+*Default value*: `0`
+
+*Possible values*: `0`, `1`
+
+This parameter can be used to disable CSRF protection.
+
+This might be required if you access Dolibarr behind a proxy that make URL rewriting, to avoid false alarms.
+
+Examples:
+```
+DOLI_NO_CSRF_CHECK=0
+DOLI_NO_CSRF_CHECK=1
 ```
 
 

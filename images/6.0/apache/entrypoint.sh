@@ -62,8 +62,8 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_db_user='${DOLI_DB_USER}';
 \$dolibarr_main_db_pass='${DOLI_DB_PASSWORD}';
 \$dolibarr_main_db_type='${DOLI_DB_TYPE}';
-\$dolibarr_main_db_character_set='utf8';
-\$dolibarr_main_db_collation='utf8_unicode_ci';
+\$dolibarr_main_db_character_set='${DOLI_DB_CHARACTER_SET}';
+\$dolibarr_main_db_collation='${DOLI_DB_COLLATION}';
 
 // ##################
 // # Login		    #
@@ -86,7 +86,7 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_prod='${DOLI_PROD}';
 \$dolibarr_main_force_https='${DOLI_HTTPS}';
 \$dolibarr_main_restrict_os_commands='mysqldump, mysql, pg_dump, pgrestore';
-\$dolibarr_nocsrfcheck='0';
+\$dolibarr_nocsrfcheck='${DOLI_NO_CSRF_CHECK}';
 \$dolibarr_main_cookie_cryptkey='$(openssl rand -hex 32)';
 \$dolibarr_mailing_limit_sendbyweb='0';
 EOF
