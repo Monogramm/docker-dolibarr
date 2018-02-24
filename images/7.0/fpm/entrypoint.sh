@@ -66,6 +66,21 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_db_collation='utf8_unicode_ci';
 
 // ##################
+// # Login		    #
+// ##################
+\$dolibarr_main_authentication='${DOLI_AUTH}';
+\$dolibarr_main_auth_ldap_host='${DOLI_LDAP_HOST}';
+\$dolibarr_main_auth_ldap_port='${DOLI_LDAP_PORT}';
+\$dolibarr_main_auth_ldap_version='${DOLI_LDAP_VERSION}';
+\$dolibarr_main_auth_ldap_servertype='${DOLI_LDAP_SERVERTYPE}';
+\$dolibarr_main_auth_ldap_login_attribute='${DOLI_LDAP_LOGIN_ATTRIBUTE}';
+\$dolibarr_main_auth_ldap_dn='${DOLI_LDAP_DN}';
+\$dolibarr_main_auth_ldap_filter ='${DOLI_LDAP_FILTER}';
+\$dolibarr_main_auth_ldap_admin_login='${DOLI_LDAP_ADMIN_LOGIN}';
+\$dolibarr_main_auth_ldap_admin_pass='${DOLI_LDAP_ADMIN_PASS}';
+\$dolibarr_main_auth_ldap_debug='${DOLI_LDAP_DEBUG}';
+
+// ##################
 // # Security	    #
 // ##################
 \$dolibarr_main_prod='${DOLI_PROD}';
@@ -130,8 +145,8 @@ if version_greater "$image_version" "$installed_version"; then
 		chown www-data:www-data /var/www/documents/install.lock
 		chmod 400 /var/www/documents/install.lock
 	elif [ ! -f /var/www/documents/install.lock ]; then
-		# Create forced values for first install
-		cat <<EOF > /var/www/html/install/install.forced.php
+			# Create forced values for first install
+			cat <<EOF > /var/www/html/install/install.forced.php
 <?php
 \$force_install_nophpinfo = true;
 \$force_install_noedit = 2;
