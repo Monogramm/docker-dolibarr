@@ -119,10 +119,15 @@ if version_greater "$image_version" "$installed_version"; then
 	#cp -r /usr/src/dolibarr/scripts /var/www/
 	rsync $rsync_options --delete --exclude /conf/ --exclude /custom/ --exclude /theme/ /usr/src/dolibarr/htdocs/ /var/www/html/
 
-	for dir in conf custom theme; do
+	for dir in conf custom; do
 		if [ ! -d /var/www/html/"$dir" ] || directory_empty /var/www/html/"$dir"; then
 			rsync $rsync_options --include /"$dir"/ --exclude '/*' /usr/src/dolibarr/htdocs/ /var/www/html/
 		fi
+	done
+
+	# The theme folder contains custom and official themes. We must copy even if folder is not empty, but not delete content either
+	for dir in theme; do
+		rsync $rsync_options --include /"$dir"/ --exclude '/*' /usr/src/dolibarr/htdocs/ /var/www/html/
 	done
 
 	if [ "$installed_version" != "0.0.0~unknown" ]; then
