@@ -82,5 +82,8 @@ RUN set -ex; \
 	chmod +x /usr/src/dolibarr/scripts/*
 
 COPY entrypoint.sh /
+RUN set -ex; \
+	chmod 755 /entrypoint.sh;
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
