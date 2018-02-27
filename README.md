@@ -586,16 +586,16 @@ RUN ...
 
 You can also clone this repository and use the [update.sh](update.sh) shell script to generate a new Dockerfile based on your own needs.
 
-For instance, you could build a container based on Dolibarr develop branch and  by setting the `update.sh` versions like this:
+For instance, you could build a container based on Dolibarr develop branch by setting the `update.sh` versions like this:
 ```bash
-versions=( "latest" )
+versions=( "develop" )
 ```
 Then simply call [update.sh](update.sh) script.
 
 ```console
 bash update.sh
 ```
-Your Dockerfile(s) will be generated in the `images` folder.
+Your Dockerfile(s) will be generated in the `images/develop` folder.
 
 If you use your own Dockerfile you need to configure your docker-compose file accordingly. Switch out the `image` option with `build`. You have to specify the path to your Dockerfile. (in the example it's in the same directory next to the docker-compose file)
 
