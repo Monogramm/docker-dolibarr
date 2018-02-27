@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/madmath03/docker-dolibarr.svg)](https://travis-ci.org/madmath03/docker-dolibarr)
+[![Build Status](https://travis-ci.org/monogramm/docker-dolibarr.svg)](https://travis-ci.org/monogramm/docker-dolibarr)
 
 # Dolibarr on Docker
 
@@ -37,7 +37,7 @@ The second option is a `fpm` container. It is based on the [php-fpm](https://hub
 The apache image contains a webserver and exposes port 80. To start the container type:
 
 ```console
-$ docker run -d -p 8080:80 madmath03/docker-dolibarr
+$ docker run -d -p 8080:80 monogramm/docker-dolibarr
 ```
 
 Now you can access Dolibarr at http://localhost:8080/ from your host system.
@@ -49,7 +49,7 @@ If you use your host you can address your Dolibarr container directly on port 90
 In both cases you don't want to map the fpm port to you host. 
 
 ```console
-$ docker run -d madmath03/docker-dolibarr:fpm
+$ docker run -d monogramm/docker-dolibarr:fpm
 ```
 
 As the fastCGI-Process is not capable of serving static files (style sheets, images, ...) the webserver needs access to these files. This can be achieved with the `volumes-from` option. You can find more information in the docker-compose section.
@@ -71,7 +71,7 @@ Dolibarr:
 $ docker run -d \
     -v dolibarr_html:/var/www/html \
     -v dolibarr_docs:/var/www/documents \
-    madmath03/docker-dolibarr
+    monogramm/docker-dolibarr
 ```
 
 Database:
@@ -100,7 +100,7 @@ $ docker run -d \
     -v apps:/var/www/html/custom \
     -v config:/var/www/html/conf \
     -v theme:/var/www/html/theme/<YOUR_CUSTOM_THEME> \
-    madmath03/docker-dolibarr
+    monogramm/docker-dolibarr
 ```
 
 ## Auto configuration via environment variables
@@ -458,7 +458,7 @@ mariadb:
         - "MYSQL_USER=dolibarr"
 
 dolibarr:
-    image: madmath03/docker-dolibarr
+    image: monogramm/docker-dolibarr
     restart: always
     depends_on:
         - mariadb
@@ -477,7 +477,7 @@ dolibarr:
 Then run all services `docker-compose up -d`. Now, go to http://localhost:8080/install to access the new Dolibarr installation wizard.
 
 ## Base version - FPM with PostgreSQL
-When using the FPM image you need another container that acts as web server on port 80 and proxies the requests to the Dolibarr container. In this example a simple nginx container is combined with the madmath03/docker-dolibarr-fpm image and a [PostgreSQL](https://hub.docker.com/_/postgres/) database container. The data is stored in docker volumes. The nginx container also need access to static files from your Dolibarr installation. It gets access to all the volumes mounted to Dolibarr via the `volumes_from` option. The configuration for nginx is stored in the configuration file `nginx.conf`, that is mounted into the container.
+When using the FPM image you need another container that acts as web server on port 80 and proxies the requests to the Dolibarr container. In this example a simple nginx container is combined with the monogramm/docker-dolibarr-fpm image and a [PostgreSQL](https://hub.docker.com/_/postgres/) database container. The data is stored in docker volumes. The nginx container also need access to static files from your Dolibarr installation. It gets access to all the volumes mounted to Dolibarr via the `volumes_from` option. The configuration for nginx is stored in the configuration file `nginx.conf`, that is mounted into the container.
 
 As this setup does **not include encryption** it should to be run behind a proxy. 
 
@@ -504,7 +504,7 @@ postgres:
         - dolibarr_db:/var/lib/postgresql/data
 
 dolibarr:
-    image: madmath03/docker-dolibarr
+    image: monogramm/docker-dolibarr
     depends_on:
         - postgres
     ports:
@@ -558,10 +558,10 @@ You should note though that some environment variables will be ignored during in
 Updating the Dolibarr container is done by pulling the new image, throwing away the old container and starting the new one. Since all data is stored in volumes, nothing gets lost. The startup script will check for the version in your volume and the installed docker version. If it finds a mismatch, it automatically starts the upgrade process. Don't forget to add all the volumes to your new container, so it works as expected. Also, we advised you do not skip major versions during your upgrade. For instance, upgrade from 5.0 to 6.0, then 6.0 to 7.0, not directly from 5.0 to 7.0.
 
 ```console
-$ docker pull madmath03/docker-dolibarr
+$ docker pull monogramm/docker-dolibarr
 $ docker stop <your_dolibarr_container>
 $ docker rm <your_dolibarr_container>
-$ docker run <OPTIONS> -d madmath03/docker-dolibarr
+$ docker run <OPTIONS> -d monogramm/docker-dolibarr
 ```
 Beware that you have to run the same command with the options that you used to initially start your Dolibarr. That includes volumes, port mapping.
 
@@ -578,7 +578,7 @@ If the image does not include the packages you need, you can easily build your o
 Start your derived image with the `FROM` statement and add whatever you like.
 
 ```yaml
-FROM madmath03/docker-dolibarr:apache
+FROM monogramm/docker-dolibarr:apache
 
 RUN ...
 
@@ -627,4 +627,4 @@ docker-compose up -d
 The `--pull` option tells docker to look for new versions of the base image. Then the build instructions inside your `Dockerfile` are run on top of the new image.
 
 # Questions / Issues
-If you got any questions or problems using the image, please visit our [Github Repository](https://github.com/madmath03/docker-dolibarr) and write an issue.  
+If you got any questions or problems using the image, please visit our [Github Repository](https://github.com/monogramm/docker-dolibarr) and write an issue.  

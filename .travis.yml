@@ -11,7 +11,7 @@ branches:
 
 before_script:
   - env | sort
-  - image="madmath03/docker-dolibarr:${VERSION}${VARIANT:+-$VARIANT}"
+  - image="monogramm/docker-dolibarr:${VERSION}${VARIANT:+-$VARIANT}"
 
 script:
   - travis_retry docker build -t "$image" "images/${VERSION}/${VARIANT}"

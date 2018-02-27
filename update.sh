@@ -54,14 +54,13 @@ for latest in "${latests[@]}"; do
 			for name in entrypoint; do
 				cp "docker-$name.sh" "$dir/$name.sh"
 				chmod 755 "$dir/$name.sh"
-				git update-index --chmod=+x "$dir/$name.sh"
 			done
 
 			travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
 
 			if [[ $1 == 'build' ]]; then
 				echo "Build Dockerfile for Dolibarr ${tag}"
-				docker build -t madmath03/docker-dolibarr:${tag} $dir
+				docker build -t monogramm/docker-dolibarr:${tag} $dir
 			fi
 		done
 	fi
