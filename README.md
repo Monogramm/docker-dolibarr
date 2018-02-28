@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/monogramm/docker-dolibarr.svg)](https://travis-ci.org/monogramm/docker-dolibarr)
+[![Build Status](https://travis-ci.org/Monogramm/docker-dolibarr.svg)](https://travis-ci.org/Monogramm/docker-dolibarr)
 
 # Dolibarr on Docker
 
@@ -13,6 +13,8 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 > [More informations](https://github.com/dolibarr/dolibarr)
 
 ## Supported tags
+
+https://hub.docker.com/r/monogramm/docker-dolibarr/
 
 * `7.0.0-apache` `7.0.0` `7.0-apache` `7.0` `7-apache` `7` `apache` `latest`
 * `7.0.0-fpm` `7.0-fpm` `7-fpm` `fpm`
@@ -627,4 +629,4 @@ docker-compose up -d
 The `--pull` option tells docker to look for new versions of the base image. Then the build instructions inside your `Dockerfile` are run on top of the new image.
 
 # Questions / Issues
-If you got any questions or problems using the image, please visit our [Github Repository](https://github.com/monogramm/docker-dolibarr) and write an issue.  
+If you got any questions or problems using the image, please visit our [Github Repository](https://github.com/Monogramm/docker-dolibarr) and write an issue.  
