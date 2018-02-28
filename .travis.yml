@@ -19,6 +19,7 @@ script:
 after_script:
   - docker images
   - docker run -d "$image" "images/${VERSION}/${VARIANT}"
+  - docker logs "$image"
 
 notifications:
   email: false
