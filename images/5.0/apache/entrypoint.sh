@@ -60,7 +60,7 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_db_name='${DOLI_DB_NAME}';
 \$dolibarr_main_db_prefix='${DOLI_DB_PREFIX}';
 \$dolibarr_main_db_user='${DOLI_DB_USER}';
-\$dolibarr_main_db_pass='${DOLI_DB_PASSWORD}';
+\$dolibarr_main_db_pass='$(echo "${DOLI_DB_PASSWORD}" | sed "s/'/\\\'/g")';
 \$dolibarr_main_db_type='${DOLI_DB_TYPE}';
 \$dolibarr_main_db_character_set='${DOLI_DB_CHARACTER_SET}';
 \$dolibarr_main_db_collation='${DOLI_DB_COLLATION}';
@@ -165,7 +165,7 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_prefix = '${DOLI_DB_PREFIX}';
 \$force_install_createdatabase = false;
 \$force_install_databaselogin = '${DOLI_DB_USER}';
-\$force_install_databasepass = '${DOLI_DB_PASSWORD}';
+\$force_install_databasepass = '$(echo "${DOLI_DB_PASSWORD}" | sed "s/'/\\\'/g")';
 \$force_install_createuser = false;
 \$force_install_databaserootlogin = '${DOLI_DB_USER}';
 \$force_install_databaserootpass = '${DOLI_DB_PASSWORD}';
