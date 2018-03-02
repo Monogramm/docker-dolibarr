@@ -32,7 +32,7 @@ chown -R www-data:www-data /var/www
 
 if [ ! -f /usr/local/etc/php/php.ini ]; then
 	cat <<EOF > /usr/local/etc/php/php.ini
-date.timezone = ${PHP_INI_DATE_TIMEZONE}
+date.timezone = "${PHP_INI_DATE_TIMEZONE}"
 sendmail_path = /usr/sbin/sendmail -t -i
 EOF
 fi
@@ -45,7 +45,7 @@ fi
 if [ ! -f /var/www/html/conf/conf.php ]; then
 	cat <<EOF > /var/www/html/conf/conf.php
 <?php
-// Config file for Dolibarr ${DOLI_VERSION}
+// Config file for Dolibarr ${DOLI_VERSION} ($(date --iso-8601=seconds))
 
 // ###################
 // # Main parameters #
@@ -153,24 +153,63 @@ if version_greater "$image_version" "$installed_version"; then
 			# Create forced values for first install
 			cat <<EOF > /var/www/html/install/install.forced.php
 <?php
+// Forced install config file for Dolibarr ${DOLI_VERSION} ($(date --iso-8601=seconds))
+
+/** @var bool Hide PHP informations */
 \$force_install_nophpinfo = true;
+
+/** @var int 1 = Lock and hide environment variables, 2 = Lock all set variables */
 \$force_install_noedit = 2;
+
+/** @var string Information message */
 \$force_install_message = 'Dolibarr installation';
+
+/** @var string Data root absolute path (documents folder) */
 \$force_install_main_data_root = '/var/www/documents';
+
+/** @var bool Force HTTPS */
 \$force_install_mainforcehttps = !empty('${DOLI_HTTPS}');
+
+/** @var string Database name */
 \$force_install_database = '${DOLI_DB_NAME}';
+
+/** @var string Database driver (mysql|mysqli|pgsql|mssql|sqlite|sqlite3) */
 \$force_install_type = '${DOLI_DB_TYPE}';
+
+/** @var string Database server host */
 \$force_install_dbserver = '${DOLI_DB_HOST}';
+
+/** @var int Database server port */
 \$force_install_port = ${DOLI_DB_PORT};
+
+/** @var string Database tables prefix */
 \$force_install_prefix = '${DOLI_DB_PREFIX}';
+
+/** @var string Database username */
 \$force_install_databaselogin = '${DOLI_DB_USER}';
+
+/** @var string Database password */
 \$force_install_databasepass = '$(echo "${DOLI_DB_PASSWORD}" | sed "s/'/\\\'/g")';
+
+/** @var bool Force database user creation */
 \$force_install_createuser = false;
+
+/** @var bool Force database creation */
 \$force_install_createdatabase = !empty('${DOLI_DB_ROOT_LOGIN}');
+
+/** @var string Database root username */
 \$force_install_databaserootlogin = '${DOLI_DB_ROOT_LOGIN}';
+
+/** @var string Database root password */
 \$force_install_databaserootpass = '$(echo "${DOLI_DB_ROOT_PASSWORD}" | sed "s/'/\\\'/g")';
+
+/** @var string Dolibarr super-administrator username */
 \$force_install_dolibarrlogin = '${DOLI_ADMIN_LOGIN}';
+
+/** @var bool Force install locking */
 \$force_install_lockinstall = true;
+
+/** @var string Enable module(s) (Comma separated class names list) */
 \$force_install_module = '${DOLI_MODULES}';
 EOF
 
