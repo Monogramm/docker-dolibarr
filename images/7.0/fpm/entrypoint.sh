@@ -66,7 +66,7 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_db_collation='${DOLI_DB_COLLATION}';
 
 // ##################
-// # Login		    #
+// # Login          #
 // ##################
 \$dolibarr_main_authentication='${DOLI_AUTH}';
 \$dolibarr_main_auth_ldap_host='${DOLI_LDAP_HOST}';
@@ -81,7 +81,7 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_auth_ldap_debug='${DOLI_LDAP_DEBUG}';
 
 // ##################
-// # Security	    #
+// # Security       #
 // ##################
 \$dolibarr_main_prod='${DOLI_PROD}';
 \$dolibarr_main_force_https='${DOLI_HTTPS}';
@@ -163,12 +163,12 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_dbserver = '${DOLI_DB_HOST}';
 \$force_install_port = ${DOLI_DB_PORT};
 \$force_install_prefix = '${DOLI_DB_PREFIX}';
-\$force_install_createdatabase = false;
 \$force_install_databaselogin = '${DOLI_DB_USER}';
 \$force_install_databasepass = '$(echo "${DOLI_DB_PASSWORD}" | sed "s/'/\\\'/g")';
 \$force_install_createuser = false;
-\$force_install_databaserootlogin = '${DOLI_DB_USER}';
-\$force_install_databaserootpass = '${DOLI_DB_PASSWORD}';
+\$force_install_createdatabase = !empty('${DOLI_DB_ROOT_LOGIN}');
+\$force_install_databaserootlogin = '${DOLI_DB_ROOT_LOGIN}';
+\$force_install_databaserootpass = '$(echo "${DOLI_DB_ROOT_PASSWORD}" | sed "s/'/\\\'/g")';
 \$force_install_dolibarrlogin = '${DOLI_ADMIN_LOGIN}';
 \$force_install_lockinstall = true;
 \$force_install_module = '${DOLI_MODULES}';

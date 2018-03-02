@@ -223,6 +223,31 @@ Examples:
 DOLI_DB_COLLATION=utf8_unicode_ci
 ```
 
+### DOLI_DB_ROOT_LOGIN
+
+*Default value*: 
+
+This parameter contains the database server root username used to create the Dolibarr database.
+
+If this parameter is set, the container will automatically tell Dolibarr to create the database on first install with the root account.
+
+Examples:
+```
+DOLI_DB_ROOT_LOGIN=root
+DOLI_DB_ROOT_LOGIN=dolibarruser
+```
+
+### DOLI_DB_ROOT_PASSWORD
+
+*Default value*: 
+
+This parameter contains the database server root password used to create the Dolibarr database.
+
+Examples:
+```
+DOLI_DB_ROOT_PASSWORD=myrootpass
+```
+
 
 ### DOLI_ADMIN_LOGIN
 
@@ -436,7 +461,7 @@ ID of group www-data. ID will not change if left empty.
 
 This version will use the apache image and add a [MariaDB](https://hub.docker.com/_/mariadb/) container (you can also use [MySQL](https://hub.docker.com/_/mysql/) if you prefer). The volumes are set to keep your data persistent. This setup provides **no ssl encryption** and is intended to run behind a proxy. 
 
-Make sure to set the variables `MYSQL_ROOT_PASSWORD`, `MYSQL_PASSWORD` and `DOLI_DB_PASSWORD` before you run this setup.
+Make sure to set the variables `MYSQL_ROOT_PASSWORD`, `MYSQL_PASSWORD`, `DOLI_DB_PASSWORD` and `DOLI_DB_ROOT_PASSWORD` before you run this setup.
 
 Create `docker-compose.yml` file as following:
 
@@ -471,6 +496,8 @@ dolibarr:
         - "DOLI_DB_NAME=dolibarr"
         - "DOLI_DB_USER=dolibarr"
         - "DOLI_DB_PASSWORD="
+        - "DOLI_DB_ROOT_LOGIN=root"
+        - "DOLI_DB_ROOT_PASSWORD="
     volumes:
         - dolibarr_html:/var/www/html
         - dolibarr_docs:/var/www/documents
