@@ -60,7 +60,7 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_db_name='${DOLI_DB_NAME}';
 \$dolibarr_main_db_prefix='${DOLI_DB_PREFIX}';
 \$dolibarr_main_db_user='${DOLI_DB_USER}';
-\$dolibarr_main_db_pass='$(echo "${DOLI_DB_PASSWORD}" | sed "s/'/\\\'/g")';
+\$dolibarr_main_db_pass='${DOLI_DB_PASSWORD}';
 \$dolibarr_main_db_type='${DOLI_DB_TYPE}';
 \$dolibarr_main_db_character_set='${DOLI_DB_CHARACTER_SET}';
 \$dolibarr_main_db_collation='${DOLI_DB_COLLATION}';
@@ -77,7 +77,7 @@ if [ ! -f /var/www/html/conf/conf.php ]; then
 \$dolibarr_main_auth_ldap_dn='${DOLI_LDAP_DN}';
 \$dolibarr_main_auth_ldap_filter ='${DOLI_LDAP_FILTER}';
 \$dolibarr_main_auth_ldap_admin_login='${DOLI_LDAP_ADMIN_LOGIN}';
-\$dolibarr_main_auth_ldap_admin_pass='$(echo "${DOLI_LDAP_ADMIN_PASS}" | sed "s/'/\\\'/g")';
+\$dolibarr_main_auth_ldap_admin_pass='${DOLI_LDAP_ADMIN_PASS}';
 \$dolibarr_main_auth_ldap_debug='${DOLI_LDAP_DEBUG}';
 
 // ##################
@@ -189,7 +189,7 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_databaselogin = '${DOLI_DB_USER}';
 
 /** @var string Database password */
-\$force_install_databasepass = '$(echo "${DOLI_DB_PASSWORD}" | sed "s/'/\\\'/g")';
+\$force_install_databasepass = '${DOLI_DB_PASSWORD}';
 
 /** @var bool Force database user creation */
 \$force_install_createuser = false;
@@ -201,7 +201,7 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_databaserootlogin = '${DOLI_DB_ROOT_LOGIN}';
 
 /** @var string Database root password */
-\$force_install_databaserootpass = '$(echo "${DOLI_DB_ROOT_PASSWORD}" | sed "s/'/\\\'/g")';
+\$force_install_databaserootpass = '${DOLI_DB_ROOT_PASSWORD}';
 
 /** @var string Dolibarr super-administrator username */
 \$force_install_dolibarrlogin = '${DOLI_ADMIN_LOGIN}';
