@@ -11,9 +11,10 @@ function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
+dockerRepo="monogramm/docker-dolibarr"
 # TODO Find a way to retrieve automatically the latest versions
-# latests=( $( curl -fsSL 'https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/' |tac|tac| \
-# 	grep -oE '[[:digit:]]+(.[[:digit:]]+)+(.[[:digit:]]+)+' | \
+# latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
+# 	grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
 # 	sort -urV ) )
 latests=( "5.0.7" "6.0.5" "7.0.0" )
 
@@ -59,8 +60,8 @@ for latest in "${latests[@]}"; do
 			travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
 
 			if [[ $1 == 'build' ]]; then
-				echo "Build Dockerfile for Dolibarr ${tag}"
-				docker build -t monogramm/docker-dolibarr:${tag} $dir
+				echo "Build Dockerfile for ${tag}"
+				docker build -t ${dockerRepo}:${tag} $dir
 			fi
 		done
 	fi
