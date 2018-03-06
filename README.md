@@ -442,6 +442,25 @@ DOLI_NO_CSRF_CHECK=1
 
 Default timezone on PHP.
 
+### PHP_MEMORY_LIMIT
+
+*Default value*: `256M`
+
+Default memory limit on PHP.
+
+### PHP_MAX_UPLOAD
+
+*Default value*: `20M`
+
+Default max upload size on PHP.
+
+### PHP_MAX_EXECUTION_TIME
+
+*Default value*: `300`
+
+Default max execution time (in seconds) on PHP.
+
+
 ### WWW_USER_ID
 
 *Default value*: `33`

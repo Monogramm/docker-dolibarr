@@ -33,6 +33,9 @@ chown -R www-data:www-data /var/www
 if [ ! -f /usr/local/etc/php/php.ini ]; then
 	cat <<EOF > /usr/local/etc/php/php.ini
 date.timezone = "${PHP_INI_DATE_TIMEZONE}"
+memory_limit = "${PHP_MEMORY_LIMIT}"
+upload_max_filesize = "${PHP_MAX_UPLOAD}"
+max_execution_time = "${PHP_MAX_EXECUTION_TIME}"
 sendmail_path = /usr/sbin/sendmail -t -i
 EOF
 fi
