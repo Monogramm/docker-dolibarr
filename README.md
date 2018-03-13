@@ -261,6 +261,18 @@ Examples:
 DOLI_ADMIN_LOGIN=admin
 ```
 
+### DOLI_MODULES
+
+*Default value*: 
+
+This parameter contains the list (comma separated) of modules to enable in the first install.
+
+Examples:
+```
+DOLI_MODULES=modSociete
+DOLI_MODULES=modSociete,modPropale,modFournisseur,modContrat,modLdap
+```
+
 ### DOLI_URL_ROOT
 
 *Default value*: `http://localhost`
