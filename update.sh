@@ -11,6 +11,8 @@ function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
+php_versions=( "5.6" "7.1" )
+
 dockerRepo="monogramm/docker-dolibarr"
 # TODO Find a way to retrieve automatically the latest versions
 # latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
@@ -34,38 +36,44 @@ for latest in "${latests[@]}"; do
 	# Only add versions >= 5
 	if version_greater_or_equal "$version" "5.0"; then
 
-		for variant in apache fpm; do
-			echo "updating $latest [$version] $variant"
+		for php_version in "${php_versions[@]}"; do
 
-			# Create the version+variant directory with a Dockerfile.
-			dir="images/$version/$variant"
-			mkdir -p "$dir"
+			for variant in apache fpm; do
+				echo "updating $latest [$version] php$php_version-$variant"
 
-			template="Dockerfile.template"
-			cp "$template" "$dir/Dockerfile"
+				# Create the version+php_version+variant directory with a Dockerfile.
+				dir="images/$version/php$php_version-$variant"
+				mkdir -p "$dir"
 
-			# Replace the variables.
-			sed -ri -e '
-				s/%%VARIANT%%/'"$variant"'/g;
-				s/%%VERSION%%/'"$latest"'/g;
-				s/%%CMD%%/'"${cmd[$variant]}"'/g;
-			' "$dir/Dockerfile"
+				template="Dockerfile.template"
+				cp "$template" "$dir/Dockerfile"
 
-			# Copy the shell scripts
-			for name in entrypoint; do
-				cp "docker-$name.sh" "$dir/$name.sh"
-				chmod 755 "$dir/$name.sh"
+				# Replace the variables.
+				sed -ri -e '
+					s/%%PHP_VERSION%%/'"$php_version"'/g;
+					s/%%VARIANT%%/'"$variant"'/g;
+					s/%%VERSION%%/'"$latest"'/g;
+					s/%%CMD%%/'"${cmd[$variant]}"'/g;
+				' "$dir/Dockerfile"
+
+				# Copy the shell scripts
+				for name in entrypoint; do
+					cp "docker-$name.sh" "$dir/$name.sh"
+					chmod 755 "$dir/$name.sh"
+				done
+
+				travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant$travisEnv"
+
+				if [[ $1 == 'build' ]]; then
+					tag="$version-$php_version-$variant"
+					echo "Build Dockerfile for ${tag}"
+					docker build -t ${dockerRepo}:${tag} $dir
+				fi
 			done
 
-			travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
-
-			if [[ $1 == 'build' ]]; then
-				tag="$version-$variant"
-				echo "Build Dockerfile for ${tag}"
-				docker build -t ${dockerRepo}:${tag} $dir
-			fi
 		done
 	fi
+
 done
 
 # update .travis.yml

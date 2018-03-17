@@ -1,8 +1,8 @@
-FROM php:%%PHP_VERSION%%-%%VARIANT%%
+FROM php:5.6-apache
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 
-ENV DOLI_VERSION %%VERSION%%
+ENV DOLI_VERSION 7.0.0
 
 ENV DOLI_DB_TYPE ''
 ENV DOLI_DB_HOST ''
@@ -91,4 +91,4 @@ RUN set -ex; \
 	chmod 755 /entrypoint.sh;
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["%%CMD%%"]
+CMD ["apache2-foreground"]
