@@ -42,7 +42,7 @@ https://hub.docker.com/r/monogramm/docker-dolibarr/
 ## How to run this image ?
 
 This image is based on the [officiel PHP repository](https://registry.hub.docker.com/_/php/).
-It is inspired from [nextcloud](https://github.com/_/nextcloud) and [tuxgasy/docker-dolibarr](https://github.com/tuxgasy/docker-dolibarr).
+It is inspired from [nextcloud](https://github.com/nextcloud/docker) and [tuxgasy/docker-dolibarr](https://github.com/tuxgasy/docker-dolibarr).
 
 This image does not contain the database for Dolibarr. You need to use either an existing database or a database container.
 
