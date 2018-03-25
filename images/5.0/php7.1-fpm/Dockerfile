@@ -59,6 +59,8 @@ RUN set -ex; \
 		libfreetype6-dev \
 		libjpeg-dev \
 		libldap2-dev \
+		libmagickcore-dev \
+		libmagickwand-dev \
         libmcrypt-dev \
 		libpng-dev \
 		libpq-dev \
