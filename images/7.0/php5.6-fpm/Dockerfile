@@ -76,7 +76,6 @@ RUN set -ex; \
 		mcrypt \
 		mysqli \
 		openssl \
-		pdo_sqlite \
 		pgsql \
 		soap \
 		zip \
