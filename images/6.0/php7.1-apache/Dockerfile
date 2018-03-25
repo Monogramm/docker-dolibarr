@@ -59,6 +59,8 @@ RUN set -ex; \
 		libfreetype6-dev \
 		libjpeg-dev \
 		libldap2-dev \
+		libmagickcore-dev \
+		libmagickwand-dev \
         libmcrypt-dev \
 		libpng-dev \
 		libpq-dev \
@@ -77,6 +79,8 @@ RUN set -ex; \
 		soap \
 		zip \
 	; \
+    pecl install imagick; \
+    docker-php-ext-enable imagick; \
     \
     chown -R www-data:root /var/www/html; \
     chmod -R g=u /var/www/html
