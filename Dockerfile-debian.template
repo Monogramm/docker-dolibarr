@@ -68,7 +68,21 @@ RUN set -ex; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd ldap mysqli pgsql soap zip; \
+	docker-php-ext-install \
+		gd \
+		ldap \
+		mbstring \
+		mcrypt \
+		mssql \
+		mysqli \
+		openssl \
+		pdo_sqlite \
+		pgsql \
+		soap \
+		zip \
+	; \
+    pecl install imagick; \
+    docker-php-ext-enable imagick; \
     \
     chown -R www-data:root /var/www/html; \
     chmod -R g=u /var/www/html

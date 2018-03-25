@@ -6,6 +6,19 @@ declare -A cmd=(
 	[fpm]='php-fpm'
 )
 
+declare -A base=(
+	[apache]='debian'
+	[fpm]='debian'
+)
+
+variants=(
+	apache
+	fpm
+)
+
+min_version='5.0'
+
+
 # version_greater_or_equal A B returns whether A >= B
 function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
@@ -33,19 +46,19 @@ for latest in "${latests[@]}"; do
 		continue
 	fi
 
-	# Only add versions >= 5
-	if version_greater_or_equal "$version" "5.0"; then
+	# Only add versions >= "$min_version"
+	if version_greater_or_equal "$version" "$min_version"; then
 
 		for php_version in "${php_versions[@]}"; do
 
-			for variant in apache fpm; do
+			for variant in "${variants[@]}"; do
 				echo "updating $latest [$version] php$php_version-$variant"
 
 				# Create the version+php_version+variant directory with a Dockerfile.
 				dir="images/$version/php$php_version-$variant"
 				mkdir -p "$dir"
 
-				template="Dockerfile.template"
+				template="Dockerfile-${base[$variant]}.template"
 				cp "$template" "$dir/Dockerfile"
 
 				# Replace the variables.
