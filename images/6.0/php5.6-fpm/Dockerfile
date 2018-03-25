@@ -73,7 +73,6 @@ RUN set -ex; \
 		ldap \
 		mbstring \
 		mcrypt \
-		mssql \
 		mysqli \
 		openssl \
 		pdo_sqlite \
