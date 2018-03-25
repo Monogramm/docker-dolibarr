@@ -77,6 +77,8 @@ RUN set -ex; \
 		soap \
 		zip \
 	; \
+    pecl install imagick; \
+    docker-php-ext-enable imagick; \
     \
     chown -R www-data:root /var/www/html; \
     chmod -R g=u /var/www/html
