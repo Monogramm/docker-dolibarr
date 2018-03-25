@@ -72,16 +72,11 @@ RUN set -ex; \
 	docker-php-ext-install \
 		gd \
 		ldap \
-		mbstring \
-		mcrypt \
 		mysqli \
-		openssl \
 		pgsql \
 		soap \
 		zip \
 	; \
-    pecl install imagick; \
-    docker-php-ext-enable imagick; \
     \
     chown -R www-data:root /var/www/html; \
     chmod -R g=u /var/www/html
