@@ -16,11 +16,11 @@ before_script:
   - dir="images/${VERSION}/php${PHP_VERSION}-${VARIANT}"
 
 script:
-  - travis_retry docker build -t "$image" --name "$name" "$dir"
+  - travis_retry docker build -t "$image" "$dir"
 
 after_script:
   - docker images
-  - docker run -d "$image" "$dir"
+  - docker run --name "$name" -d "$image" "$dir"
   - docker ps
   - docker logs "$name"
 
