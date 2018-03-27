@@ -183,7 +183,7 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_dbserver = '${DOLI_DB_HOST}';
 
 /** @var int Database server port */
-\$force_install_port = ${DOLI_DB_PORT};
+\$force_install_port = '${DOLI_DB_PORT}';
 
 /** @var string Database tables prefix */
 \$force_install_prefix = '${DOLI_DB_PREFIX}';
