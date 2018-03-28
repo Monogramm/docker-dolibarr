@@ -131,7 +131,7 @@ See [conf.php.example](https://github.com/Dolibarr/dolibarr/blob/develop/htdocs/
 
 ### DOLI_DB_TYPE
 
-*Default value*: 
+*Default value*: `mysqli`
 
 *Possible values*: `mysqli`, `pgsql`
 
@@ -145,7 +145,7 @@ DOLI_DB_TYPE=pgsql
 
 ### DOLI_DB_HOST
 
-*Default value*: 
+*Default value*: `localhost`
 
 This parameter contains host name or ip address of Dolibarr database server.
 
@@ -159,7 +159,7 @@ DOLI_DB_HOST=mysql.myserver.com
 
 ### DOLI_DB_PORT
 
-*Default value*: 
+*Default value*: `3306`
 
 This parameter contains the port of the Dolibarr database.
 
