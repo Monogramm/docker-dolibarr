@@ -76,7 +76,6 @@ RUN set -ex; \
 		ldap \
 		mbstring \
 		mysqli \
-		openssl \
 		pgsql \
 		soap \
 		zip \
