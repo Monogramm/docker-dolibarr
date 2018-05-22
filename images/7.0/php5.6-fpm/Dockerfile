@@ -2,7 +2,7 @@ FROM php:5.6-fpm
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 
-ENV DOLI_VERSION 7.0.1
+ENV DOLI_VERSION 7.0.2
 
 ENV DOLI_DB_TYPE mysqli
 ENV DOLI_DB_HOST localhost
