@@ -74,7 +74,10 @@ RUN set -ex; \
 	docker-php-ext-install \
 		gd \
 		ldap \
+		mbstring \
+		mcrypt \
 		mysqli \
+		openssl \
 		pgsql \
 		soap \
 		zip \
