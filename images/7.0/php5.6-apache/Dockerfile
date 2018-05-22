@@ -2,7 +2,7 @@ FROM php:5.6-apache
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 
-ENV DOLI_VERSION 7.0.1
+ENV DOLI_VERSION 7.0.2
 
 ENV DOLI_DB_TYPE mysqli
 ENV DOLI_DB_HOST localhost
@@ -61,7 +61,7 @@ RUN set -ex; \
 		libldap2-dev \
 		libmagickcore-dev \
 		libmagickwand-dev \
-		libmcrypt-dev \
+        libmcrypt-dev \
 		libpng-dev \
 		libpq-dev \
 		libxml2-dev \
@@ -74,6 +74,7 @@ RUN set -ex; \
 	docker-php-ext-install \
 		gd \
 		ldap \
+		mbstring \
 		mysqli \
 		pgsql \
 		soap \
