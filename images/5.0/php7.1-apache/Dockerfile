@@ -61,7 +61,7 @@ RUN set -ex; \
 		libldap2-dev \
 		libmagickcore-dev \
 		libmagickwand-dev \
-        libmcrypt-dev \
+		libmcrypt-dev \
 		libpng-dev \
 		libpq-dev \
 		libxml2-dev \
