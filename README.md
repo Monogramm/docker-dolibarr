@@ -100,6 +100,7 @@ Database:
 $ docker run -d \
     -v db:/var/lib/mysql \
     mariadb
+    --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ```
 
 If you want to get fine grained access to your individual files, you can mount additional volumes for config, your theme and custom modules. 
@@ -524,6 +525,7 @@ volumes:
 mariadb:
     image: mariadb:latest
     restart: always
+    command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
     volumes:
       - dolibarr_db:/var/lib/mysql
     environment:
