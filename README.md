@@ -23,11 +23,16 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 
 https://hub.docker.com/r/monogramm/docker-dolibarr/
 
+* Dolibarr 8.0
+    * `8.0.0-php7.1-apache` `8.0.0-apache` `8.0.0-php7.1` `8.0.0` `8.0-php7.1-apache` `8.0-apache` `8.0-php7.1` `8.0` `8-php7.1-apache` `8-apache` `8-php7.1` `8` `php7.1-apache` `apache` `php7.1` `latest`
+    * `8.0.0-php7.1-fpm` `8.0.0-fpm` `8.0-php7.1-fpm` `8.0-fpm` `8-php7.1-fpm` `8-fpm` `php7.1-fpm` `fpm`
+    * `8.0.0-php5.6-apache` `8.0.0-php5.6` `8.0-php5.6-apache` `8.0-php5.6` `8-php5.6-apache` `8-php5.6` `php5.6-apache` `php5.6`
+    * `8.0.0-php5.6-fpm` `8.0-php5.6-fpm` `8-php5.6-fpm` `php5.6-fpm`
 * Dolibarr 7.0
-    * `7.0.3-php7.1-apache` `7.0.3-apache` `7.0.3-php7.1` `7.0.3` `7.0-php7.1-apache` `7.0-apache` `7.0-php7.1` `7.0` `7-php7.1-apache` `7-apache` `7-php7.1` `7` `php7.1-apache` `apache` `php7.1` `latest`
-    * `7.0.3-php7.1-fpm` `7.0.3-fpm` `7.0-php7.1-fpm` `7.0-fpm` `7-php7.1-fpm` `7-fpm` `php7.1-fpm` `fpm`
-    * `7.0.3-php5.6-apache` `7.0.3-php5.6` `7.0-php5.6-apache` `7.0-php5.6` `7-php5.6-apache` `7-php5.6` `php5.6-apache` `php5.6`
-    * `7.0.3-php5.6-fpm` `7.0-php5.6-fpm` `7-php5.6-fpm` `php5.6-fpm`
+    * `7.0.3-php7.1-apache` `7.0.3-apache` `7.0.3-php7.1` `7.0.3` `7.0-php7.1-apache` `7.0-apache` `7.0-php7.1` `7.0` `7-php7.1-apache` `7-apache` `7-php7.1` `7`
+    * `7.0.3-php7.1-fpm` `7.0.3-fpm` `7.0-php7.1-fpm` `7.0-fpm` `7-php7.1-fpm` `7-fpm`
+    * `7.0.3-php5.6-apache` `7.0.3-php5.6` `7.0-php5.6-apache` `7.0-php5.6` `7-php5.6-apache` `7-php5.6`
+    * `7.0.3-php5.6-fpm` `7.0-php5.6-fpm` `7-php5.6-fpm`
 * Dolibarr 6.0
     * `6.0.7-php7.1-apache` `6.0.7-apache` `6.0.7-php7.1` `6.0.7` `6.0-php7.1-apache` `6.0-apache` `6.0-php7.1` `6.0` `6-php7.1-apache` `6-apache` `6-php7.1` `6`
     * `6.0.7-php7.1-fpm` `6.0.7-fpm` `6.0-php7.1-fpm` `6.0-fpm` `6-php7.1-fpm` `6-fpm`
