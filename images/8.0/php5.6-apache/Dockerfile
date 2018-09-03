@@ -2,7 +2,7 @@ FROM php:5.6-apache
 
 LABEL maintainer="mb.mathieu.brunot@gmail.com"
 
-ENV DOLI_VERSION 8.0.0
+ENV DOLI_VERSION 8.0.1
 
 ENV DOLI_DB_TYPE mysqli
 ENV DOLI_DB_HOST localhost
@@ -71,7 +71,9 @@ RUN set -ex; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
+	docker-php-ext-configure calendar; \
 	docker-php-ext-install \
+		calendar \
 		gd \
 		ldap \
 		mbstring \
