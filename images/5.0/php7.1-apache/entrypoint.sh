@@ -37,6 +37,7 @@ memory_limit = "${PHP_MEMORY_LIMIT}"
 upload_max_filesize = "${PHP_MAX_UPLOAD}"
 max_execution_time = "${PHP_MAX_EXECUTION_TIME}"
 sendmail_path = /usr/sbin/sendmail -t -i
+extension = calendar.so
 EOF
 fi
 
