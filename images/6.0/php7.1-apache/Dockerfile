@@ -1,6 +1,6 @@
 FROM php:7.1-apache
 
-LABEL maintainer="mb.mathieu.brunot@gmail.com"
+LABEL maintainer="mathieu.brunot at monogramm dot io"
 
 ENV DOLI_VERSION 6.0.7
 
@@ -77,6 +77,9 @@ RUN set -ex; \
 		ldap \
 		mbstring \
 		mysqli \
+		pdo \
+		pdo_mysql \
+		pdo_pgsql \
 		pgsql \
 		soap \
 		zip \
