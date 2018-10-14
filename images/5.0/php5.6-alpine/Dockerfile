@@ -54,14 +54,19 @@ RUN set -ex; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apk add --no-cache --virtual .build-deps \
+		autoconf \
 		curl-dev \
 		freetype-dev \
+		gcc \
+		g++ \
 		icu-dev \
 		libjpeg-turbo-dev \
 		imagemagick-dev \
 		libmcrypt-dev \
 		libpng-dev \
+		libtool \
 		libxml2-dev \
+		make \
 		openldap-dev \
 		postgresql-dev \
 		unzip \
