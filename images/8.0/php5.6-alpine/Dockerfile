@@ -54,6 +54,7 @@ RUN set -ex; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apk add --no-cache --virtual .build-deps \
+		$PHPIZE_DEPS \
 		autoconf \
 		curl-dev \
 		freetype-dev \
@@ -89,7 +90,7 @@ RUN set -ex; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
     \
-    mkdir /var/www/documents; \
+    mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www; \
     \

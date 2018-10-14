@@ -87,7 +87,7 @@ RUN set -ex; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
     \
-    mkdir /var/www/documents; \
+    mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www
 
