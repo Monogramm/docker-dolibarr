@@ -54,16 +54,16 @@ RUN set -ex; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apk add --no-cache \
-		libcurl4-openssl-dev \
-		libfreetype6-dev \
-		libjpeg-dev \
-		libldap2-dev \
-		libmagickcore-dev \
-		libmagickwand-dev \
+		curl-dev \
+		freetype-dev \
+		icu-dev \
+		libjpeg-turbo-dev \
+		imagemagick-dev \
 		libmcrypt-dev \
 		libpng-dev \
-		libpq-dev \
 		libxml2-dev \
+		openldap-dev \
+		postgresql-dev \
 		unzip \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
