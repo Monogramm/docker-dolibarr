@@ -66,9 +66,8 @@ RUN set -ex; \
 		postgresql-dev \
 		unzip \
 	; \
-	rm -rf /var/lib/apt/lists/*; \
-	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
-	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
+	apk del .build-deps; \
+	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install \
 		calendar \
