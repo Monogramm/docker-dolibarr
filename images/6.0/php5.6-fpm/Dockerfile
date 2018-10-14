@@ -97,6 +97,7 @@ VOLUME /var/www/documents
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
 RUN set -ex; \
+    mkdir -p /tmp/dolibarr; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
 	mkdir -p /usr/src/dolibarr; \
