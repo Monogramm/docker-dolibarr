@@ -89,8 +89,9 @@ RUN set -ex; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
     \
-    chown -R www-data:root /var/www/html; \
-    chmod -R g=u /var/www/html; \
+    mkdir /var/www/documents; \
+    chown -R www-data:root /var/www; \
+    chmod -R g=u /var/www; \
     \
 	apk del .build-deps
 
