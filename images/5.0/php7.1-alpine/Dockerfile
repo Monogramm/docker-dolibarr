@@ -53,7 +53,7 @@ RUN set -ex; \
 	; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
-	apk add --no-cache \
+	apk add --no-cache --virtual .build-deps \
 		curl-dev \
 		freetype-dev \
 		icu-dev \
