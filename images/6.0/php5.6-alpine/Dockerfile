@@ -1,8 +1,8 @@
-FROM php:5.6-fpm
+FROM php:5.6-alpine
 
 LABEL maintainer="mathieu.brunot at monogramm dot io"
 
-ENV DOLI_VERSION 7.0.3
+ENV DOLI_VERSION 6.0.7
 
 ENV DOLI_DB_TYPE mysqli
 ENV DOLI_DB_HOST localhost
@@ -47,29 +47,32 @@ ENV PHP_MAX_UPLOAD 20M
 ENV PHP_MAX_EXECUTION_TIME 300
 
 RUN set -ex; \
-	apt-get update -q; \
 	# install the packages we need
-	apt-get install -y --no-install-recommends \
+	apk add --no-cache \
 		rsync \
 	; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
-	apt-get install -y --no-install-recommends \
-		libcurl4-openssl-dev \
-		libfreetype6-dev \
-		libjpeg-dev \
-		libldap2-dev \
-		libmagickcore-dev \
-		libmagickwand-dev \
+	apk add --no-cache --virtual .build-deps \
+		$PHPIZE_DEPS \
+		autoconf \
+		curl-dev \
+		freetype-dev \
+		gcc \
+		g++ \
+		icu-dev \
+		libjpeg-turbo-dev \
+		imagemagick-dev \
 		libmcrypt-dev \
 		libpng-dev \
-		libpq-dev \
+		libtool \
 		libxml2-dev \
+		make \
+		openldap-dev \
+		postgresql-dev \
 		unzip \
 	; \
-	rm -rf /var/lib/apt/lists/*; \
-	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
-	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
+	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install \
 		calendar \
@@ -89,7 +92,9 @@ RUN set -ex; \
     \
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
-    chmod -R g=u /var/www
+    chmod -R g=u /var/www; \
+    \
+	apk del .build-deps
 
 VOLUME /var/www/html
 VOLUME /var/www/documents

@@ -87,8 +87,9 @@ RUN set -ex; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
     \
-    chown -R www-data:root /var/www/html; \
-    chmod -R g=u /var/www/html
+    mkdir -p /var/www/documents; \
+    chown -R www-data:root /var/www; \
+    chmod -R g=u /var/www
 
 VOLUME /var/www/html
 VOLUME /var/www/documents
@@ -96,6 +97,7 @@ VOLUME /var/www/documents
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
 RUN set -ex; \
+    mkdir -p /tmp/dolibarr; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
 	mkdir -p /usr/src/dolibarr; \
