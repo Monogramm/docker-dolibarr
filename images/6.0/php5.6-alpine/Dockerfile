@@ -66,7 +66,6 @@ RUN set -ex; \
 		postgresql-dev \
 		unzip \
 	; \
-	apk del .build-deps; \
 	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install \
@@ -86,7 +85,9 @@ RUN set -ex; \
     docker-php-ext-enable imagick; \
     \
     chown -R www-data:root /var/www/html; \
-    chmod -R g=u /var/www/html
+    chmod -R g=u /var/www/html; \
+    \
+	apk del .build-deps
 
 VOLUME /var/www/html
 VOLUME /var/www/documents
