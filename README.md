@@ -31,19 +31,19 @@ https://hub.docker.com/r/monogramm/docker-dolibarr/
     * `8.0.2-php5.6-fpm` `8.0-php5.6-fpm` `8-php5.6-fpm` `php5.6-fpm`
     * `8.0.2-php5.6-alpine` `8.0-php5.6-alpine` `8-php5.6-alpine` `php5.6-alpine`
 * Dolibarr 7.0
-    * `7.0.3-php7.1-apache` `7.0.3-apache` `7.0.3-php7.1` `7.0.3` `7.0-php7.1-apache` `7.0-apache` `7.0-php7.1` `7.0` `7-php7.1-apache` `7-apache` `7-php7.1` `7`
-    * `7.0.3-php7.1-fpm` `7.0.3-fpm` `7.0-php7.1-fpm` `7.0-fpm` `7-php7.1-fpm` `7-fpm`
-    * `7.0.3-php7.1-alpine` `7.0.3-alpine` `7.0-php7.1-alpine` `7.0-alpine` `7-php7.1-alpine` `7-alpine`
-    * `7.0.3-php5.6-apache` `7.0.3-php5.6` `7.0-php5.6-apache` `7.0-php5.6` `7-php5.6-apache` `7-php5.6`
-    * `7.0.3-php5.6-fpm` `7.0-php5.6-fpm` `7-php5.6-fpm`
-    * `7.0.3-php5.6-alpine` `7.0-php5.6-alpine` `7-php5.6-alpine`
+    * `7.0.4-php7.1-apache` `7.0.4-apache` `7.0.4-php7.1` `7.0.4` `7.0-php7.1-apache` `7.0-apache` `7.0-php7.1` `7.0` `7-php7.1-apache` `7-apache` `7-php7.1` `7`
+    * `7.0.4-php7.1-fpm` `7.0.4-fpm` `7.0-php7.1-fpm` `7.0-fpm` `7-php7.1-fpm` `7-fpm`
+    * `7.0.4-php7.1-alpine` `7.0.4-alpine` `7.0-php7.1-alpine` `7.0-alpine` `7-php7.1-alpine` `7-alpine`
+    * `7.0.4-php5.6-apache` `7.0.4-php5.6` `7.0-php5.6-apache` `7.0-php5.6` `7-php5.6-apache` `7-php5.6`
+    * `7.0.4-php5.6-fpm` `7.0-php5.6-fpm` `7-php5.6-fpm`
+    * `7.0.4-php5.6-alpine` `7.0-php5.6-alpine` `7-php5.6-alpine`
 * Dolibarr 6.0
-    * `6.0.7-php7.1-apache` `6.0.7-apache` `6.0.7-php7.1` `6.0.7` `6.0-php7.1-apache` `6.0-apache` `6.0-php7.1` `6.0` `6-php7.1-apache` `6-apache` `6-php7.1` `6`
-    * `6.0.7-php7.1-fpm` `6.0.7-fpm` `6.0-php7.1-fpm` `6.0-fpm` `6-php7.1-fpm` `6-fpm`
-    * `6.0.7-php7.1-alpine` `6.0.7-alpine` `6.0-php7.1-alpine` `6.0-alpine` `6-php7.1-alpine` `6-alpine`
-    * `6.0.7-php5.6-apache` `6.0.7-php5.6` `6.0-php5.6-apache` `6.0-php5.6` `6-php5.6-apache` `6-php5.6`
-    * `6.0.7-php5.6-fpm` `6.0-php5.6-fpm` `6-php5.6-fpm`
-    * `6.0.7-php5.6-alpine` `6.0-php5.6-alpine` `6-php5.6-alpine`
+    * `6.0.8-php7.1-apache` `6.0.8-apache` `6.0.8-php7.1` `6.0.8` `6.0-php7.1-apache` `6.0-apache` `6.0-php7.1` `6.0` `6-php7.1-apache` `6-apache` `6-php7.1` `6`
+    * `6.0.8-php7.1-fpm` `6.0.8-fpm` `6.0-php7.1-fpm` `6.0-fpm` `6-php7.1-fpm` `6-fpm`
+    * `6.0.8-php7.1-alpine` `6.0.8-alpine` `6.0-php7.1-alpine` `6.0-alpine` `6-php7.1-alpine` `6-alpine`
+    * `6.0.8-php5.6-apache` `6.0.8-php5.6` `6.0-php5.6-apache` `6.0-php5.6` `6-php5.6-apache` `6-php5.6`
+    * `6.0.8-php5.6-fpm` `6.0-php5.6-fpm` `6-php5.6-fpm`
+    * `6.0.8-php5.6-alpine` `6.0-php5.6-alpine` `6-php5.6-alpine`
 * Dolibarr 5.0
     * `5.0.7-php7.1-apache` `5.0.7-apache` `5.0.7-php7.1` `5.0.7` `5.0-php7.1-apache` `5.0-apache` `5.0-php7.1` `5.0` `5-php7.1-apache` `5-apache` `5-php7.1` `5`
     * `5.0.7-php7.1-fpm` `5.0.7-fpm` `5.0-php7.1-fpm` `5.0-fpm` `5-php7.1-fpm` `5-fpm`

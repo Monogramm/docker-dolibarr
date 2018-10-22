@@ -2,7 +2,7 @@ FROM php:5.6-alpine
 
 LABEL maintainer="mathieu.brunot at monogramm dot io"
 
-ENV DOLI_VERSION 6.0.7
+ENV DOLI_VERSION 6.0.8
 
 ENV DOLI_DB_TYPE mysqli
 ENV DOLI_DB_HOST localhost
