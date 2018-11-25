@@ -34,7 +34,7 @@ dockerRepo="monogramm/docker-dolibarr"
 # latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
 # 	grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
 # 	sort -urV ) )
-latests=( "5.0.7" "6.0.8" "7.0.4" "8.0.2" )
+latests=( "5.0.7" "6.0.8" "7.0.4" "8.0.3" )
 
 # Remove existing images
 echo "reset docker images"
