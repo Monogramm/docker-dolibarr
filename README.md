@@ -558,10 +558,12 @@ services:
         volumes:
             - ./dolibarr_html:/var/www/html
             - ./dolibarr_docs:/var/www/documents
+            - ./dolibarr_scripts:/var/www/scripts
 ```
 
 Then run all services `docker-compose up -d`. Now, go to http://localhost:80/install to access the new Dolibarr installation wizard.
-In this example, the Dolibarr documents, HTML and database will all be stored locally in the following folders:
+In this example, the Dolibarr scripts, documents, HTML and database will all be stored locally in the following folders:
+* `./dolibarr_scripts`
 * `./dolibarr_docs`
 * `./dolibarr_html`
 * `./dolibarr_db`
@@ -582,6 +584,7 @@ version: '2'
 volumes:
   dolibarr_html:
   dolibarr_docs:
+  dolibarr_scripts:
   dolibarr_db:
 
 services:
@@ -609,6 +612,7 @@ services:
         volumes:
             - dolibarr_html:/var/www/html
             - dolibarr_docs:/var/www/documents
+            - dolibarr_scripts:/var/www/scripts
         environment:
             - "DOLI_DB_TYPE=pgsql"
             - "DOLI_DB_HOST=dolipgsql" # same as pgsql container name
@@ -668,7 +672,7 @@ server {
 ```
 
 Then run all services `docker-compose up -d`. Now, go to http://localhost:80/install to access the new Dolibarr installation wizard.
-In this example, the Dolibarr documents, HTML and database will all be stored in Docker's default location.
+In this example, the Dolibarr scripts, documents, HTML and database will all be stored in Docker's default location.
 Feel free to edit this as you see fit.
 
 
