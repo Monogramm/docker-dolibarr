@@ -523,48 +523,49 @@ ID of group www-data. ID will not change if left empty.
 
 This version will use the apache image and add a [MariaDB](https://hub.docker.com/_/mariadb/) container (you can also use [MySQL](https://hub.docker.com/_/mysql/) if you prefer). The volumes are set to keep your data persistent. This setup provides **no ssl encryption** and is intended to run behind a proxy. 
 
-Make sure to set the variables `MYSQL_ROOT_PASSWORD`, `MYSQL_PASSWORD`, `DOLI_DB_PASSWORD` and `DOLI_DB_ROOT_PASSWORD` before you run this setup.
+Make sure to set the variables `MYSQL_ROOT_PASSWORD`, `MYSQL_PASSWORD`, `DOLI_DB_PASSWORD` before you run this setup.
 
 Create `docker-compose.yml` file as following:
 
 ```yml
 version: '2'
 
-volumes:
-  dolibarr_html:
-  dolibarr_docs:
-  dolibarr_db:
+services:
+    mariadb:
+        image: mariadb:latest
+        restart: always
+        command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
+        volumes:
+            - ./dolibarr_db:/var/lib/mysql
+        environment:
+            - "MYSQL_ROOT_PASSWORD=my-secret-pw"
+            - "MYSQL_DATABASE=dolibarr"
+            - "MYSQL_USER=dolibarr"
+            - "MYSQL_PASSWORD=dolibarr"
 
-mariadb:
-    image: mariadb:latest
-    restart: always
-    command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
-    volumes:
-      - dolibarr_db:/var/lib/mysql
-    environment:
-        - "MYSQL_ROOT_PASSWORD="
-        - "MYSQL_PASSWORD="
-        - "MYSQL_DATABASE=dolibarr"
-        - "MYSQL_USER=dolibarr"
-
-dolibarr:
-    image: monogramm/docker-dolibarr
-    restart: always
-    depends_on:
-        - mariadb
-    ports:
-        - "8080:80"
-    environment:
-        - "DOLI_DB_HOST=mariadb"
-        - "DOLI_DB_NAME=dolibarr"
-        - "DOLI_DB_USER=dolibarr"
-        - "DOLI_DB_PASSWORD="
-    volumes:
-        - dolibarr_html:/var/www/html
-        - dolibarr_docs:/var/www/documents
+    dolibarr:
+        image: monogramm/docker-dolibarr:apache
+        restart: always
+        depends_on:
+            - mariadb
+        ports:
+            - "80:80"
+        environment:
+            - "DOLI_DB_HOST=mariadb" # same as mysql container name
+            - "DOLI_DB_NAME=dolibarr" # same as mysql MYSQL_DATABASE env name
+            - "DOLI_DB_USER=dolibarr" # same as mysql MYSQL_USER env name
+            - "DOLI_DB_PASSWORD=dolibarr" # same as mysql MYSQL_PASSWORD env name
+        volumes:
+            - ./dolibarr_html:/var/www/html
+            - ./dolibarr_docs:/var/www/documents
 ```
 
-Then run all services `docker-compose up -d`. Now, go to http://localhost:8080/install to access the new Dolibarr installation wizard.
+Then run all services `docker-compose up -d`. Now, go to http://localhost:80/install to access the new Dolibarr installation wizard.
+In this example, the Dolibarr documents, HTML and database will all be stored locally in the following folders:
+* `./dolibarr_docs`
+* `./dolibarr_html`
+* `./dolibarr_db`
+Feel free to edit this as you see fit.
 
 ## Base version - FPM with PostgreSQL
 When using the FPM image you need another container that acts as web server on port 80 and proxies the requests to the Dolibarr container. In this example a simple nginx container is combined with the monogramm/docker-dolibarr-fpm image and a [PostgreSQL](https://hub.docker.com/_/postgres/) database container. The data is stored in docker volumes. The nginx container also need access to static files from your Dolibarr installation. It gets access to all the volumes mounted to Dolibarr via the `volumes_from` option. The configuration for nginx is stored in the configuration file `nginx.conf`, that is mounted into the container.
@@ -583,47 +584,92 @@ volumes:
   dolibarr_docs:
   dolibarr_db:
 
-postgres:
-    image: postgres:latest
-    restart: always
-    environment:
-        - "POSTGRES_DB=dolibarr"
-        - "POSTGRES_USER=dolibarr"
-        - "POSTGRES_PASSWORD="
-    volumes:
-        - dolibarr_db:/var/lib/postgresql/data
+services:
+    dolipgsql:
+        image: postgres:latest
+        container_name: dolipgsql
+        restart: always
+        volumes:
+            - dolibarr_db:/var/lib/postgresql/data
+        environment:
+            - "POSTGRES_DB=dolibarr"
+            - "POSTGRES_USER=dolibarr"
+            - "POSTGRES_PASSWORD=dolibarr"
 
-dolibarr:
-    image: monogramm/docker-dolibarr
-    depends_on:
-        - postgres
-    ports:
-        - "80:80"
-    environment:
-        - "DOLI_DB_TYPE=pgsql"
-        - "DOLI_DB_HOST=postgres"
-        - "DOLI_DB_PORT=5432"
-        - "DOLI_DB_NAME=dolibarr"
-        - "DOLI_DB_USER=dolibarr"
-        - "DOLI_DB_PASSWORD="
-    volumes:
-        - dolibarr_html:/var/www/html
-        - dolibarr_docs:/var/www/documents
+    dolifpm:
+        image: monogramm/docker-dolibarr:fpm
+        container_name: dolifpm
+        restart: always
+        ports:
+            - "9000:9000"
+        depends_on:
+            - dolipgsql
+        links:
+            - dolipgsql
+        volumes:
+            - dolibarr_html:/var/www/html
+            - dolibarr_docs:/var/www/documents
+        environment:
+            - "DOLI_DB_TYPE=pgsql"
+            - "DOLI_DB_HOST=dolipgsql" # same as pgsql container name
+            - "DOLI_DB_PORT=5432"
+            - "DOLI_DB_NAME=dolibarr" # same as pgsql POSTGRES_DB env name
+            - "DOLI_DB_USER=dolibarr" # same as pgsql POSTGRES_USER env name
+            - "DOLI_DB_PASSWORD=dolibarr" # same as pgsql POSTGRES_PASSWORD env name
 
-web:
-    image: nginx
-    ports:
-        - 8080:80
-    links:
-        - dolibarr
-    volumes:
-        - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    volumes_from:
-        - dolibarr
-    restart: always
+    dolinginx:
+        image: nginx:latest
+        container_name: dolinginx
+        restart: always
+        ports:
+            - 80:80
+            # - '443:443'
+        depends_on:
+            - dolifpm
+        links:
+            - dolifpm
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf:ro
+            - dolibarr_html:/var/www/html
+            # If you need SSL connection, you can provide your own certificates
+            # - ./certs:/etc/letsencrypt
+            # - ./certs-data:/data/letsencrypt
+        environment:
+            - NGINX_HOST=localhost # set your local domain or your live domain
+            # - NGINX_CGI=dolifpm:9000 # same as dolibarr container name
 ```
 
-Then run all services `docker-compose up -d`. Now, go to http://localhost:8080/install to access the new Dolibarr installation wizard.
+Here is a sample `nginx.conf` file expected to be in the same folder:
+```
+server {
+    listen 80;
+    server_name ${NGINX_HOST};
+
+    root /var/www/html;
+    index index.php;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass dolifpm:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+}
+```
+
+Then run all services `docker-compose up -d`. Now, go to http://localhost:80/install to access the new Dolibarr installation wizard.
+In this example, the Dolibarr documents, HTML and database will all be stored in Docker's default location.
+Feel free to edit this as you see fit.
 
 
 # Make your Dolibarr available from the internet
