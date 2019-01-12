@@ -217,6 +217,9 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_module = '${DOLI_MODULES}';
 EOF
 
+		# Add a symlink to /var/www/htdocs
+		ln -s /var/www/html /var/www/htdocs
+
 		echo "You shall complete Dolibarr install manually at '${DOLI_URL_ROOT}/install'"
 	fi
 fi

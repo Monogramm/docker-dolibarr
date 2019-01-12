@@ -120,7 +120,7 @@ if version_greater "$image_version" "$installed_version"; then
 		rsync_options="-rlD"
 	fi
 
-	cp -r /usr/src/dolibarr/scripts /var/www/
+	rsync $rsync_options /usr/src/dolibarr/scripts /var/www/
 	rsync $rsync_options --delete --exclude /conf/ --exclude /custom/ --exclude /theme/ /usr/src/dolibarr/htdocs/ /var/www/html/
 
 	for dir in conf custom; do
@@ -216,6 +216,9 @@ if version_greater "$image_version" "$installed_version"; then
 /** @var string Enable module(s) (Comma separated class names list) */
 \$force_install_module = '${DOLI_MODULES}';
 EOF
+
+		# Add a symlink to /var/www/htdocs
+		ln -s /var/www/html /var/www/htdocs
 
 		echo "You shall complete Dolibarr install manually at '${DOLI_URL_ROOT}/install'"
 	fi
