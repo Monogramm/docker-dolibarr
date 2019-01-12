@@ -559,8 +559,6 @@ dolibarr:
         - "DOLI_DB_NAME=dolibarr"
         - "DOLI_DB_USER=dolibarr"
         - "DOLI_DB_PASSWORD="
-        - "DOLI_DB_ROOT_LOGIN=root"
-        - "DOLI_DB_ROOT_PASSWORD="
     volumes:
         - dolibarr_html:/var/www/html
         - dolibarr_docs:/var/www/documents
