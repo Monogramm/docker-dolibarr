@@ -120,7 +120,7 @@ if version_greater "$image_version" "$installed_version"; then
 		rsync_options="-rlD"
 	fi
 
-	cp -r /usr/src/dolibarr/scripts /var/www/
+	rsync $rsync_options /usr/src/dolibarr/scripts /var/www/
 	rsync $rsync_options --delete --exclude /conf/ --exclude /custom/ --exclude /theme/ /usr/src/dolibarr/htdocs/ /var/www/html/
 
 	for dir in conf custom; do
