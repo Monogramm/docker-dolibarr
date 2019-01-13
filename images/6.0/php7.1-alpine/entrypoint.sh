@@ -27,6 +27,10 @@ if [ ! -d /var/www/documents ]; then
 	mkdir -p /var/www/documents
 fi
 
+if [ ! -d /var/www/scripts ]; then
+	mkdir -p /var/www/scripts
+fi
+
 chown -R www-data:www-data /var/www
 
 
@@ -120,7 +124,7 @@ if version_greater "$image_version" "$installed_version"; then
 		rsync_options="-rlD"
 	fi
 
-	#cp -r /usr/src/dolibarr/scripts /var/www/
+	rsync $rsync_options /usr/src/dolibarr/scripts/ /var/www/scripts/
 	rsync $rsync_options --delete --exclude /conf/ --exclude /custom/ --exclude /theme/ /usr/src/dolibarr/htdocs/ /var/www/html/
 
 	for dir in conf custom; do
@@ -135,7 +139,7 @@ if version_greater "$image_version" "$installed_version"; then
 	done
 
 	if [ "$installed_version" != "0.0.0~unknown" ]; then
-		# Call upgrade scripts if needed
+		# Call upgrade if needed
 		# https://wiki.dolibarr.org/index.php/Installation_-_Upgrade#With_Dolibarr_.28standard_.zip_package.29
 		echo "Dolibarr upgrade from $installed_version to $image_version..."
 
@@ -216,6 +220,9 @@ if version_greater "$image_version" "$installed_version"; then
 /** @var string Enable module(s) (Comma separated class names list) */
 \$force_install_module = '${DOLI_MODULES}';
 EOF
+
+		# Add a symlink to /var/www/htdocs
+		ln -s /var/www/html /var/www/htdocs
 
 		echo "You shall complete Dolibarr install manually at '${DOLI_URL_ROOT}/install'"
 	fi
