@@ -93,6 +93,7 @@ RUN set -ex; \
 
 VOLUME /var/www/html
 VOLUME /var/www/documents
+VOLUME /var/www/scripts
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
