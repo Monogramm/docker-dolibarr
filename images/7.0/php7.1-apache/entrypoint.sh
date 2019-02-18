@@ -27,10 +27,6 @@ if [ ! -d /var/www/documents ]; then
 	mkdir -p /var/www/documents
 fi
 
-if [ ! -d /var/www/scripts ]; then
-	mkdir -p /var/www/scripts
-fi
-
 chown -R www-data:www-data /var/www
 
 
@@ -124,6 +120,7 @@ if version_greater "$image_version" "$installed_version"; then
 		rsync_options="-rlD"
 	fi
 
+	mkdir -p /var/www/scripts
 	rsync $rsync_options /usr/src/dolibarr/scripts/ /var/www/scripts/
 	rsync $rsync_options --delete --exclude /conf/ --exclude /custom/ --exclude /theme/ /usr/src/dolibarr/htdocs/ /var/www/html/
 
@@ -226,6 +223,10 @@ EOF
 
 		echo "You shall complete Dolibarr install manually at '${DOLI_URL_ROOT}/install'"
 	fi
+fi
+
+if [ ! -d /var/www/scripts ]; then
+	cp /usr/src/dolibarr/scripts /var/www/scripts
 fi
 
 if [ -f /var/www/documents/install.lock ]; then
