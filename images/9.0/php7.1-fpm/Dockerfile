@@ -1,8 +1,8 @@
-FROM php:5.6-apache
+FROM php:7.1-fpm
 
 LABEL maintainer="mathieu.brunot at monogramm dot io"
 
-ENV DOLI_VERSION 7.0.5 \
+ENV DOLI_VERSION 9.0.0 \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST=localhost \
 	DOLI_DB_PORT=3306 \
@@ -101,4 +101,4 @@ RUN set -ex; \
 	chmod 755 /entrypoint.sh;
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]
