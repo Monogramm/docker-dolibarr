@@ -27,14 +27,14 @@ function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
-php_versions=( "5.6" "7.1" )
+php_versions=( "7.1" )
 
 dockerRepo="monogramm/docker-dolibarr"
 # TODO Find a way to retrieve automatically the latest versions
 # latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
 # 	grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
 # 	sort -urV ) )
-latests=( "5.0.7" "6.0.8" "7.0.5" "8.0.4" )
+latests=( "5.0.7" "6.0.8" "7.0.5" "8.0.4" "9.0.0" )
 
 # Remove existing images
 echo "reset docker images"
