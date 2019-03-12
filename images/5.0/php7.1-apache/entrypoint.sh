@@ -45,8 +45,8 @@ if [ ! -d /var/www/html/conf/ ]; then
 	mkdir -p /var/www/html/conf/
 fi
 
-# Create a default config
-if [ ! -f /var/www/html/conf/conf.php ]; then
+# Create a default config if autoconfig enabled
+if [ -n "$DOLI_AUTO_CONFIGURE" ] && [ ! -f /var/www/html/conf/conf.php ]; then
 	cat <<EOF > /var/www/html/conf/conf.php
 <?php
 // Config file for Dolibarr ${DOLI_VERSION} ($(date --iso-8601=seconds))

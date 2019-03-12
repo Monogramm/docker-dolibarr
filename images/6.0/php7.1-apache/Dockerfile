@@ -3,6 +3,7 @@ FROM php:7.1-apache
 LABEL maintainer="mathieu.brunot at monogramm dot io"
 
 ENV DOLI_VERSION=6.0.8 \
+	DOLI_AUTO_CONFIGURE=1 \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST=localhost \
 	DOLI_DB_PORT=3306 \

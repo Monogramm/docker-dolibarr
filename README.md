@@ -61,7 +61,7 @@ The second option is a `fpm` container. It is based on the [php-fpm](https://hub
 The apache image contains a webserver and exposes port 80. To start the container type:
 
 ```console
-$ docker run -d -p 8080:80 monogramm/docker-dolibarr
+$ docker run -d -e DOLI_AUTO_CONFIGURE='' -p 8080:80 monogramm/docker-dolibarr
 ```
 
 Now you can access Dolibarr at http://localhost:8080/ from your host system.
@@ -73,7 +73,7 @@ If you use your host you can address your Dolibarr container directly on port 90
 In both cases you don't want to map the fpm port to you host. 
 
 ```console
-$ docker run -d monogramm/docker-dolibarr:fpm
+$ docker run -d -e DOLI_AUTO_CONFIGURE='' monogramm/docker-dolibarr:fpm
 ```
 
 As the fastCGI-Process is not capable of serving static files (style sheets, images, ...) the webserver needs access to these files. This can be achieved with the `volumes-from` option. You can find more information in the docker-compose section.
@@ -95,6 +95,7 @@ Dolibarr:
 $ docker run -d \
     -v dolibarr_html:/var/www/html \
     -v dolibarr_docs:/var/www/documents \
+    -e DOLI_AUTO_CONFIGURE='' \
     monogramm/docker-dolibarr
 ```
 
@@ -104,8 +105,8 @@ Database:
 ```console
 $ docker run -d \
     -v db:/var/lib/mysql \
-    mariadb
-    --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    mariadb \
+    --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
 ```
 
 If you want to get fine grained access to your individual files, you can mount additional volumes for config, your theme and custom modules. 
@@ -125,6 +126,7 @@ $ docker run -d \
     -v apps:/var/www/html/custom \
     -v config:/var/www/html/conf \
     -v theme:/var/www/html/theme/<YOUR_CUSTOM_THEME> \
+    -e DOLI_AUTO_CONFIGURE='' \
     monogramm/docker-dolibarr
 ```
 
@@ -133,6 +135,21 @@ $ docker run -d \
 The Dolibarr image supports auto configuration via environment variables. You can preconfigure nearly everything that is asked on the install page on first run. To enable auto configuration, set your database connection via the following environment variables. ONLY use one database type!
 
 See [conf.php.example](https://github.com/Dolibarr/dolibarr/blob/develop/htdocs/conf/conf.php.example) and [install.forced.sample.php](https://github.com/Dolibarr/dolibarr/blob/develop/htdocs/install/install.forced.sample.php) for more details on install configuration.
+
+
+### DOLI_AUTO_CONFIGURE
+
+*Default value*: `1`
+
+*Possible values*: `1`, `''`
+
+This parameter triggers the Dolibarr default configuration generation based on environment variables.
+
+Examples:
+```
+DOLI_AUTO_CONFIGURE=1
+DOLI_AUTO_CONFIGURE=''
+```
 
 
 ### DOLI_DB_TYPE
