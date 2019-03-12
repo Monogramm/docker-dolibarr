@@ -1,6 +1,6 @@
 FROM php:7.1-fpm
 
-LABEL maintainer="mathieu.brunot at monogramm dot io"
+LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
 
 ENV DOLI_VERSION=7.0.5 \
 	DOLI_AUTO_CONFIGURE=1 \

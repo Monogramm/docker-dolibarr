@@ -6,6 +6,7 @@
 [![Build Status](https://travis-ci.org/Monogramm/docker-dolibarr.svg)](https://travis-ci.org/Monogramm/docker-dolibarr)
 [![Docker Automated buid](https://img.shields.io/docker/build/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
+[![Docker layers](https://images.microbadger.com/badges/image/monogramm/docker-dolibarr.svg)](https://microbadger.com/images/monogramm/docker-dolibarr)
 
 # Dolibarr on Docker
 
