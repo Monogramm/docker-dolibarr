@@ -12,7 +12,7 @@ branches:
 before_script:
   - env | sort
   - name="dolibarr"
-  - image="monogramm/docker-dolibarr:${VERSION}${PHP_VERSION:+-$PHP_VERSION}${VARIANT:+-$VARIANT}"
+  - image="monogramm/docker-dolibarr:travis-${VERSION}${PHP_VERSION:+-$PHP_VERSION}${VARIANT:+-$VARIANT}"
   - dir="images/${VERSION}/php${PHP_VERSION}-${VARIANT}"
 
 script:
@@ -28,18 +28,18 @@ notifications:
   email: false
 
 env: # Environments
-    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=alpine
-    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=fpm
-    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=apache
-    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=alpine
-    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=fpm
-    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=apache
-    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=alpine
-    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=fpm
-    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=apache
-    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=alpine
-    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=fpm
-    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=apache
     - VERSION=5.0 PHP_VERSION=7.1 VARIANT=alpine
     - VERSION=5.0 PHP_VERSION=7.1 VARIANT=fpm
     - VERSION=5.0 PHP_VERSION=7.1 VARIANT=apache
+    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=fpm
+    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=apache
+    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=fpm
+    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=apache
+    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=fpm
+    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=apache
+    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=fpm
+    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=apache
