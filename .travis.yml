@@ -20,7 +20,7 @@ script:
 
 after_script:
   - docker images
-  - docker run --name "$name" -e DOLI_AUTO_CONFIGURE='' -d "$image" "$dir"
+  - docker run --name "$name" -e DOLI_AUTO_CONFIGURE='' -d "$image"
   - docker ps
   - docker logs "$name"
 
