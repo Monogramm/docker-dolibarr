@@ -2,7 +2,7 @@ FROM php:7.1-fpm
 
 LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
 
-ENV DOLI_VERSION=9.0.0 \
+ENV DOLI_VERSION=9.0.1 \
 	DOLI_AUTO_CONFIGURE=1 \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST=localhost \
@@ -39,12 +39,20 @@ ENV DOLI_VERSION=9.0.0 \
 	PHP_MAX_UPLOAD=20M \
 	PHP_MAX_EXECUTION_TIME=300
 
+VOLUME /var/www/html /var/www/documents /var/www/scripts
+
+COPY entrypoint.sh /
+
+# Get Dolibarr
+ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
+
 RUN set -ex; \
 	apt-get update -q; \
 	# install the packages we need
 	apt-get install -y --no-install-recommends \
 		rsync \
 	; \
+	chmod 755 /entrypoint.sh; \
 	# install the PHP extensions we need
 	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apt-get install -y --no-install-recommends \
@@ -80,15 +88,11 @@ RUN set -ex; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
     \
+	# Prepare folders
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
-    chmod -R g=u /var/www
-
-VOLUME /var/www/html /var/www/documents /var/www/scripts
-
-# Get Dolibarr
-ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
-RUN set -ex; \
+    chmod -R g=u /var/www; \
+	# Install Dolibarr from tag archive
     mkdir -p /tmp/dolibarr; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
@@ -96,10 +100,6 @@ RUN set -ex; \
 	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
 	rm -rf /tmp/dolibarr; \
 	chmod +x /usr/src/dolibarr/scripts/*
-
-COPY entrypoint.sh /
-RUN set -ex; \
-	chmod 755 /entrypoint.sh;
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
