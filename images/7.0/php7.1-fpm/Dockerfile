@@ -46,15 +46,17 @@ COPY entrypoint.sh /
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
 
+# Install the packages we need
+# Install the PHP extensions we need
+# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
+# Prepare folders
+# Install Dolibarr from tag archive
 RUN set -ex; \
 	apt-get update -q; \
-	# install the packages we need
 	apt-get install -y --no-install-recommends \
 		rsync \
 	; \
 	chmod 755 /entrypoint.sh; \
-	# install the PHP extensions we need
-	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 	apt-get install -y --no-install-recommends \
 		libcurl4-openssl-dev \
 		libfreetype6-dev \
@@ -87,12 +89,9 @@ RUN set -ex; \
 	; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
-    \
-	# Prepare folders
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www; \
-	# Install Dolibarr from tag archive
     mkdir -p /tmp/dolibarr; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
