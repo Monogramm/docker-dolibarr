@@ -30,11 +30,9 @@ function version_greater_or_equal() {
 php_versions=( "7.1" )
 
 dockerRepo="monogramm/docker-dolibarr"
-# TODO Find a way to retrieve automatically the latest versions
-# latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
-# 	grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
-# 	sort -urV ) )
-latests=( "5.0.7" "6.0.8" "7.0.5" "8.0.4" "9.0.0" )
+latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
+	grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
+	sort -urV ) )
 
 # Remove existing images
 echo "reset docker images"
@@ -45,20 +43,18 @@ travisEnv=
 for latest in "${latests[@]}"; do
 	version=$(echo "$latest" | cut -d. -f1-2)
 
-	if [ -d "$version" ]; then
-		continue
-	fi
-
 	# Only add versions >= "$min_version"
 	if version_greater_or_equal "$version" "$min_version"; then
 
 		for php_version in "${php_versions[@]}"; do
 
 			for variant in "${variants[@]}"; do
-				echo "updating $latest [$version] php$php_version-$variant"
-
 				# Create the version+php_version+variant directory with a Dockerfile.
 				dir="images/$version/php$php_version-$variant"
+				if [ -d "$dir" ]; then
+					continue
+				fi
+				echo "generating $latest [$version] php$php_version-$variant"
 				mkdir -p "$dir"
 
 				template="Dockerfile-${base[$variant]}.template"

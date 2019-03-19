@@ -39,14 +39,24 @@ ENV DOLI_VERSION=%%VERSION%% \
 	PHP_MAX_UPLOAD=20M \
 	PHP_MAX_EXECUTION_TIME=300
 
+VOLUME /var/www/html /var/www/documents /var/www/scripts
+
+COPY entrypoint.sh /
+
+# Get Dolibarr
+ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
+
+# Install the packages we need
+# Install the PHP extensions we need
+# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
+# Prepare folders
+# Install Dolibarr from tag archive
 RUN set -ex; \
 	apt-get update -q; \
-	# install the packages we need
 	apt-get install -y --no-install-recommends \
 		rsync \
 	; \
-	# install the PHP extensions we need
-	# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
+	chmod 755 /entrypoint.sh; \
 	apt-get install -y --no-install-recommends \
 		libcurl4-openssl-dev \
 		libfreetype6-dev \
@@ -79,16 +89,9 @@ RUN set -ex; \
 	; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
-    \
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
-    chmod -R g=u /var/www
-
-VOLUME /var/www/html /var/www/documents /var/www/scripts
-
-# Get Dolibarr
-ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
-RUN set -ex; \
+    chmod -R g=u /var/www; \
     mkdir -p /tmp/dolibarr; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
@@ -96,10 +99,6 @@ RUN set -ex; \
 	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
 	rm -rf /tmp/dolibarr; \
 	chmod +x /usr/src/dolibarr/scripts/*
-
-COPY entrypoint.sh /
-RUN set -ex; \
-	chmod 755 /entrypoint.sh;
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["%%CMD%%"]
