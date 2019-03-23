@@ -197,10 +197,11 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_databasepass = '${DOLI_DB_PASSWORD}';
 
 /** @var bool Force database user creation */
-\$force_install_createuser = false;
+\$force_install_createdatabase = '${DOLI_DB_CREATE_USER}';
+\$force_install_createdatabase = '${DOLI_DB_CREATE_DB}';
 
 /** @var bool Force database creation */
-\$force_install_createdatabase = !empty('${DOLI_DB_ROOT_LOGIN}');
+\$force_install_createdatabase = '${DOLI_DB_CREATE_DB}';
 
 /** @var string Database root username */
 \$force_install_databaserootlogin = '${DOLI_DB_ROOT_LOGIN}';
