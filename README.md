@@ -169,7 +169,7 @@ DOLI_DB_TYPE=pgsql
 
 ### DOLI_DB_HOST
 
-*Default value*: `localhost`
+*Default value*: 
 
 This parameter contains host name or ip address of Dolibarr database server.
 
@@ -195,7 +195,7 @@ DOLI_DB_PORT=5432
 
 ### DOLI_DB_NAME
 
-*Default value*: 
+*Default value*: `dolibarr`
 
 This parameter contains name of Dolibarr database.
 
@@ -207,7 +207,7 @@ DOLI_DB_NAME=mydatabase
 
 ### DOLI_DB_USER
 
-*Default value*: 
+*Default value*: `dolibarr`
 
 This parameter contains user name used to read and write into Dolibarr database.
 
@@ -354,7 +354,7 @@ DOLI_AUTH=openid,dolibarr
 
 ### DOLI_LDAP_HOST
 
-*Default value*: `127.0.2.1`
+*Default value*: 
 
 You can define several servers here separated with a comma.
 
