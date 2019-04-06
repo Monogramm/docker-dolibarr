@@ -54,7 +54,7 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 RUN set -ex; \
 	apk add --no-cache \
 		rsync \
-		sendmail \
+		ssmtp \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apk add --no-cache --virtual .build-deps \
