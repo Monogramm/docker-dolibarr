@@ -55,6 +55,7 @@ RUN set -ex; \
 	apt-get update -q; \
 	apt-get install -y --no-install-recommends \
 		rsync \
+		sendmail \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apt-get install -y --no-install-recommends \

@@ -19,7 +19,7 @@ ENV DOLI_VERSION=7.0.5 \
 	DOLI_MODULES='' \
 	DOLI_URL_ROOT='http://localhost' \
 	DOLI_AUTH=dolibarr \
-	DOLI_LDAP_HOST=127.0.0.1 \
+	DOLI_LDAP_HOST= \
 	DOLI_LDAP_PORT=389 \
 	DOLI_LDAP_VERSION=3 \
 	DOLI_LDAP_SERVERTYPE=openldap \
@@ -55,6 +55,7 @@ RUN set -ex; \
 	apt-get update -q; \
 	apt-get install -y --no-install-recommends \
 		rsync \
+		sendmail \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apt-get install -y --no-install-recommends \
