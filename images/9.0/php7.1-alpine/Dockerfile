@@ -19,7 +19,7 @@ ENV DOLI_VERSION=9.0.1 \
 	DOLI_MODULES='' \
 	DOLI_URL_ROOT='http://localhost' \
 	DOLI_AUTH=dolibarr \
-	DOLI_LDAP_HOST=127.0.0.1 \
+	DOLI_LDAP_HOST= \
 	DOLI_LDAP_PORT=389 \
 	DOLI_LDAP_VERSION=3 \
 	DOLI_LDAP_SERVERTYPE=openldap \
@@ -54,6 +54,7 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 RUN set -ex; \
 	apk add --no-cache \
 		rsync \
+		ssmtp \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apk add --no-cache --virtual .build-deps \
