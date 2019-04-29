@@ -74,6 +74,7 @@ RUN set -ex; \
 		make \
 		openldap-dev \
 		postgresql-dev \
+		shadow \
 		unzip \
 	; \
 	docker-php-ext-configure ldap; \
