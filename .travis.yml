@@ -11,18 +11,17 @@ branches:
 
 before_script:
   - env | sort
-  - name="dolibarr"
-  - image="monogramm/docker-dolibarr:travis-${VERSION}${PHP_VERSION:+-$PHP_VERSION}${VARIANT:+-$VARIANT}"
   - dir="images/${VERSION}/php${PHP_VERSION}-${VARIANT}"
 
 script:
-  - travis_retry docker build -t "$image" "$dir"
-
-after_script:
+  - cd "$dir"
+  - docker-compose build
   - docker images
-  - docker run --name "$name" -e DOLI_AUTO_CONFIGURE='' -d "$image"
-  - docker ps
-  - docker logs "$name"
+  - travis_retry docker-compose up -d && sleep 60
+  - docker-compose ps
+  - docker-compose logs
+  - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose ps "dolibarr" | grep "Up"
 
 notifications:
   email: false
