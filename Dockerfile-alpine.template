@@ -53,8 +53,6 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 # Install Dolibarr from tag archive
 RUN set -ex; \
 	apk add --no-cache \
-		bash \
-		coreutils \
 		rsync \
 		ssmtp \
 		shadow \
