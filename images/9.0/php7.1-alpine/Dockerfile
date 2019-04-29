@@ -53,8 +53,10 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 # Install Dolibarr from tag archive
 RUN set -ex; \
 	apk add --no-cache \
+		bash \
 		rsync \
 		ssmtp \
+		shadow \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apk add --no-cache --virtual .build-deps \
@@ -74,7 +76,6 @@ RUN set -ex; \
 		make \
 		openldap-dev \
 		postgresql-dev \
-		shadow \
 		unzip \
 	; \
 	docker-php-ext-configure ldap; \
