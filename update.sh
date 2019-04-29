@@ -7,6 +7,12 @@ declare -A cmd=(
 	[alpine]='php-fpm'
 )
 
+declare -A compose=(
+	[apache]='apache'
+	[fpm]='fpm'
+	[alpine]='fpm'
+)
+
 declare -A base=(
 	[apache]='debian'
 	[fpm]='debian'
@@ -73,6 +79,9 @@ for latest in "${latests[@]}"; do
 					cp "docker-$name.sh" "$dir/$name.sh"
 					chmod 755 "$dir/$name.sh"
 				done
+
+				cp ".dockerignore" "$dir/.dockerignore"
+				cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
 
 				travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant$travisEnv"
 
