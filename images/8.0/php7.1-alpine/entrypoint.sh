@@ -51,7 +51,7 @@ fi
 if [ -n "$DOLI_AUTO_CONFIGURE" ] && [ ! -f /var/www/html/conf/conf.php ]; then
 	cat <<EOF > /var/www/html/conf/conf.php
 <?php
-// Config file for Dolibarr ${DOLI_VERSION} ($(date --iso-8601=seconds))
+// Config file for Dolibarr ${DOLI_VERSION} ($(date +%Y-%m-%dT%H:%M:%S%:z))
 
 // ###################
 // # Main parameters #
@@ -160,7 +160,7 @@ if version_greater "$image_version" "$installed_version"; then
 			# Create forced values for first install
 			cat <<EOF > /var/www/html/install/install.forced.php
 <?php
-// Forced install config file for Dolibarr ${DOLI_VERSION} ($(date --iso-8601=seconds))
+// Forced install config file for Dolibarr ${DOLI_VERSION} ($(date +%Y-%m-%dT%H:%M:%S%:z))
 
 /** @var bool Hide PHP informations */
 \$force_install_nophpinfo = true;
