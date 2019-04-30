@@ -1,8 +1,8 @@
-FROM php:7.1-alpine
+FROM php:7.1-fpm-alpine
 
 LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
 
-ENV DOLI_VERSION=6.0.8 \
+ENV DOLI_VERSION=8.0.4 \
 	DOLI_AUTO_CONFIGURE=1 \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST= \
@@ -32,8 +32,8 @@ ENV DOLI_VERSION=6.0.8 \
 	DOLI_HTTPS=0 \
 	DOLI_PROD=0 \
 	DOLI_NO_CSRF_CHECK=0 \
-	WWW_USER_ID=33 \
-	WWW_GROUP_ID=33 \
+	WWW_USER_ID=82 \
+	WWW_GROUP_ID=82 \
 	PHP_INI_DATE_TIMEZONE='UTC' \
 	PHP_MEMORY_LIMIT=256M \
 	PHP_MAX_UPLOAD=20M \
@@ -55,6 +55,7 @@ RUN set -ex; \
 	apk add --no-cache \
 		rsync \
 		ssmtp \
+		shadow \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apk add --no-cache --virtual .build-deps \
@@ -67,13 +68,17 @@ RUN set -ex; \
 		icu-dev \
 		libjpeg-turbo-dev \
 		imagemagick-dev \
+		imagemagick-libs \
+		libldap \
 		libmcrypt-dev \
+		libpng \
 		libpng-dev \
 		libtool \
 		libxml2-dev \
 		make \
 		openldap-dev \
 		postgresql-dev \
+		postgresql-libs \
 		unzip \
 	; \
 	docker-php-ext-configure ldap; \

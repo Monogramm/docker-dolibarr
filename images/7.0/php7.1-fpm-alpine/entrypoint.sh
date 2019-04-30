@@ -1,21 +1,21 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 # version_greater A B returns whether A > B
-function version_greater() {
-	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" ]];
+version_greater() {
+	[ "$(printf '%s\n' "$@" | sort -t '.' -n -k1,1 -k2,2 -k3,3 -k4,4 | head -n 1)" != "$1" ]
 }
 
 # return true if specified directory is empty
-function directory_empty() {
-	[ -n "$(find "$1"/ -prune -empty)" ]
+directory_empty() {
+	[ -z "$(ls -A "$1/")" ]
 }
 
-function run_as() {
-	if [[ $EUID -eq 0 ]]; then
-		su - www-data -s /bin/bash -c "$1"
+run_as() {
+	if [ "$(id -u)" = 0 ]; then
+		su - www-data -s /bin/sh -c "$1"
 	else
-		bash -c "$1"
+		sh -c "$1"
 	fi
 }
 
@@ -51,7 +51,7 @@ fi
 if [ -n "$DOLI_AUTO_CONFIGURE" ] && [ ! -f /var/www/html/conf/conf.php ]; then
 	cat <<EOF > /var/www/html/conf/conf.php
 <?php
-// Config file for Dolibarr ${DOLI_VERSION} ($(date --iso-8601=seconds))
+// Config file for Dolibarr ${DOLI_VERSION} ($(date +%Y-%m-%dT%H:%M:%S%:z))
 
 // ###################
 // # Main parameters #
@@ -102,11 +102,13 @@ EOF
 fi
 
 # Detect installed version (docker specific solution)
-installed_version="0.0.0~unknown"
+installed_version="0.0.0.0"
 if [ -f /var/www/documents/install.version ]; then
-	installed_version=$(cat /var/www/documents/install.version)
+	# shellcheck disable=SC2016
+	installed_version="$(cat /var/www/documents/install.version)"
 fi
-image_version=${DOLI_VERSION}
+# shellcheck disable=SC2016
+image_version="${DOLI_VERSION}"
 
 if version_greater "$installed_version" "$image_version"; then
 	echo "Can't start Dolibarr because the version of the data ($installed_version) is higher than the docker image version ($image_version) and downgrading is not supported. Are you sure you have pulled the newest image version?"
@@ -116,7 +118,7 @@ fi
 # Initialize image
 if version_greater "$image_version" "$installed_version"; then
 	echo "Dolibarr initialization..."
-	if [[ $EUID -eq 0 ]]; then
+	if [ "$(id -u)" = 0 ]; then
 		rsync_options="-rlDog --chown www-data:root"
 	else
 		rsync_options="-rlD"
@@ -127,17 +129,17 @@ if version_greater "$image_version" "$installed_version"; then
 	rsync $rsync_options --delete --exclude /conf/ --exclude /custom/ --exclude /theme/ /usr/src/dolibarr/htdocs/ /var/www/html/
 
 	for dir in conf custom; do
-		if [ ! -d /var/www/html/"$dir" ] || directory_empty /var/www/html/"$dir"; then
-			rsync $rsync_options --include /"$dir"/ --exclude '/*' /usr/src/dolibarr/htdocs/ /var/www/html/
+		if [ ! -d "/var/www/html/$dir" ] || directory_empty "/var/www/html/$dir"; then
+			rsync $rsync_options --include "/$dir/" --exclude '/*' /usr/src/dolibarr/htdocs/ /var/www/html/
 		fi
 	done
 
 	# The theme folder contains custom and official themes. We must copy even if folder is not empty, but not delete content either
 	for dir in theme; do
-		rsync $rsync_options --include /"$dir"/ --exclude '/*' /usr/src/dolibarr/htdocs/ /var/www/html/
+		rsync $rsync_options --include "/$dir/" --exclude '/*' /usr/src/dolibarr/htdocs/ /var/www/html/
 	done
 
-	if [ "$installed_version" != "0.0.0~unknown" ]; then
+	if [ "$installed_version" != "0.0.0.0" ]; then
 		# Call upgrade if needed
 		# https://wiki.dolibarr.org/index.php/Installation_-_Upgrade#With_Dolibarr_.28standard_.zip_package.29
 		echo "Dolibarr upgrade from $installed_version to $image_version..."
@@ -146,8 +148,8 @@ if version_greater "$image_version" "$installed_version"; then
 			rm /var/www/documents/install.lock
 		fi
 
-		base_version=(${installed_version//./ })
-		target_version=(${image_version//./ })
+		base_version="${installed_version//./ }"
+		target_version="${image_version//./ }"
 
 		run_as "cd /var/www/html/install/ && php upgrade.php ${base_version[0]}.${base_version[1]}.0 ${target_version[0]}.${target_version[1]}.0"
 		run_as "cd /var/www/html/install/ && php upgrade2.php ${base_version[0]}.${base_version[1]}.0 ${target_version[0]}.${target_version[1]}.0"
@@ -160,7 +162,7 @@ if version_greater "$image_version" "$installed_version"; then
 			# Create forced values for first install
 			cat <<EOF > /var/www/html/install/install.forced.php
 <?php
-// Forced install config file for Dolibarr ${DOLI_VERSION} ($(date --iso-8601=seconds))
+// Forced install config file for Dolibarr ${DOLI_VERSION} ($(date +%Y-%m-%dT%H:%M:%S%:z))
 
 /** @var bool Hide PHP informations */
 \$force_install_nophpinfo = true;
@@ -220,11 +222,13 @@ if version_greater "$image_version" "$installed_version"; then
 \$force_install_module = '${DOLI_MODULES}';
 EOF
 
-		# Add a symlink to /var/www/htdocs
-		ln -s /var/www/html /var/www/htdocs
-
 		echo "You shall complete Dolibarr install manually at '${DOLI_URL_ROOT}/install'"
 	fi
+fi
+
+if [ ! -d /var/www/htdocs ]; then
+	# Add a symlink to /var/www/htdocs
+	ln -s /var/www/html /var/www/htdocs
 fi
 
 if [ ! -d /var/www/scripts ]; then

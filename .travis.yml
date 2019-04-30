@@ -11,35 +11,34 @@ branches:
 
 before_script:
   - env | sort
-  - name="dolibarr"
-  - image="monogramm/docker-dolibarr:travis-${VERSION}${PHP_VERSION:+-$PHP_VERSION}${VARIANT:+-$VARIANT}"
   - dir="images/${VERSION}/php${PHP_VERSION}-${VARIANT}"
 
 script:
-  - travis_retry docker build -t "$image" "$dir"
-
-after_script:
+  - cd "$dir"
+  - docker-compose build
   - docker images
-  - docker run --name "$name" -e DOLI_AUTO_CONFIGURE='' -d "$image"
-  - docker ps
-  - docker logs "$name"
+  - travis_retry docker-compose up -d && sleep 60
+  - docker-compose ps
+  - docker-compose logs
+  - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose ps "dolibarr" | grep "Up"
 
 notifications:
   email: false
 
 env: # Environments
-    - VERSION=5.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=5.0 PHP_VERSION=7.1 VARIANT=fpm-alpine
     - VERSION=5.0 PHP_VERSION=7.1 VARIANT=fpm
     - VERSION=5.0 PHP_VERSION=7.1 VARIANT=apache
-    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=6.0 PHP_VERSION=7.1 VARIANT=fpm-alpine
     - VERSION=6.0 PHP_VERSION=7.1 VARIANT=fpm
     - VERSION=6.0 PHP_VERSION=7.1 VARIANT=apache
-    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=7.0 PHP_VERSION=7.1 VARIANT=fpm-alpine
     - VERSION=7.0 PHP_VERSION=7.1 VARIANT=fpm
     - VERSION=7.0 PHP_VERSION=7.1 VARIANT=apache
-    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=8.0 PHP_VERSION=7.1 VARIANT=fpm-alpine
     - VERSION=8.0 PHP_VERSION=7.1 VARIANT=fpm
     - VERSION=8.0 PHP_VERSION=7.1 VARIANT=apache
-    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=alpine
+    - VERSION=9.0 PHP_VERSION=7.1 VARIANT=fpm-alpine
     - VERSION=9.0 PHP_VERSION=7.1 VARIANT=fpm
     - VERSION=9.0 PHP_VERSION=7.1 VARIANT=apache

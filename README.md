@@ -535,48 +535,14 @@ This version will use the apache image and add a [MariaDB](https://hub.docker.co
 
 Make sure to set the variables `MYSQL_ROOT_PASSWORD`, `MYSQL_PASSWORD`, `DOLI_DB_PASSWORD` before you run this setup.
 
-Create `docker-compose.yml` file as following:
-
-```yml
-version: '2'
-
-services:
-    mariadb:
-        image: mariadb:latest
-        restart: always
-        command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
-        volumes:
-            - ./dolibarr_db:/var/lib/mysql
-        environment:
-            - "MYSQL_ROOT_PASSWORD=my-secret-pw"
-            - "MYSQL_DATABASE=dolibarr"
-            - "MYSQL_USER=dolibarr"
-            - "MYSQL_PASSWORD=dolibarr"
-
-    dolibarr:
-        image: monogramm/docker-dolibarr:apache
-        restart: always
-        depends_on:
-            - mariadb
-        ports:
-            - "80:80"
-        environment:
-            - "DOLI_DB_HOST=mariadb" # same as mysql container name
-            - "DOLI_DB_NAME=dolibarr" # same as mysql MYSQL_DATABASE env name
-            - "DOLI_DB_USER=dolibarr" # same as mysql MYSQL_USER env name
-            - "DOLI_DB_PASSWORD=dolibarr" # same as mysql MYSQL_PASSWORD env name
-        volumes:
-            - ./dolibarr_html:/var/www/html
-            - ./dolibarr_docs:/var/www/documents
-            - ./dolibarr_scripts:/var/www/scripts
-```
+Create `docker-compose.yml` file using [docker-compose_apache.yml](docker-compose_apache.yml) as template.
 
 Then run all services `docker-compose up -d`. Now, go to http://localhost:80/install to access the new Dolibarr installation wizard.
 In this example, the Dolibarr scripts, documents, HTML and database will all be stored locally in the following folders:
-* `./dolibarr_scripts`
-* `./dolibarr_docs`
-* `./dolibarr_html`
-* `./dolibarr_db`
+* `/srv/dolibarr/html`
+* `/srv/dolibarr/scripts`
+* `/srv/dolibarr/documents`
+* `/srv/dolibarr/db`
 Feel free to edit this as you see fit.
 
 ## Base version - FPM with PostgreSQL
@@ -586,72 +552,7 @@ As this setup does **not include encryption** it should to be run behind a proxy
 
 Make sure to set the variables `POSTGRES_PASSWORD` and `DOLI_DB_PASSWORD` before you run this setup.
 
-Create `docker-compose.yml` file as following:
-
-```yml
-version: '2'
-
-volumes:
-  dolibarr_html:
-  dolibarr_docs:
-  dolibarr_scripts:
-  dolibarr_db:
-
-services:
-    dolipgsql:
-        image: postgres:latest
-        container_name: dolipgsql
-        restart: always
-        volumes:
-            - dolibarr_db:/var/lib/postgresql/data
-        environment:
-            - "POSTGRES_DB=dolibarr"
-            - "POSTGRES_USER=dolibarr"
-            - "POSTGRES_PASSWORD=dolibarr"
-
-    dolifpm:
-        image: monogramm/docker-dolibarr:fpm
-        container_name: dolifpm
-        restart: always
-        ports:
-            - "9000:9000"
-        depends_on:
-            - dolipgsql
-        links:
-            - dolipgsql
-        volumes:
-            - dolibarr_html:/var/www/html
-            - dolibarr_docs:/var/www/documents
-            - dolibarr_scripts:/var/www/scripts
-        environment:
-            - "DOLI_DB_TYPE=pgsql"
-            - "DOLI_DB_HOST=dolipgsql" # same as pgsql container name
-            - "DOLI_DB_PORT=5432"
-            - "DOLI_DB_NAME=dolibarr" # same as pgsql POSTGRES_DB env name
-            - "DOLI_DB_USER=dolibarr" # same as pgsql POSTGRES_USER env name
-            - "DOLI_DB_PASSWORD=dolibarr" # same as pgsql POSTGRES_PASSWORD env name
-
-    dolinginx:
-        image: nginx:latest
-        container_name: dolinginx
-        restart: always
-        ports:
-            - 80:80
-            # - '443:443'
-        depends_on:
-            - dolifpm
-        links:
-            - dolifpm
-        volumes:
-            - ./nginx.conf:/etc/nginx/nginx.conf:ro
-            - dolibarr_html:/var/www/html
-            # If you need SSL connection, you can provide your own certificates
-            # - ./certs:/etc/letsencrypt
-            # - ./certs-data:/data/letsencrypt
-        environment:
-            - NGINX_HOST=localhost # set your local domain or your live domain
-            # - NGINX_CGI=dolifpm:9000 # same as dolibarr container name
-```
+Create `docker-compose.yml` file using [docker-compose_fpm.yml](docker-compose_fpm.yml) as template.
 
 Here is a sample `nginx.conf` file expected to be in the same folder:
 ```

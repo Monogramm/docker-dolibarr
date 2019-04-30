@@ -4,19 +4,25 @@ set -eo pipefail
 declare -A cmd=(
 	[apache]='apache2-foreground'
 	[fpm]='php-fpm'
-	[alpine]='php-fpm'
+	[fpm-alpine]='php-fpm'
+)
+
+declare -A compose=(
+	[apache]='apache'
+	[fpm]='fpm'
+	[fpm-alpine]='fpm'
 )
 
 declare -A base=(
 	[apache]='debian'
 	[fpm]='debian'
-	[alpine]='alpine'
+	[fpm-alpine]='alpine'
 )
 
 variants=(
 	apache
 	fpm
-	alpine
+	fpm-alpine
 )
 
 min_version='5.0'
@@ -73,6 +79,9 @@ for latest in "${latests[@]}"; do
 					cp "docker-$name.sh" "$dir/$name.sh"
 					chmod 755 "$dir/$name.sh"
 				done
+
+				cp ".dockerignore" "$dir/.dockerignore"
+				cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
 
 				travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant$travisEnv"
 
