@@ -3,7 +3,7 @@ set -e
 
 # version_greater A B returns whether A > B
 version_greater() {
-	[[ "$(printf '%s\n' "$@" | sort -t '.' -n -k1,1 -k2,2 -k3,3 -k4,4 | head -n 1)" != "$1" ]];
+	[ "$(printf '%s\n' "$@" | sort -t '.' -n -k1,1 -k2,2 -k3,3 -k4,4 | head -n 1)" != "$1" ]
 }
 
 # return true if specified directory is empty
@@ -148,8 +148,8 @@ if version_greater "$image_version" "$installed_version"; then
 			rm /var/www/documents/install.lock
 		fi
 
-		base_version=(${installed_version//./ })
-		target_version=(${image_version//./ })
+		base_version="${installed_version//./ }"
+		target_version="${image_version//./ }"
 
 		run_as "cd /var/www/html/install/ && php upgrade.php ${base_version[0]}.${base_version[1]}.0 ${target_version[0]}.${target_version[1]}.0"
 		run_as "cd /var/www/html/install/ && php upgrade2.php ${base_version[0]}.${base_version[1]}.0 ${target_version[0]}.${target_version[1]}.0"
