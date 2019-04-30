@@ -1,8 +1,8 @@
-FROM php:7.1-alpine
+FROM php:7.1-fpm-alpine
 
 LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
 
-ENV DOLI_VERSION=9.0.2 \
+ENV DOLI_VERSION=6.0.8 \
 	DOLI_AUTO_CONFIGURE=1 \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST= \

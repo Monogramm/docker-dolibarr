@@ -4,25 +4,25 @@ set -eo pipefail
 declare -A cmd=(
 	[apache]='apache2-foreground'
 	[fpm]='php-fpm'
-	[alpine]='php-fpm'
+	[fpm-alpine]='php-fpm'
 )
 
 declare -A compose=(
 	[apache]='apache'
 	[fpm]='fpm'
-	[alpine]='fpm'
+	[fpm-alpine]='fpm'
 )
 
 declare -A base=(
 	[apache]='debian'
 	[fpm]='debian'
-	[alpine]='alpine'
+	[fpm-alpine]='alpine'
 )
 
 variants=(
 	apache
 	fpm
-	alpine
+	fpm-alpine
 )
 
 min_version='5.0'
