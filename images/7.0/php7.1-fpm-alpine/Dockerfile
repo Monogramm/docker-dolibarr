@@ -68,13 +68,17 @@ RUN set -ex; \
 		icu-dev \
 		libjpeg-turbo-dev \
 		imagemagick-dev \
+		imagemagick-libs \
+		libldap \
 		libmcrypt-dev \
+		libpng \
 		libpng-dev \
 		libtool \
 		libxml2-dev \
 		make \
 		openldap-dev \
 		postgresql-dev \
+		postgresql-libs \
 		unzip \
 	; \
 	docker-php-ext-configure ldap; \
