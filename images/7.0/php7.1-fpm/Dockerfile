@@ -56,6 +56,8 @@ RUN set -ex; \
 	apt-get install -y --no-install-recommends \
 		rsync \
 		sendmail \
+		mysql-client \
+		postgresql-client \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apt-get install -y --no-install-recommends \

@@ -2,7 +2,7 @@ FROM php:7.1-fpm
 
 LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
 
-ENV DOLI_VERSION=9.0.2 \
+ENV DOLI_VERSION=9.0.3 \
 	DOLI_AUTO_CONFIGURE=1 \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST= \
@@ -56,6 +56,8 @@ RUN set -ex; \
 	apt-get install -y --no-install-recommends \
 		rsync \
 		sendmail \
+		mysql-client \
+		postgresql-client \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apt-get install -y --no-install-recommends \
