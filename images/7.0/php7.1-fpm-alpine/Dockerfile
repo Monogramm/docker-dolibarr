@@ -56,7 +56,6 @@ RUN set -ex; \
 		rsync \
 		ssmtp \
 		mysql-client \
-		postgresql-client \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apk add --no-cache --virtual .build-deps \
