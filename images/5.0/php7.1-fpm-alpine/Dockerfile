@@ -56,6 +56,7 @@ RUN set -ex; \
 		rsync \
 		ssmtp \
 		shadow \
+		mysql-client \
 	; \
 	chmod 755 /entrypoint.sh; \
 	apk add --no-cache --virtual .build-deps \
