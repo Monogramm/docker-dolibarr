@@ -55,6 +55,7 @@ RUN set -ex; \
 	apk add --no-cache \
 		rsync \
 		ssmtp \
+		shadow \
 		mysql-client \
 	; \
 	chmod 755 /entrypoint.sh; \
