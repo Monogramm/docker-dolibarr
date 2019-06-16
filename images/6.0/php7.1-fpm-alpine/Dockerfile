@@ -15,10 +15,14 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 # Install Dolibarr from tag archive
 RUN set -ex; \
 	apk add --no-cache \
+		imagemagick \
+		libldap \
+		libpq \
+		libpng \
+		mysql-client \
 		rsync \
 		ssmtp \
 		shadow \
-		mysql-client \
 	; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
@@ -31,9 +35,7 @@ RUN set -ex; \
 		libjpeg-turbo-dev \
 		imagemagick-dev \
 		imagemagick-libs \
-		libldap \
 		libmcrypt-dev \
-		libpng \
 		libpng-dev \
 		libtool \
 		libxml2-dev \

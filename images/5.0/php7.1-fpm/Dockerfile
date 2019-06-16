@@ -16,9 +16,9 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 RUN set -ex; \
 	apt-get update -q; \
 	apt-get install -y --no-install-recommends \
+		mysql-client \
 		rsync \
 		sendmail \
-		mysql-client \
 	; \
 	apt-get install -y --no-install-recommends \
 		libcurl4-openssl-dev \
