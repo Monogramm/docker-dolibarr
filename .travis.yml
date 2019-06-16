@@ -17,7 +17,7 @@ script:
   - cd "$dir"
   - docker-compose build
   - docker images
-  - travis_retry docker-compose up -d && sleep 60
+  - travis_retry docker-compose up -d && sleep 90
   - docker-compose ps
   - docker-compose logs
   - docker-compose ps "dolibarrdb" | grep "Up"
