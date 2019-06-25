@@ -18,6 +18,10 @@ services:
       - /srv/dolibarr/documents:/var/www/documents
       - /srv/dolibarr/scripts:/var/www/scripts
     environment:
+      - DOLI_AUTO_CONFIGURE=1
+      - DOLI_AUTO_INSTALL=1
+      - DOLI_ADMIN_LOGIN=admin
+      - DOLI_ADMIN_PWD=somethingrandomandsecure
       - DOLI_DB_TYPE=pgsql
       - DOLI_DB_HOST=dolibarrdb # same as pgsql container name
       - DOLI_DB_PORT=5432

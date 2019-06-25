@@ -153,6 +153,21 @@ DOLI_AUTO_CONFIGURE=''
 ```
 
 
+### DOLI_AUTO_INSTALL
+
+*Default value*: 
+
+*Possible values*: `1`, `''`
+
+This parameter triggers the Dolibarr automatic installation based on default configuration generation (see above).
+
+Examples:
+```
+DOLI_AUTO_INSTALL=1
+DOLI_AUTO_INSTALL=''
+```
+
+
 ### DOLI_DB_TYPE
 
 *Default value*: `mysqli`

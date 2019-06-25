@@ -15,6 +15,7 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 # Install Dolibarr from tag archive
 RUN set -ex; \
 	apk add --no-cache \
+		curl \
 		imagemagick \
 		libldap \
 		libpq \
@@ -76,6 +77,7 @@ RUN set -ex; \
 
 # Runtime env var
 ENV DOLI_AUTO_CONFIGURE=1 \
+	DOLI_AUTO_INSTALL= \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST= \
 	DOLI_DB_PORT=3306 \
@@ -88,6 +90,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	DOLI_DB_ROOT_LOGIN='' \
 	DOLI_DB_ROOT_PASSWORD='' \
 	DOLI_ADMIN_LOGIN=admin \
+	DOLI_ADMIN_PWD= \
 	DOLI_MODULES='' \
 	DOLI_URL_ROOT='http://localhost' \
 	DOLI_AUTH=dolibarr \
