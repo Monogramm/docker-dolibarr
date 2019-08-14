@@ -20,17 +20,8 @@ run_as() {
 }
 
 
-usermod -u $WWW_USER_ID www-data
-groupmod -g $WWW_GROUP_ID www-data
-
-if [ ! -d /var/www/documents ]; then
-	mkdir -p /var/www/documents
-fi
-
-chown -R www-data:www-data /var/www
-
-
 if [ ! -f /usr/local/etc/php/php.ini ]; then
+	echo "Initializing PHP configuration..."
 	cat <<EOF > /usr/local/etc/php/php.ini
 date.timezone = "${PHP_INI_DATE_TIMEZONE}"
 memory_limit = ${PHP_MEMORY_LIMIT}
@@ -43,12 +34,28 @@ extension = calendar.so
 EOF
 fi
 
+
+if [ ! -d /var/www/documents ]; then
+	echo "Initializing Dolibarr documents directory..."
+	mkdir -p /var/www/documents
+fi
+
+echo "Updating Dolibarr users and group..."
+usermod -u $WWW_USER_ID www-data
+groupmod -g $WWW_GROUP_ID www-data
+
+echo "Updating Dolibarr folder ownership..."
+chown -R www-data:www-data /var/www
+
+
 if [ ! -d /var/www/html/conf/ ]; then
+	echo "Initializing Dolibarr HTML configuration directory..."
 	mkdir -p /var/www/html/conf/
 fi
 
 # Create a default config if autoconfig enabled
 if [ -n "$DOLI_AUTO_CONFIGURE" ] && [ ! -f /var/www/html/conf/conf.php ]; then
+	echo "Initializing Dolibarr HTML configuration..."
 	cat <<EOF > /var/www/html/conf/conf.php
 <?php
 // Config file for Dolibarr ${DOLI_VERSION} ($(date +%Y-%m-%dT%H:%M:%S%:z))
@@ -100,6 +107,7 @@ EOF
 	chown www-data:www-data /var/www/html/conf/conf.php
 	chmod 766 /var/www/html/conf/conf.php
 fi
+
 
 # Detect installed version (docker specific solution)
 installed_version="0.0.0.0"
@@ -159,7 +167,7 @@ if version_greater "$image_version" "$installed_version"; then
 		chown www-data:www-data /var/www/documents/install.lock
 		chmod 400 /var/www/documents/install.lock
 	elif [ ! -f /var/www/documents/install.lock ]; then
-			# Create forced values for first install
+			echo "Create forced values for first Dolibarr install..."
 			cat <<EOF > /var/www/html/install/install.forced.php
 <?php
 // Forced install config file for Dolibarr ${DOLI_VERSION} ($(date +%Y-%m-%dT%H:%M:%S%:z))
@@ -227,16 +235,19 @@ EOF
 fi
 
 if [ ! -d /var/www/htdocs ]; then
-	# Add a symlink to /var/www/htdocs
+	echo "Adding a symlink to /var/www/htdocs..."
 	ln -s /var/www/html /var/www/htdocs
 fi
 
 if [ ! -d /var/www/scripts ]; then
+	echo "Initializing Dolibarr scripts directory..."
 	cp /usr/src/dolibarr/scripts /var/www/scripts
 fi
 
 if [ -f /var/www/documents/install.lock ]; then
+	echo "Updating Dolibarr installed version..."
 	echo $image_version > /var/www/documents/install.version
 fi
 
+echo "Serving Dolibarr..."
 exec "$@"

@@ -2,8 +2,80 @@ FROM php:7.1-fpm-alpine
 
 LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>"
 
-ENV DOLI_VERSION=7.0.5 \
-	DOLI_AUTO_CONFIGURE=1 \
+# Build time env var
+ENV DOLI_VERSION=7.0.5
+
+# Get Dolibarr
+ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
+
+# Install the packages we need
+# Install the PHP extensions we need
+# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
+# Prepare folders
+# Install Dolibarr from tag archive
+RUN set -ex; \
+	apk add --no-cache \
+		imagemagick \
+		libldap \
+		libpq \
+		libpng \
+		mysql-client \
+		rsync \
+		ssmtp \
+		shadow \
+	; \
+	apk add --no-cache --virtual .build-deps \
+		$PHPIZE_DEPS \
+		autoconf \
+		curl-dev \
+		freetype-dev \
+		gcc \
+		g++ \
+		icu-dev \
+		libjpeg-turbo-dev \
+		imagemagick-dev \
+		imagemagick-libs \
+		libmcrypt-dev \
+		libpng-dev \
+		libtool \
+		libxml2-dev \
+		make \
+		openldap-dev \
+		postgresql-dev \
+		postgresql-libs \
+		unzip \
+	; \
+	docker-php-ext-configure ldap; \
+	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
+	docker-php-ext-install \
+		calendar \
+		gd \
+		ldap \
+		mbstring \
+		mysqli \
+		pdo \
+		pdo_mysql \
+		pdo_pgsql \
+		pgsql \
+		soap \
+		zip \
+	; \
+    pecl install imagick; \
+    docker-php-ext-enable imagick; \
+	apk --purge del .build-deps; \
+    mkdir -p /var/www/documents; \
+    chown -R www-data:root /var/www; \
+    chmod -R g=u /var/www; \
+    mkdir -p /tmp/dolibarr; \
+	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
+	rm /tmp/dolibarr.zip; \
+	mkdir -p /usr/src/dolibarr; \
+	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
+	rm -rf /tmp/dolibarr; \
+	chmod +x /usr/src/dolibarr/scripts/*
+
+# Runtime env var
+ENV DOLI_AUTO_CONFIGURE=1 \
 	DOLI_DB_TYPE=mysqli \
 	DOLI_DB_HOST= \
 	DOLI_DB_PORT=3306 \
@@ -42,74 +114,8 @@ ENV DOLI_VERSION=7.0.5 \
 VOLUME /var/www/html /var/www/documents /var/www/scripts
 
 COPY entrypoint.sh /
-
-# Get Dolibarr
-ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
-
-# Install the packages we need
-# Install the PHP extensions we need
-# see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
-# Prepare folders
-# Install Dolibarr from tag archive
 RUN set -ex; \
-	apk add --no-cache \
-		rsync \
-		ssmtp \
-		shadow \
-		mysql-client \
-	; \
-	chmod 755 /entrypoint.sh; \
-	apk add --no-cache --virtual .build-deps \
-		$PHPIZE_DEPS \
-		autoconf \
-		curl-dev \
-		freetype-dev \
-		gcc \
-		g++ \
-		icu-dev \
-		libjpeg-turbo-dev \
-		imagemagick-dev \
-		imagemagick-libs \
-		libldap \
-		libmcrypt-dev \
-		libpng \
-		libpng-dev \
-		libtool \
-		libxml2-dev \
-		make \
-		openldap-dev \
-		postgresql-dev \
-		postgresql-libs \
-		unzip \
-	; \
-	docker-php-ext-configure ldap; \
-	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install \
-		calendar \
-		gd \
-		ldap \
-		mbstring \
-		mysqli \
-		pdo \
-		pdo_mysql \
-		pdo_pgsql \
-		pgsql \
-		soap \
-		zip \
-	; \
-    pecl install imagick; \
-    docker-php-ext-enable imagick; \
-	apk --purge del .build-deps; \
-    mkdir -p /var/www/documents; \
-    chown -R www-data:root /var/www; \
-    chmod -R g=u /var/www; \
-    mkdir -p /tmp/dolibarr; \
-	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
-	rm /tmp/dolibarr.zip; \
-	mkdir -p /usr/src/dolibarr; \
-	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
-	rm -rf /tmp/dolibarr; \
-	chmod +x /usr/src/dolibarr/scripts/*
+	chmod 755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
