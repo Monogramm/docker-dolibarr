@@ -1,9 +1,9 @@
-FROM php:7.1-fpm-alpine
+FROM php:7.2-fpm-alpine
 
 LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>"
 
 # Build time env var
-ENV DOLI_VERSION=8.0.5
+ENV DOLI_VERSION=develop
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
