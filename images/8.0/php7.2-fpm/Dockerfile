@@ -3,7 +3,7 @@ FROM php:7.2-fpm
 LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>"
 
 # Build time env var
-ENV DOLI_VERSION=8.0.5
+ENV DOLI_VERSION=8.0.6
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -16,7 +16,8 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 RUN set -ex; \
 	apt-get update -q; \
 	apt-get install -y --no-install-recommends \
-		mysql-client \
+		default-mysql-client \
+		cron \
 		rsync \
 		sendmail \
 	; \

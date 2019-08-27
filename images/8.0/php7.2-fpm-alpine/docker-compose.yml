@@ -6,7 +6,7 @@ services:
     #image: dolibarr/docker-dolibarr:alpine
     build: ./
     container_name: dolibarr
-    restart: always
+    #restart: always
     depends_on:
       - dolibarrdb
     links:
@@ -28,7 +28,7 @@ services:
   dolibarrdb:
     image: postgres:latest
     container_name: dolibarrdb
-    restart: always
+    #restart: always
     ports:
       - 5432:5432
     volumes:
@@ -41,7 +41,7 @@ services:
   dolinginx:
     image: nginx:latest
     container_name: dolibarrnginx
-    restart: always
+    #restart: always
     ports:
       - 80:80
       # If you need SSL connection
@@ -52,8 +52,9 @@ services:
       - dolibarr
     volumes:
       - /srv/dolibarr/html:/var/www/html
-      # TODO Provide a custom nginx conf
+      # Provide a custom nginx conf
       #- ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       # If you need SSL connection, you can provide your own certificates
       # - ./certs:/etc/letsencrypt
       # - ./certs-data:/data/letsencrypt

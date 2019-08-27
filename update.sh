@@ -7,6 +7,12 @@ declare -A cmd=(
 	[fpm-alpine]='php-fpm'
 )
 
+declare -A conf=(
+	[apache]=''
+	[fpm]='nginx.conf'
+	[fpm-alpine]='nginx.conf'
+)
+
 declare -A compose=(
 	[apache]='apache'
 	[fpm]='fpm'
@@ -43,7 +49,8 @@ latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |t
 
 # Remove existing images
 echo "reset docker images"
-find ./images -maxdepth 1 -type d -regextype sed -regex '\./images/[[:digit:]]\+\.[[:digit:]]\+' -exec rm -r '{}' \;
+rm -rf ./images/
+mkdir -p ./images
 
 echo "update docker images"
 travisEnv=
@@ -64,8 +71,21 @@ for latest in "${latests[@]}"; do
 				echo "generating $latest [$version] php$php_version-$variant"
 				mkdir -p "$dir"
 
+				# Copy the files
+				for name in entrypoint; do
+					cp "docker-$name.sh" "$dir/$name.sh"
+					chmod 755 "$dir/$name.sh"
+				done
+
 				template="Dockerfile-${base[$variant]}.template"
 				cp "$template" "$dir/Dockerfile"
+
+				cp ".dockerignore" "$dir/.dockerignore"
+				cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
+
+				if [ -f "docker-${conf[$variant]}" ]; then
+					cp "docker-${conf[$variant]}" "$dir/${conf[$variant]}"
+				fi
 
 				# Replace the variables.
 				sed -ri -e '
@@ -74,15 +94,6 @@ for latest in "${latests[@]}"; do
 					s/%%VERSION%%/'"$latest"'/g;
 					s/%%CMD%%/'"${cmd[$variant]}"'/g;
 				' "$dir/Dockerfile"
-
-				# Copy the shell scripts
-				for name in entrypoint; do
-					cp "docker-$name.sh" "$dir/$name.sh"
-					chmod 755 "$dir/$name.sh"
-				done
-
-				cp ".dockerignore" "$dir/.dockerignore"
-				cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
 
 				travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant$travisEnv"
 
