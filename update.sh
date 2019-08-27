@@ -25,7 +25,7 @@ variants=(
 	fpm-alpine
 )
 
-min_version='5.0'
+min_version='6.0'
 
 
 # version_greater_or_equal A B returns whether A >= B
@@ -33,12 +33,13 @@ function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
-php_versions=( "7.1" )
+php_versions=( "7.2" )
 
 dockerRepo="monogramm/docker-dolibarr"
 latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
 	grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
-	sort -urV ) )
+	sort -urV )
+	develop )
 
 # Remove existing images
 echo "reset docker images"

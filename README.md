@@ -24,6 +24,10 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 
 https://hub.docker.com/r/monogramm/docker-dolibarr/
 
+* Dolibarr develop branch (:construction: potentially unstable)
+    * [`develop-apache` `develop`: /images/develop/php7.2-apache](/images/develop/php7.2-apache/Dockerfile)
+    * [`develop-fpm`: /images/develop/php7.2-fpm](/images/develop/php7.2-fpm)
+    * [`develop-alpine`: /images/develop/php7.2-alpine](/images/develop/php7.2-alpine)
 * Dolibarr 10
     * [`10.0-apache` `10.0` `apache` `latest`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache/Dockerfile)
     * [`10.0-fpm` `fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm)

@@ -1,0 +1,2 @@
+# Ignore CI docker-compose
+docker-compose.yml
