@@ -17,6 +17,7 @@ RUN set -ex; \
 	apt-get update -q; \
 	apt-get install -y --no-install-recommends \
 		default-mysql-client \
+		cron \
 		rsync \
 		sendmail \
 	; \
