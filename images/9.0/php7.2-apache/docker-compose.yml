@@ -5,7 +5,7 @@ services:
     #image: dolibarr/docker-dolibarr:apache
     build: ./
     container_name: dolibarr
-    restart: always
+    #restart: always
     depends_on:
       - dolibarrdb
     links:
@@ -25,7 +25,7 @@ services:
   dolibarrdb:
     image: mariadb:latest
     container_name: dolibarrdb
-    restart: always
+    #restart: always
     command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
     ports:
       - 3306:3306
