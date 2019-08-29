@@ -1,9 +1,9 @@
-FROM php:%%PHP_VERSION%%-%%VARIANT%%
+FROM php:7.2-fpm-alpine
 
 LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>"
 
 # Build time env var
-ENV DOLI_VERSION=%%VERSION%%
+ENV DOLI_VERSION=6.0.8
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -14,29 +14,38 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 # Prepare folders
 # Install Dolibarr from tag archive
 RUN set -ex; \
-	apt-get update -q; \
-	apt-get install -y --no-install-recommends \
-		default-mysql-client \
-		cron \
+	apk add --no-cache \
+		imagemagick \
+		libldap \
+		libpq \
+		libpng \
+		mysql-client \
 		rsync \
-		sendmail \
+		ssmtp \
+		shadow \
 	; \
-	apt-get install -y --no-install-recommends \
-		libcurl4-openssl-dev \
-		libfreetype6-dev \
-		libjpeg-dev \
-		libldap2-dev \
-		libmagickcore-dev \
-		libmagickwand-dev \
+	apk add --no-cache --virtual .build-deps \
+		$PHPIZE_DEPS \
+		autoconf \
+		curl-dev \
+		freetype-dev \
+		gcc \
+		g++ \
+		icu-dev \
+		libjpeg-turbo-dev \
+		imagemagick-dev \
+		imagemagick-libs \
 		libmcrypt-dev \
 		libpng-dev \
-		libpq-dev \
+		libtool \
 		libxml2-dev \
+		make \
+		openldap-dev \
+		postgresql-dev \
+		postgresql-libs \
 		unzip \
 	; \
-	rm -rf /var/lib/apt/lists/*; \
-	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
-	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
+	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install \
 		calendar \
@@ -53,6 +62,7 @@ RUN set -ex; \
 	; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
+	apk --purge del .build-deps; \
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www; \
@@ -94,8 +104,8 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	DOLI_HTTPS=0 \
 	DOLI_PROD=0 \
 	DOLI_NO_CSRF_CHECK=0 \
-	WWW_USER_ID=33 \
-	WWW_GROUP_ID=33 \
+	WWW_USER_ID=82 \
+	WWW_GROUP_ID=82 \
 	PHP_INI_DATE_TIMEZONE='UTC' \
 	PHP_MEMORY_LIMIT=256M \
 	PHP_MAX_UPLOAD=20M \
@@ -108,4 +118,4 @@ RUN set -ex; \
 	chmod 755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["%%CMD%%"]
+CMD ["php-fpm"]

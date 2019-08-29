@@ -7,6 +7,12 @@ declare -A cmd=(
 	[fpm-alpine]='php-fpm'
 )
 
+declare -A conf=(
+	[apache]=''
+	[fpm]='nginx.conf'
+	[fpm-alpine]='nginx.conf'
+)
+
 declare -A compose=(
 	[apache]='apache'
 	[fpm]='fpm'
@@ -25,7 +31,7 @@ variants=(
 	fpm-alpine
 )
 
-min_version='5.0'
+min_version='6.0'
 
 
 # version_greater_or_equal A B returns whether A >= B
@@ -33,16 +39,18 @@ function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
-php_versions=( "7.1" )
+php_versions=( "7.2" )
 
 dockerRepo="monogramm/docker-dolibarr"
 latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
 	grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
-	sort -urV ) )
+	sort -urV )
+	develop )
 
 # Remove existing images
 echo "reset docker images"
-find ./images -maxdepth 1 -type d -regextype sed -regex '\./images/[[:digit:]]\+\.[[:digit:]]\+' -exec rm -r '{}' \;
+rm -rf ./images/
+mkdir -p ./images
 
 echo "update docker images"
 travisEnv=
@@ -63,8 +71,21 @@ for latest in "${latests[@]}"; do
 				echo "generating $latest [$version] php$php_version-$variant"
 				mkdir -p "$dir"
 
+				# Copy the files
+				for name in entrypoint; do
+					cp "docker-$name.sh" "$dir/$name.sh"
+					chmod 755 "$dir/$name.sh"
+				done
+
 				template="Dockerfile-${base[$variant]}.template"
 				cp "$template" "$dir/Dockerfile"
+
+				cp ".dockerignore" "$dir/.dockerignore"
+				cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
+
+				if [ -f "docker-${conf[$variant]}" ]; then
+					cp "docker-${conf[$variant]}" "$dir/${conf[$variant]}"
+				fi
 
 				# Replace the variables.
 				sed -ri -e '
@@ -73,15 +94,6 @@ for latest in "${latests[@]}"; do
 					s/%%VERSION%%/'"$latest"'/g;
 					s/%%CMD%%/'"${cmd[$variant]}"'/g;
 				' "$dir/Dockerfile"
-
-				# Copy the shell scripts
-				for name in entrypoint; do
-					cp "docker-$name.sh" "$dir/$name.sh"
-					chmod 755 "$dir/$name.sh"
-				done
-
-				cp ".dockerignore" "$dir/.dockerignore"
-				cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
 
 				travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant$travisEnv"
 

@@ -1,9 +1,9 @@
-FROM php:%%PHP_VERSION%%-%%VARIANT%%
+FROM php:7.2-fpm
 
 LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>"
 
 # Build time env var
-ENV DOLI_VERSION=%%VERSION%%
+ENV DOLI_VERSION=6.0.8
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -108,4 +108,4 @@ RUN set -ex; \
 	chmod 755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["%%CMD%%"]
+CMD ["php-fpm"]
