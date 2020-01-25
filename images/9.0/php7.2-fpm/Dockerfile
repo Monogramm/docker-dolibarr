@@ -2,17 +2,10 @@ FROM php:7.2-fpm
 
 LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>"
 
-# Build time env var
-ENV DOLI_VERSION=9.0.4
-
-# Get Dolibarr
-ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
-
 # Install the packages we need
 # Install the PHP extensions we need
 # see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 # Prepare folders
-# Install Dolibarr from tag archive
 RUN set -ex; \
 	apt-get update -q; \
 	apt-get install -y --no-install-recommends \
@@ -55,14 +48,9 @@ RUN set -ex; \
     docker-php-ext-enable imagick; \
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
-    chmod -R g=u /var/www; \
-    mkdir -p /tmp/dolibarr; \
-	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
-	rm /tmp/dolibarr.zip; \
-	mkdir -p /usr/src/dolibarr; \
-	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
-	rm -rf /tmp/dolibarr; \
-	chmod +x /usr/src/dolibarr/scripts/*
+    chmod -R g=u /var/www
+
+VOLUME /var/www/html /var/www/documents /var/www/scripts
 
 # Runtime env var
 ENV DOLI_AUTO_CONFIGURE=1 \
@@ -101,7 +89,21 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_UPLOAD=20M \
 	PHP_MAX_EXECUTION_TIME=300
 
-VOLUME /var/www/html /var/www/documents /var/www/scripts
+# Build time env var
+ENV DOLI_VERSION=9.0.4
+
+# Get Dolibarr
+ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
+
+# Install Dolibarr from tag archive
+RUN set -ex; \
+    mkdir -p /tmp/dolibarr; \
+	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
+	rm /tmp/dolibarr.zip; \
+	mkdir -p /usr/src/dolibarr; \
+	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
+	rm -rf /tmp/dolibarr; \
+	chmod +x /usr/src/dolibarr/scripts/*
 
 COPY entrypoint.sh /
 RUN set -ex; \
