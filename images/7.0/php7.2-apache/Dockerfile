@@ -31,7 +31,7 @@ RUN set -ex; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install \
+	docker-php-ext-install -j "$(nproc)" \
 		calendar \
 		gd \
 		ldap \
