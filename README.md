@@ -555,7 +555,7 @@ Here is a sample `nginx.conf` file expected to be in the same folder:
         location ~ [^/]\.php(/|$) {
             # try_files $uri =404;
             fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-            fastcgi_pass dolifpm:9000;
+            fastcgi_pass dolibarr:9000;
             fastcgi_index index.php;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
