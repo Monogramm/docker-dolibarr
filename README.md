@@ -74,7 +74,7 @@ Now you can access Dolibarr at <http://localhost:8080/> from your host system.
 
 To use the fpm image you need an additional web server that can proxy http-request to the fpm-port of the container. For fpm connection this container exposes port 9000. In most cases you might want use another container or your host as proxy.
 If you use your host you can address your Dolibarr container directly on port 9000. If you use another container, make sure that you add them to the same docker network (via `docker run --network <NAME> ...` or a `docker-compose` file).
-In both cases you don't want to map the fpm port to you host. 
+In both cases you don't want to map the fpm port to you host.
 
 ```console
 $ docker run -d -e DOLI_AUTO_CONFIGURE='' monogramm/docker-dolibarr:fpm
@@ -119,7 +119,7 @@ $ docker run -d \
     --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
 ```
 
-If you want to get fine grained access to your individual files, you can mount additional volumes for config, your theme and custom modules. 
+If you want to get fine grained access to your individual files, you can mount additional volumes for config, your theme and custom modules.
 The `conf` is stored in subfolder inside `/var/www/html/`. The modules are split into core `apps` (which are shipped with Dolibarr and you don't need to take care of) and a `custom` folder. If you use a custom theme it would go into the `theme` subfolder.
 
 Overview of the folders that can be mounted as volumes:
@@ -175,7 +175,7 @@ Examples:
 
 ### DOLI_DB_HOST
 
-_Default value_: 
+_Default value_:
 
 This parameter contains host name or ip address of Dolibarr database server.
 
@@ -221,7 +221,7 @@ Examples:
 
 ### DOLI_DB_PASSWORD
 
-_Default value_: 
+_Default value_:
 
 This parameter contains password used to read and write into Dolibarr database.
 
@@ -264,7 +264,7 @@ Examples:
 
 ### DOLI_DB_ROOT_LOGIN
 
-_Default value_: 
+_Default value_:
 
 This parameter contains the database server root username used to create the Dolibarr database.
 
@@ -277,7 +277,7 @@ Examples:
 
 ### DOLI_DB_ROOT_PASSWORD
 
-_Default value_: 
+_Default value_:
 
 This parameter contains the database server root password used to create the Dolibarr database.
 
@@ -297,7 +297,7 @@ Examples:
 
 ### DOLI_MODULES
 
-_Default value_: 
+_Default value_:
 
 This parameter contains the list (comma separated) of modules to enable in the first install.
 
@@ -312,7 +312,7 @@ _Default value_: `http://localhost`
 
 This parameter defines the root URL of your Dolibarr index.php page without ending "/".
 It must link to the directory htdocs.
-In most cases, this is autodetected but it's still required 
+In most cases, this is autodetected but it's still required
 
 -   to show full url bookmarks for some services (ie: agenda rss export url, ...)
 -   or when using Apache dir aliases (autodetect fails)
@@ -345,7 +345,7 @@ Examples:
 
 ### DOLI_LDAP_HOST
 
-_Default value_: 
+_Default value_:
 
 You can define several servers here separated with a comma.
 
@@ -370,7 +370,7 @@ _Possible values_: `openldap`, `activedirectory` or `egroupware`
 
 ### DOLI_LDAP_DN
 
-_Default value_: 
+_Default value_:
 
 Examples:
 
@@ -384,7 +384,7 @@ Ex: uid or samaccountname for active directory
 
 ### DOLI_LDAP_FILTER
 
-_Default value_: 
+_Default value_:
 
 If defined, the two previous parameters are not used to find a user into LDAP.
 
@@ -395,7 +395,7 @@ Examples:
 
 ### DOLI_LDAP_ADMIN_LOGIN
 
-_Default value_: 
+_Default value_:
 
 Required only if anonymous bind disabled.
 
@@ -405,9 +405,9 @@ Examples:
 
 ### DOLI_LDAP_ADMIN_PASS
 
-_Default value_: 
+_Default value_:
 
-Required only if anonymous bind disabled. Ex: 
+Required only if anonymous bind disabled. Ex:
 
 Examples:
 
@@ -445,8 +445,8 @@ This parameter allows to force the HTTPS mode.
 -   '<https://my.domain.com>' = Force redirect to https using this domain name.
 
 _Warning_: If you enable this parameter, your web server must be configured to
-respond URL with https protocol. 
-According to your web server setup, some values may work and other not. Try 
+respond URL with https protocol.
+According to your web server setup, some values may work and other not. Try
 different values (1,2 or '<https://my.domain.com'>) if you experience problems.
 
 Examples:
@@ -511,7 +511,7 @@ ID of group www-data. ID will not change if left empty.
 
 ## Base version - apache with MariaDB/MySQL
 
-This version will use the apache image and add a [MariaDB](https://hub.docker.com/_/mariadb/) container (you can also use [MySQL](https://hub.docker.com/_/mysql/) if you prefer). The volumes are set to keep your data persistent. This setup provides **no ssl encryption** and is intended to run behind a proxy. 
+This version will use the apache image and add a [MariaDB](https://hub.docker.com/_/mariadb/) container (you can also use [MySQL](https://hub.docker.com/_/mysql/) if you prefer). The volumes are set to keep your data persistent. This setup provides **no ssl encryption** and is intended to run behind a proxy.
 
 Make sure to set the variables `MYSQL_ROOT_PASSWORD`, `MYSQL_PASSWORD`, `DOLI_DB_PASSWORD` before you run this setup.
 
@@ -530,7 +530,7 @@ In this example, the Dolibarr scripts, documents, HTML and database will all be 
 
 When using the FPM image you need another container that acts as web server on port 80 and proxies the requests to the Dolibarr container. In this example a simple nginx container is combined with the monogramm/docker-dolibarr-fpm image and a [PostgreSQL](https://hub.docker.com/_/postgres/) database container. The data is stored in docker volumes. The nginx container also need access to static files from your Dolibarr installation. It gets access to all the volumes mounted to Dolibarr via the `volumes_from` option. The configuration for nginx is stored in the configuration file `nginx.conf`, that is mounted into the container.
 
-As this setup does **not include encryption** it should to be run behind a proxy. 
+As this setup does **not include encryption** it should to be run behind a proxy.
 
 Make sure to set the variables `POSTGRES_PASSWORD` and `DOLI_DB_PASSWORD` before you run this setup.
 
@@ -580,7 +580,7 @@ Until here your Dolibarr is just available from you docker host. If you want you
 
 ## HTTPS - SSL encryption
 
-There are many different possibilities to introduce encryption depending on your setup. 
+There are many different possibilities to introduce encryption depending on your setup.
 
 We recommend using a reverse proxy in front of our Dolibarr installation. Your Dolibarr will only be reachable through the proxy, which encrypts all traffic to the clients. You can mount your manually generated certificates to the proxy or use a fully automated solution, which generates and renews the certificates for you.
 
@@ -658,7 +658,7 @@ If you use your own Dockerfile you need to configure your docker-compose file ac
 **Updating** your own derived image is also very simple. When a new version of the Dolibarr image is available run:
 
 ```console
-docker build -t your-name --pull . 
+docker build -t your-name --pull .
 docker run -d your-name
 ```
 
