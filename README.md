@@ -25,27 +25,31 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 [Dockerhub monogramm/docker-dolibarr/](https://hub.docker.com/r/monogramm/docker-dolibarr/)
 
 -   Dolibarr develop branch (:construction: potentially unstable)
-    -   [`develop`: /images/develop/php7.2-apache](/images/develop/php7.2-apache/Dockerfile)
+    -   [`develop`: /images/develop/php7.2-apache](/images/develop/php7.2-apache-amd64/Dockerfile)
+-   Dolibarr 11
+    -   [`11.0-apache` `apache` `latest`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache-amd64/Dockerfile)
+    -   [`11.0-fpm` `fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`11.0-alpine` `alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 10
-    -   [`10.0-apache` `10.0` `apache` `latest`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache/Dockerfile)
-    -   [`10.0-fpm` `fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm)
-    -   [`10.0-alpine` `alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine)
+    -   [`10.0-apache`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache-amd64/Dockerfile)
+    -   [`10.0-fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`10.0-alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 9.0
-    -   [`9.0-apache` `9.0`: /images/9.0/php7.2-apache](/images/9.0/php7.2-apache/Dockerfile)
-    -   [`9.0-fpm`: /images/9.0/php7.2-fpm](/images/9.0/php7.2-fpm)
-    -   [`9.0-alpine`: /images/9.0/php7.2-alpine](/images/9.0/php7.2-alpine)
+    -   [`9.0-apache`: /images/9.0/php7.2-apache](/images/9.0/php7.2-apache-amd64/Dockerfile)
+    -   [`9.0-fpm`: /images/9.0/php7.2-fpm](/images/9.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`9.0-alpine`: /images/9.0/php7.2-alpine](/images/9.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 8.0
-    -   [`8.0-apache` `8.0`: /images/8.0/php7.2-apache](/images/8.0/php7.2-apache/Dockerfile)
-    -   [`8.0-fpm`: /images/8.0/php7.2-fpm](/images/8.0/php7.2-fpm)
-    -   [`8.0-alpine`: /images/8.0/php7.2-alpine](/images/8.0/php7.2-alpine)
+    -   [`8.0-apache`: /images/8.0/php7.2-apache](/images/8.0/php7.2-apache-amd64/Dockerfile)
+    -   [`8.0-fpm`: /images/8.0/php7.2-fpm](/images/8.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`8.0-alpine`: /images/8.0/php7.2-alpine](/images/8.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 7.0
-    -   [`7.0-apache` `7.0`: /images/7.0/php7.2-apache](/images/7.0/php7.2-apache/Dockerfile)
-    -   [`7.0-fpm`: /images/7.0/php7.2-fpm](/images/7.0/php7.2-fpm)
-    -   [`7.0-alpine`: /images/7.0/php7.2-alpine](/images/7.0/php7.2-alpine)
+    -   [`7.0-apache`: /images/7.0/php7.2-apache](/images/7.0/php7.2-apache-amd64/Dockerfile)
+    -   [`7.0-fpm`: /images/7.0/php7.2-fpm](/images/7.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`7.0-alpine`: /images/7.0/php7.2-alpine](/images/7.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 6.0
-    -   [`6.0-apache` `6.0`: /images/6.0/php7.2-apache](/images/6.0/php7.2-apache/Dockerfile)
-    -   [`6.0-fpm`: /images/6.0/php7.2-fpm](/images/6.0/php7.2-fpm)
-    -   [`6.0-alpine`: /images/6.0/php7.2-alpine](/images/6.0/php7.2-alpine)
+    -   [`6.0-apache`: /images/6.0/php7.2-apache](/images/6.0/php7.2-apache-amd64/Dockerfile)
+    -   [`6.0-fpm`: /images/6.0/php7.2-fpm](/images/6.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`6.0-alpine`: /images/6.0/php7.2-alpine](/images/6.0/php7.2-alpine-amd64/Dockerfile)
 
 ## How to run this image ?
 
