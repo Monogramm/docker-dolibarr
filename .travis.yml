@@ -1,9 +1,9 @@
+os: linux
 dist: trusty
-sudo: required
 
 services: docker
 
-language: bash
+language: shell
 
 branches:
   only:
@@ -15,12 +15,23 @@ before_script:
 
 script:
   - cd "$dir"
+  # Test container build
   - docker-compose build
   - docker images
+  # Test container run
   - travis_retry docker-compose up -d && sleep 90
   - docker-compose ps
-  - docker-compose logs
+  - docker-compose logs "dolibarrdb"
   - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose logs "dolibarr"
+  - docker-compose ps "dolibarr" | grep "Up"
+  # Test container restart
+  - docker-compose down
+  - travis_retry docker-compose up -d && sleep 90
+  - docker-compose ps
+  - docker-compose logs "dolibarrdb"
+  - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose logs "dolibarr"
   - docker-compose ps "dolibarr" | grep "Up"
 
 notifications:
