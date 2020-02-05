@@ -20,7 +20,7 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 
 > [More informations](https://github.com/dolibarr/dolibarr)
 
-## Supported tags
+## Supported tags and respective `Dockerfile` links
 
 [Dockerhub monogramm/docker-dolibarr/](https://hub.docker.com/r/monogramm/docker-dolibarr/)
 
@@ -50,6 +50,11 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
     -   [`6.0-apache`: /images/6.0/php7.2-apache](/images/6.0/php7.2-apache-amd64/Dockerfile)
     -   [`6.0-fpm`: /images/6.0/php7.2-fpm](/images/6.0/php7.2-fpm-amd64/Dockerfile)
     -   [`6.0-alpine`: /images/6.0/php7.2-alpine](/images/6.0/php7.2-alpine-amd64/Dockerfile)
+
+## Quick reference
+
+-	**Supported architectures**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64))  
+	[`amd64`](https://hub.docker.com/r/amd64/php/), [`arm32v5`](https://hub.docker.com/r/arm32v5/php/), [`arm32v6`](https://hub.docker.com/r/arm32v6/php/), [`arm32v7`](https://hub.docker.com/r/arm32v7/php/), [`arm64v8`](https://hub.docker.com/r/arm64v8/php/), [`i386`](https://hub.docker.com/r/i386/php/), [`ppc64le`](https://hub.docker.com/r/ppc64le/php/)
 
 ## How to run this image ?
 
