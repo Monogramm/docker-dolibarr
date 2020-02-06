@@ -26,10 +26,14 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 
 -   Dolibarr develop branch (:construction: potentially unstable)
     -   [`develop`: /images/develop/php7.2-apache](/images/develop/php7.2-apache/Dockerfile)
+-   Dolibarr 11
+    -   [`11.0-apache` `11.0` `apache` `latest`: /images/11.0/php7.2-apache](/images/11.0/php7.2-apache/Dockerfile)
+    -   [`11.0-fpm` `fpm`: /images/11.0/php7.2-fpm](/images/11.0/php7.2-fpm)
+    -   [`11.0-alpine` `alpine`: /images/11.0/php7.2-alpine](/images/11.0/php7.2-alpine)
 -   Dolibarr 10
-    -   [`10.0-apache` `10.0` `apache` `latest`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache/Dockerfile)
-    -   [`10.0-fpm` `fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm/Dockerfile)
-    -   [`10.0-alpine` `alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine/Dockerfile)
+    -   [`10.0-apache` `10.0`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache/Dockerfile)
+    -   [`10.0-fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm/Dockerfile)
+    -   [`10.0-alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine/Dockerfile)
 -   Dolibarr 9.0
     -   [`9.0-apache` `9.0`: /images/9.0/php7.2-apache](/images/9.0/php7.2-apache/Dockerfile)
     -   [`9.0-fpm`: /images/9.0/php7.2-fpm](/images/9.0/php7.2-fpm/Dockerfile)
