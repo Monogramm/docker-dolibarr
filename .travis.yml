@@ -43,9 +43,6 @@ matrix:
     - os: linux
       # Ref: https://docs.travis-ci.com/user/reference/linux
       dist: xenial
-    - os: osx
-      # Ref: https://docs.travis-ci.com/user/reference/osx
-      osx_image: xcode11.3
 
 env: # Environments
     - VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=i386
