@@ -3,7 +3,13 @@ version: "2"
 services:
   dolibarr:
     #image: dolibarr/docker-dolibarr:apache
-    build: ./
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args: 
+        - TAG=${TAG}
+        - VCS_REF=${VCS_REF}
+        - BUILD_DATE=${BUILD_DATE}
     container_name: dolibarr
     #restart: always
     depends_on:

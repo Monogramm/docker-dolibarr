@@ -85,18 +85,18 @@ for latest in "${latests[@]}"; do
 
 					# Copy the files
 					for name in entrypoint; do
-						cp "docker-$name.sh" "$dir/$name.sh"
+						cp "template/$name.sh" "$dir/$name.sh"
 						chmod 755 "$dir/$name.sh"
 					done
 
-					template="Dockerfile-${base[$variant]}.template"
+					template="template/Dockerfile-${base[$variant]}.template"
 					cp "$template" "$dir/Dockerfile"
 
-					cp ".dockerignore" "$dir/.dockerignore"
-					cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
+					cp "template/.dockerignore" "$dir/.dockerignore"
+					cp "template/docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
 
-					if [ -f "docker-${conf[$variant]}" ]; then
-						cp "docker-${conf[$variant]}" "$dir/${conf[$variant]}"
+					if [ -f "template/${conf[$variant]}" ]; then
+						cp "template/${conf[$variant]}" "$dir/${conf[$variant]}"
 					fi
 
 					# Replace the variables.
