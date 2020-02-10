@@ -1,7 +1,5 @@
 FROM i386/php:7.2-fpm-alpine
 
-LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>"
-
 # Install the packages we need
 # Install the PHP extensions we need
 # see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
@@ -118,6 +116,35 @@ RUN set -ex; \
 COPY entrypoint.sh /
 RUN set -ex; \
 	chmod 755 /entrypoint.sh
+
+# Arguments to label built container
+ARG VCS_REF
+ARG BUILD_DATE
+ARG VERSION=9.0.4
+
+# Container labels (http://label-schema.org/)
+# Container annotations (https://github.com/opencontainers/image-spec)
+LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
+      product="Dolibarr" \
+      version=$VERSION \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/Monogramm/docker-dolibarr" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="Dolibarr" \
+      org.label-schema.description="Open Source ERP & CRM for Business" \
+      org.label-schema.url="https://www.dolibarr.org/" \
+      org.label-schema.vendor="Dolibarr" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0" \
+      org.opencontainers.image.revision=$VCS_REF \
+      org.opencontainers.image.source="https://github.com/Monogramm/docker-dolibarr" \
+      org.opencontainers.image.created=$BUILD_DATE \
+      org.opencontainers.image.title="Dolibarr" \
+      org.opencontainers.image.description="Open Source ERP & CRM for Business" \
+      org.opencontainers.image.url="https://www.dolibarr.org/" \
+      org.opencontainers.image.vendor="Dolibarr" \
+      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.authors="Monogramm maintainers <opensource at monogramm dot io>"
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
