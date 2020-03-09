@@ -41,7 +41,7 @@ archis=(
 	#ppc64le
 )
 
-min_version='6.0'
+min_version='7.0'
 
 
 # version_greater_or_equal A B returns whether A >= B
