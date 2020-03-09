@@ -43,6 +43,13 @@ matrix:
     - os: linux
       # Ref: https://docs.travis-ci.com/user/reference/linux
       dist: xenial
+  allow_failures:
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=i386
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=amd64
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm ARCHI=i386
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm ARCHI=amd64
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=apache ARCHI=i386
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=apache ARCHI=amd64
 
 env: # Environments
     - VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=i386
