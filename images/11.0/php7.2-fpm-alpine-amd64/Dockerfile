@@ -38,9 +38,11 @@ RUN set -ex; \
 	; \
 	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
+    docker-php-ext-configure intl; \
 	docker-php-ext-install -j "$(nproc)" \
 		calendar \
 		gd \
+        intl \
 		ldap \
 		mbstring \
 		mysqli \
@@ -98,7 +100,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ENV DOLI_VERSION=11.0.0
+ENV DOLI_VERSION=11.0.2
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -120,7 +122,7 @@ RUN set -ex; \
 # Arguments to label built container
 ARG VCS_REF
 ARG BUILD_DATE
-ARG VERSION=11.0.0
+ARG VERSION=11.0.2
 
 # Container labels (http://label-schema.org/)
 # Container annotations (https://github.com/opencontainers/image-spec)
