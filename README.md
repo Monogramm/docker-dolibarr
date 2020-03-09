@@ -1,7 +1,3 @@
-[uri_license]: http://www.gnu.org/licenses/agpl.html
-
-[uri_license_image]: https://img.shields.io/badge/License-AGPL%20v3-blue.svg
-
 [![License: AGPL v3][uri_license_image]][uri_license]
 [![Build Status](https://travis-ci.org/Monogramm/docker-dolibarr.svg)](https://travis-ci.org/Monogramm/docker-dolibarr)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
@@ -47,10 +43,18 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
     -   [`7.0-fpm`: /images/7.0/php7.2-fpm](/images/7.0/php7.2-fpm-amd64/Dockerfile)
     -   [`7.0-alpine`: /images/7.0/php7.2-alpine](/images/7.0/php7.2-alpine-amd64/Dockerfile)
 
+<!--
 ## Quick reference
 
 -   **Supported architectures**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64))  
-    [`amd64`](https://hub.docker.com/r/amd64/php/), [`arm32v5`](https://hub.docker.com/r/arm32v5/php/), [`arm32v6`](https://hub.docker.com/r/arm32v6/php/), [`arm32v7`](https://hub.docker.com/r/arm32v7/php/), [`arm64v8`](https://hub.docker.com/r/arm64v8/php/), [`i386`](https://hub.docker.com/r/i386/php/), [`ppc64le`](https://hub.docker.com/r/ppc64le/php/)
+    -   [`amd64`](https://hub.docker.com/r/amd64/php/)
+    -   [`arm32v5`](https://hub.docker.com/r/arm32v5/php/)
+    -   [`arm32v6`](https://hub.docker.com/r/arm32v6/php/)
+    -   [`arm32v7`](https://hub.docker.com/r/arm32v7/php/)
+    -   [`arm64v8`](https://hub.docker.com/r/arm64v8/php/)
+    -   [`i386`](https://hub.docker.com/r/i386/php/)
+    -   [`ppc64le`](https://hub.docker.com/r/ppc64le/php/)
+-->
 
 ## How to run this image ?
 
@@ -679,3 +683,7 @@ The `--pull` option tells docker to look for new versions of the base image. The
 # Questions / Issues
 
 If you got any questions or problems using the image, please visit our [Github Repository](https://github.com/Monogramm/docker-dolibarr) and write an issue.  
+
+[uri_license]: http://www.gnu.org/licenses/agpl.html
+
+[uri_license_image]: https://img.shields.io/badge/License-AGPL%20v3-blue.svg
