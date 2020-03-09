@@ -46,10 +46,6 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
     -   [`7.0-apache`: /images/7.0/php7.2-apache](/images/7.0/php7.2-apache-amd64/Dockerfile)
     -   [`7.0-fpm`: /images/7.0/php7.2-fpm](/images/7.0/php7.2-fpm-amd64/Dockerfile)
     -   [`7.0-alpine`: /images/7.0/php7.2-alpine](/images/7.0/php7.2-alpine-amd64/Dockerfile)
--   Dolibarr 6.0
-    -   [`6.0-apache`: /images/6.0/php7.2-apache](/images/6.0/php7.2-apache-amd64/Dockerfile)
-    -   [`6.0-fpm`: /images/6.0/php7.2-fpm](/images/6.0/php7.2-fpm-amd64/Dockerfile)
-    -   [`6.0-alpine`: /images/6.0/php7.2-alpine](/images/6.0/php7.2-alpine-amd64/Dockerfile)
 
 ## Quick reference
 
