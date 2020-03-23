@@ -1,7 +1,3 @@
-[uri_license]: http://www.gnu.org/licenses/agpl.html
-
-[uri_license_image]: https://img.shields.io/badge/License-AGPL%20v3-blue.svg
-
 [![License: AGPL v3][uri_license_image]][uri_license]
 [![Build Status](https://travis-ci.org/Monogramm/docker-dolibarr.svg)](https://travis-ci.org/Monogramm/docker-dolibarr)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
@@ -20,36 +16,45 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 
 > [More informations](https://github.com/dolibarr/dolibarr)
 
-## Supported tags
+## Supported tags and respective `Dockerfile` links
 
 [Dockerhub monogramm/docker-dolibarr/](https://hub.docker.com/r/monogramm/docker-dolibarr/)
 
 -   Dolibarr develop branch (:construction: potentially unstable)
-    -   [`develop`: /images/develop/php7.2-apache](/images/develop/php7.2-apache/Dockerfile)
+    -   [`develop`: /images/develop/php7.2-apache](/images/develop/php7.2-apache-amd64/Dockerfile)
 -   Dolibarr 11
-    -   [`11.0-apache` `11.0` `apache` `latest`: /images/11.0/php7.2-apache](/images/11.0/php7.2-apache/Dockerfile)
-    -   [`11.0-fpm` `fpm`: /images/11.0/php7.2-fpm](/images/11.0/php7.2-fpm)
-    -   [`11.0-alpine` `alpine`: /images/11.0/php7.2-alpine](/images/11.0/php7.2-alpine)
+    -   [`11.0-apache` `apache` `latest`: /images/11.0/php7.2-apache](/images/11.0/php7.2-apache-amd64/Dockerfile)
+    -   [`11.0-fpm` `fpm`: /images/11.0/php7.2-fpm](/images/11.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`11.0-alpine` `alpine`: /images/11.0/php7.2-alpine](/images/11.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 10
-    -   [`10.0-apache` `10.0`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache/Dockerfile)
-    -   [`10.0-fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm/Dockerfile)
-    -   [`10.0-alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine/Dockerfile)
+    -   [`10.0-apache`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache-amd64/Dockerfile)
+    -   [`10.0-fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`10.0-alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 9.0
-    -   [`9.0-apache` `9.0`: /images/9.0/php7.2-apache](/images/9.0/php7.2-apache/Dockerfile)
-    -   [`9.0-fpm`: /images/9.0/php7.2-fpm](/images/9.0/php7.2-fpm/Dockerfile)
-    -   [`9.0-alpine`: /images/9.0/php7.2-alpine](/images/9.0/php7.2-alpine/Dockerfile)
+    -   [`9.0-apache`: /images/9.0/php7.2-apache](/images/9.0/php7.2-apache-amd64/Dockerfile)
+    -   [`9.0-fpm`: /images/9.0/php7.2-fpm](/images/9.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`9.0-alpine`: /images/9.0/php7.2-alpine](/images/9.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 8.0
-    -   [`8.0-apache` `8.0`: /images/8.0/php7.2-apache](/images/8.0/php7.2-apache/Dockerfile)
-    -   [`8.0-fpm`: /images/8.0/php7.2-fpm](/images/8.0/php7.2-fpm/Dockerfile)
-    -   [`8.0-alpine`: /images/8.0/php7.2-alpine](/images/8.0/php7.2-alpine/Dockerfile)
+    -   [`8.0-apache`: /images/8.0/php7.2-apache](/images/8.0/php7.2-apache-amd64/Dockerfile)
+    -   [`8.0-fpm`: /images/8.0/php7.2-fpm](/images/8.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`8.0-alpine`: /images/8.0/php7.2-alpine](/images/8.0/php7.2-alpine-amd64/Dockerfile)
 -   Dolibarr 7.0
-    -   [`7.0-apache` `7.0`: /images/7.0/php7.2-apache](/images/7.0/php7.2-apache/Dockerfile)
-    -   [`7.0-fpm`: /images/7.0/php7.2-fpm](/images/7.0/php7.2-fpm/Dockerfile)
-    -   [`7.0-alpine`: /images/7.0/php7.2-alpine](/images/7.0/php7.2-alpine/Dockerfile)
--   Dolibarr 6.0
-    -   [`6.0-apache` `6.0`: /images/6.0/php7.2-apache](/images/6.0/php7.2-apache/Dockerfile)
-    -   [`6.0-fpm`: /images/6.0/php7.2-fpm](/images/6.0/php7.2-fpm/Dockerfile)
-    -   [`6.0-alpine`: /images/6.0/php7.2-alpine](/images/6.0/php7.2-alpine/Dockerfile)
+    -   [`7.0-apache`: /images/7.0/php7.2-apache](/images/7.0/php7.2-apache-amd64/Dockerfile)
+    -   [`7.0-fpm`: /images/7.0/php7.2-fpm](/images/7.0/php7.2-fpm-amd64/Dockerfile)
+    -   [`7.0-alpine`: /images/7.0/php7.2-alpine](/images/7.0/php7.2-alpine-amd64/Dockerfile)
+
+<!--
+## Quick reference
+
+-   **Supported architectures**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64))  
+    -   [`amd64`](https://hub.docker.com/r/amd64/php/)
+    -   [`arm32v5`](https://hub.docker.com/r/arm32v5/php/)
+    -   [`arm32v6`](https://hub.docker.com/r/arm32v6/php/)
+    -   [`arm32v7`](https://hub.docker.com/r/arm32v7/php/)
+    -   [`arm64v8`](https://hub.docker.com/r/arm64v8/php/)
+    -   [`i386`](https://hub.docker.com/r/i386/php/)
+    -   [`ppc64le`](https://hub.docker.com/r/ppc64le/php/)
+-->
 
 ## How to run this image ?
 
@@ -678,3 +683,7 @@ The `--pull` option tells docker to look for new versions of the base image. The
 # Questions / Issues
 
 If you got any questions or problems using the image, please visit our [Github Repository](https://github.com/Monogramm/docker-dolibarr) and write an issue.  
+
+[uri_license]: http://www.gnu.org/licenses/agpl.html
+
+[uri_license_image]: https://img.shields.io/badge/License-AGPL%20v3-blue.svg

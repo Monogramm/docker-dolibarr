@@ -31,7 +31,17 @@ variants=(
 	fpm-alpine
 )
 
-min_version='6.0'
+archis=(
+	amd64
+	#arm32v5
+	#arm32v6
+	#arm32v7
+	#arm64v8
+	i386
+	#ppc64le
+)
+
+min_version='7.0'
 
 
 # version_greater_or_equal A B returns whether A >= B
@@ -63,45 +73,50 @@ for latest in "${latests[@]}"; do
 		for php_version in "${php_versions[@]}"; do
 
 			for variant in "${variants[@]}"; do
-				# Create the version+php_version+variant directory with a Dockerfile.
-				dir="images/$version/php$php_version-$variant"
-				if [ -d "$dir" ]; then
-					continue
-				fi
-				echo "generating $latest [$version] php$php_version-$variant"
-				mkdir -p "$dir"
 
-				# Copy the files
-				for name in entrypoint; do
-					cp "docker-$name.sh" "$dir/$name.sh"
-					chmod 755 "$dir/$name.sh"
+				for archi in "${archis[@]}"; do
+					# Create the version+php_version+variant directory with a Dockerfile.
+					dir="images/$version/php$php_version-$variant-$archi"
+					if [ -d "$dir" ]; then
+						continue
+					fi
+					echo "generating $latest [$version] php$php_version-$variant-$archi"
+					mkdir -p "$dir"
+
+					# Copy the files
+					for name in entrypoint; do
+						cp "template/$name.sh" "$dir/$name.sh"
+						chmod 755 "$dir/$name.sh"
+					done
+
+					template="template/Dockerfile.${base[$variant]}.template"
+					cp "$template" "$dir/Dockerfile"
+
+					cp "template/.dockerignore" "$dir/.dockerignore"
+					cp "template/docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
+
+					if [ -f "template/${conf[$variant]}" ]; then
+						cp "template/${conf[$variant]}" "$dir/${conf[$variant]}"
+					fi
+
+					# Replace the variables.
+					sed -ri -e '
+						s/%%PHP_VERSION%%/'"$php_version"'/g;
+						s/%%VARIANT%%/'"$variant"'/g;
+						s/%%ARCHI%%/'"$archi"'/g;
+						s/%%VERSION%%/'"$latest"'/g;
+						s/%%CMD%%/'"${cmd[$variant]}"'/g;
+					' "$dir/Dockerfile"
+
+					travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant"' ARCHI='"$archi$travisEnv"
+
+					if [[ $1 == 'build' ]]; then
+						tag="$version-$php_version-$variant"
+						echo "Build Dockerfile for ${tag}"
+						docker build -t ${dockerRepo}:${tag} $dir
+					fi
 				done
 
-				template="Dockerfile-${base[$variant]}.template"
-				cp "$template" "$dir/Dockerfile"
-
-				cp ".dockerignore" "$dir/.dockerignore"
-				cp "docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
-
-				if [ -f "docker-${conf[$variant]}" ]; then
-					cp "docker-${conf[$variant]}" "$dir/${conf[$variant]}"
-				fi
-
-				# Replace the variables.
-				sed -ri -e '
-					s/%%PHP_VERSION%%/'"$php_version"'/g;
-					s/%%VARIANT%%/'"$variant"'/g;
-					s/%%VERSION%%/'"$latest"'/g;
-					s/%%CMD%%/'"${cmd[$variant]}"'/g;
-				' "$dir/Dockerfile"
-
-				travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant$travisEnv"
-
-				if [[ $1 == 'build' ]]; then
-					tag="$version-$php_version-$variant"
-					echo "Build Dockerfile for ${tag}"
-					docker build -t ${dockerRepo}:${tag} $dir
-				fi
 			done
 
 		done
