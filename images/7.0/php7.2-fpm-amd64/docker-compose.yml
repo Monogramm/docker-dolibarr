@@ -16,7 +16,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
 
-      dolibarr_fpm:
+  dolibarr_fpm:
     build:
       context: ./
       dockerfile: Dockerfile

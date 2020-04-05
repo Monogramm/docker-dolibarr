@@ -28,8 +28,8 @@ fi
 
 # Add your own tests
 # https://docs.docker.com/docker-hub/builds/automated-testing/
-log "Check Dolibarr app home page..."
-wget http://dolibarr:80
+#log "Check Dolibarr app home page..."
+#wget http://dolibarr:80
 
 if [ ! -f /srv/dolibarr/documents/install.lock ]; then
     log 'Installing Dolibarr...'
