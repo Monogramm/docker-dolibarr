@@ -16,7 +16,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
 
-  dolibarr:
+  dolibarr_fpm:
     build:
       context: ./
       dockerfile: Dockerfile
@@ -25,7 +25,7 @@ services:
         - VCS_REF=${VCS_REF}
         - BUILD_DATE=${BUILD_DATE}
     image: ${IMAGE_NAME}
-    container_name: dolibarr
+    container_name: dolibarr_fpm
     #restart: always
     depends_on:
       - dolibarr_db
@@ -58,18 +58,18 @@ services:
       - POSTGRES_USER=${DOLIBARR_DB_USER}
       - POSTGRES_PASSWORD=${DOLIBARR_DB_PASSWORD}
 
-  dolibarr_nginx:
+  dolibarr:
     image: nginx:latest
-    container_name: dolibarr_nginx
+    container_name: dolibarr
     #restart: always
     ports:
       - 80:80
       # If you need SSL connection
       # - '443:443'
     depends_on:
-      - dolibarr
+      - dolibarr_fpm
     links:
-      - dolibarr
+      - dolibarr_fpm
     volumes:
       - /srv/dolibarr/html:/var/www/html
       # Provide a custom nginx conf
