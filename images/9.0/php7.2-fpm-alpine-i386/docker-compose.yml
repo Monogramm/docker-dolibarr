@@ -8,8 +8,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - dolibarr_db
+      - dolibarr_fpm
       - dolibarr
-      - dolibarr_nginx
     volumes_from:
       - dolibarr
     volumes:
