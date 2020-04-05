@@ -103,7 +103,8 @@ RUN set -ex; \
 	mkdir -p /usr/src/dolibarr; \
 	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
 	rm -rf /tmp/dolibarr; \
-	chmod +x /usr/src/dolibarr/scripts/*
+	chmod +x /usr/src/dolibarr/scripts/*; \
+	echo "${DOLI_VERSION}" > /usr/src/dolibarr/.docker-image-version
 
 COPY entrypoint.sh /
 RUN set -ex; \
@@ -115,13 +116,12 @@ CMD ["php-fpm"]
 # Arguments to label built container
 ARG VCS_REF
 ARG BUILD_DATE
-ARG VERSION=11.0.3
 
 # Container labels (http://label-schema.org/)
 # Container annotations (https://github.com/opencontainers/image-spec)
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
       product="Dolibarr" \
-      version=$VERSION \
+      version=$DOLI_VERSION \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/Monogramm/docker-dolibarr" \
       org.label-schema.build-date=$BUILD_DATE \
@@ -129,7 +129,7 @@ LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
       org.label-schema.description="Open Source ERP & CRM for Business" \
       org.label-schema.url="https://www.dolibarr.org/" \
       org.label-schema.vendor="Dolibarr" \
-      org.label-schema.version=$VERSION \
+      org.label-schema.version=$DOLI_VERSION \
       org.label-schema.schema-version="1.0" \
       org.opencontainers.image.revision=$VCS_REF \
       org.opencontainers.image.source="https://github.com/Monogramm/docker-dolibarr" \
@@ -138,5 +138,5 @@ LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
       org.opencontainers.image.description="Open Source ERP & CRM for Business" \
       org.opencontainers.image.url="https://www.dolibarr.org/" \
       org.opencontainers.image.vendor="Dolibarr" \
-      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.version=$DOLI_VERSION \
       org.opencontainers.image.authors="Monogramm maintainers <opensource at monogramm dot io>"

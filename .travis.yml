@@ -9,7 +9,7 @@ branches:
 before_script:
   - env | sort
   - dir="images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}"
-  - export TAG=${VERSION}-${VARIANT}-travis
+  - export TAG=${VERSION}-php${PHP_VERSION}-${VARIANT}-${ARCHI}
   - export VCS_REF=`git rev-parse --short HEAD`
   - export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
   - export IMAGE_NAME=monogramm/docker-dolibarr:${TAG}
