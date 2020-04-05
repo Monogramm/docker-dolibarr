@@ -22,24 +22,24 @@ script:
   # Test container run
   - travis_retry docker-compose up -d && sleep 90
   - docker-compose ps
-  - docker-compose logs "dolibarrdb"
-  - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose logs "dolibarr_db"
+  - docker-compose ps "dolibarr_db" | grep "Up"
   - docker-compose logs "dolibarr"
   - docker-compose ps "dolibarr" | grep "Up"
   - echo 'Wait until containers init and tests are over' && sleep 120
-  - docker-compose -f docker-compose_${DATABASE}.test.yml logs "sut"
-  - docker-compose -f docker-compose_${DATABASE}.test.yml ps "sut" | grep "Exit 0"
+  - docker-compose logs "sut"
+  - docker-compose ps "sut" | grep "Exit 0"
   # Test container restart
   - docker-compose down
   - travis_retry docker-compose up -d && sleep 90
   - docker-compose ps
-  - docker-compose logs "dolibarrdb"
-  - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose logs "dolibarr_db"
+  - docker-compose ps "dolibarr_db" | grep "Up"
   - docker-compose logs "dolibarr"
   - docker-compose ps "dolibarr" | grep "Up"
   - echo 'Wait until containers init and tests are over' && sleep 120
-  - docker-compose -f docker-compose_${DATABASE}.test.yml logs "sut"
-  - docker-compose -f docker-compose_${DATABASE}.test.yml ps "sut" | grep "Exit 0"
+  - docker-compose logs "sut"
+  - docker-compose ps "sut" | grep "Exit 0"
 
 notifications:
   email: false
