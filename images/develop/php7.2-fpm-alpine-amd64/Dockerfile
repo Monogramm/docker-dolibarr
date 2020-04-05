@@ -35,6 +35,7 @@ RUN set -ex; \
 		postgresql-dev \
 		postgresql-libs \
 		unzip \
+		zlib-dev \
 	; \
 	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
@@ -56,6 +57,7 @@ RUN set -ex; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
 	apk --purge del .build-deps; \
+    rm -rf /var/lib/apt/lists/*; \
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www

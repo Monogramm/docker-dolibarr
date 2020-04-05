@@ -13,8 +13,10 @@ RUN set -ex; \
 		sendmail \
 	; \
 	apt-get install -y --no-install-recommends \
+		g++ \
 		libcurl4-openssl-dev \
 		libfreetype6-dev \
+		libicu-dev \
 		libjpeg-dev \
 		libldap2-dev \
 		libmagickcore-dev \
@@ -24,8 +26,8 @@ RUN set -ex; \
 		libpq-dev \
 		libxml2-dev \
 		unzip \
+		zlib1g-dev \
 	; \
-	rm -rf /var/lib/apt/lists/*; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
@@ -46,6 +48,7 @@ RUN set -ex; \
 	; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
+	rm -rf /var/lib/apt/lists/*; \
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www
