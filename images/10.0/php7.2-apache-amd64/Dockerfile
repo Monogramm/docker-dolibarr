@@ -90,7 +90,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ENV DOLI_VERSION=10.0.6
+ARG DOLI_VERSION=10.0.7
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -109,10 +109,13 @@ COPY entrypoint.sh /
 RUN set -ex; \
 	chmod 755 /entrypoint.sh
 
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["apache2-foreground"]
+
 # Arguments to label built container
 ARG VCS_REF
 ARG BUILD_DATE
-ARG VERSION=10.0.6
+ARG VERSION=10.0.7
 
 # Container labels (http://label-schema.org/)
 # Container annotations (https://github.com/opencontainers/image-spec)
@@ -137,6 +140,3 @@ LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
       org.opencontainers.image.vendor="Dolibarr" \
       org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.authors="Monogramm maintainers <opensource at monogramm dot io>"
-
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["apache2-foreground"]
