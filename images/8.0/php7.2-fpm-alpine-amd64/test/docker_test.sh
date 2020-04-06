@@ -28,10 +28,8 @@ fi
 
 # Add your own tests
 # https://docs.docker.com/docker-hub/builds/automated-testing/
-#log "Check Dolibarr app home page..."
-#wget http://${DOLI_TEST_HOSTNAME}:80
 
-if [ ! -f /srv/dolibarr/documents/install.lock ]; then
+if [ ! -f /var/www/documents/install.lock ]; then
     log 'Installing Dolibarr...'
 
     mkdir -p /tmp/logs
@@ -53,20 +51,22 @@ if [ ! -f /srv/dolibarr/documents/install.lock ]; then
         --data "testpost=ok&action=set&selectlang=fr_FR&pass=${DOLI_DB_PASSWORD}&pass_verif=${DOLI_DB_PASSWORD}" \
         > /tmp/logs/install_step5.status
 
-    cat /tmp/logs/install_step5.status
     if ! grep -q 200 /tmp/logs/install_step5.status; then 
         log "Something went wrong during Dolibarr administration setup. Check the logs for details: $(cat /tmp/logs/install_step5.html)"
         exit 1
     fi
 
-    if [ ! -f /srv/dolibarr/documents/install.lock ]; then
+    if [ ! -f /var/www/documents/install.lock ]; then
         log 'Something went wrong during Dolibarr install. Check the logs for details.'
         exit 1
     fi
 
 else
-    log "Dolibarr already installed: $(cat /srv/dolibarr/documents/install.lock)"
+    log "Dolibarr already installed: $(cat /var/www/documents/install.lock)"
 fi
+
+log "Check Dolibarr app home page..."
+wget http://${DOLI_TEST_HOSTNAME}:80
 
 # Success
 log 'Docker tests successful'
