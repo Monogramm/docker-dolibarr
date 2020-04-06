@@ -15,6 +15,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     environment:
+      - DOLI_TEST_HOSTNAME=dolibarr
       - DOLI_DB_NAME=${DOLIBARR_DB_NAME}
       - DOLI_DB_USER=${DOLIBARR_DB_USER}
       - DOLI_DB_PASSWORD=${DOLIBARR_DB_PASSWORD}

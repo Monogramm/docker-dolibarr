@@ -25,7 +25,6 @@ script:
   - docker-compose logs "dolibarr_db"
   - docker-compose ps "dolibarr_db" | grep "Up"
   - docker-compose logs "dolibarr"
-  - docker-compose logs
   - docker-compose ps "dolibarr" | grep "Up"
   - echo 'Wait until containers init and tests are over' && sleep 120
   - docker-compose logs "sut"
@@ -37,7 +36,7 @@ script:
   - docker-compose ps
   - docker-compose logs "dolibarr_db"
   - docker-compose ps "dolibarr_db" | grep "Up"
-  - docker-compose logs
+  - docker-compose logs "dolibarr"
   - docker-compose ps "dolibarr" | grep "Up"
   - echo 'Wait until containers init and tests are over' && sleep 120
   - docker-compose logs "sut"
