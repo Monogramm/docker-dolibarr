@@ -35,10 +35,12 @@ if [ ! -f /var/www/documents/install.lock ]; then
     mkdir -p /tmp/logs
 
     log 'Calling Dolibarr install (step 2)...'
+    set +e
     curl -kL -o /tmp/logs/install_step2.html -s -w "%{http_code}" \
         -X POST "http://${DOLI_TEST_HOSTNAME}:80/install/step2.php" \
         --data "testpost=ok&action=set&dolibarr_main_db_character_set=utf8&dolibarr_main_db_collation=utf8_unicode_ci&selectlang=fr_FR" \
         > /tmp/logs/install_step2.status
+    set -e
 
     if ! grep -q 200 /tmp/logs/install_step2.status; then 
         log "Something went wrong during Dolibarr database installation. Check the logs for details: $(cat /tmp/logs/install_step2.html)"
@@ -46,10 +48,12 @@ if [ ! -f /var/www/documents/install.lock ]; then
     fi
 
     log 'Calling Dolibarr install (step 5)...'
+    set +e
     curl -kL -o /tmp/logs/install_step5.html -s -w "%{http_code}" \
         -X POST "http://${DOLI_TEST_HOSTNAME}:80/install/step5.php" \
         --data "testpost=ok&action=set&selectlang=fr_FR&pass=${DOLI_DB_PASSWORD}&pass_verif=${DOLI_DB_PASSWORD}" \
         > /tmp/logs/install_step5.status
+    set -e
 
     if ! grep -q 200 /tmp/logs/install_step5.status; then 
         log "Something went wrong during Dolibarr administration setup. Check the logs for details: $(cat /tmp/logs/install_step5.html)"
