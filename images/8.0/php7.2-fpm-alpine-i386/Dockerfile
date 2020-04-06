@@ -6,8 +6,8 @@ FROM i386/php:7.2-fpm-alpine
 # Prepare folders
 RUN set -ex; \
 	apk add --no-cache \
+		icu-libs \
 		imagemagick \
-		libicuio \
 		libldap \
 		libpq \
 		libpng \

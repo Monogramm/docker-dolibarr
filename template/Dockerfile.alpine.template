@@ -6,8 +6,8 @@ FROM %%ARCHI%%/php:%%PHP_VERSION%%-%%VARIANT%%
 # Prepare folders
 RUN set -ex; \
 	apk add --no-cache \
+		icu-libs \
 		imagemagick \
-		libicuio \
 		libldap \
 		libpq \
 		libpng \
