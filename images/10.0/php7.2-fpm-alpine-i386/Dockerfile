@@ -42,7 +42,6 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-configure intl; \
 	docker-php-ext-install -j "$(nproc)" \
-		calendar \
 		gd \
         intl \
 		ldap \
