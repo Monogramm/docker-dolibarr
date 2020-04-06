@@ -70,7 +70,7 @@ else
 fi
 
 log "Check Dolibarr app home page..."
-wget http://${DOLI_TEST_HOSTNAME}:80
+wget "http://${DOLI_TEST_HOSTNAME}:80"
 
 # Success
 log 'Docker tests successful'
