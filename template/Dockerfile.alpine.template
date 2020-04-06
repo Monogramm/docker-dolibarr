@@ -7,6 +7,7 @@ FROM %%ARCHI%%/php:%%PHP_VERSION%%-%%VARIANT%%
 RUN set -ex; \
 	apk add --no-cache \
 		imagemagick \
+		libicuio \
 		libldap \
 		libpq \
 		libpng \

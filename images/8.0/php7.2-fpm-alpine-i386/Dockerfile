@@ -7,6 +7,7 @@ FROM i386/php:7.2-fpm-alpine
 RUN set -ex; \
 	apk add --no-cache \
 		imagemagick \
+		libicuio \
 		libldap \
 		libpq \
 		libpng \
