@@ -25,21 +25,24 @@ script:
   - docker-compose logs "dolibarr_db"
   - docker-compose ps "dolibarr_db" | grep "Up"
   - docker-compose logs "dolibarr"
+  - docker-compose logs
   - docker-compose ps "dolibarr" | grep "Up"
   - echo 'Wait until containers init and tests are over' && sleep 120
   - docker-compose logs "sut"
   - docker-compose ps "sut" | grep "Exit 0"
+  - docker-compose logs
   # Test container restart
   - docker-compose down
   - travis_retry docker-compose up -d && sleep 90
   - docker-compose ps
   - docker-compose logs "dolibarr_db"
   - docker-compose ps "dolibarr_db" | grep "Up"
-  - docker-compose logs "dolibarr"
+  - docker-compose logs
   - docker-compose ps "dolibarr" | grep "Up"
   - echo 'Wait until containers init and tests are over' && sleep 120
   - docker-compose logs "sut"
   - docker-compose ps "sut" | grep "Exit 0"
+  - docker-compose logs
 
 notifications:
   email: false
