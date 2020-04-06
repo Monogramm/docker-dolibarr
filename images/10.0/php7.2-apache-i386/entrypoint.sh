@@ -264,7 +264,7 @@ fi
 
 if [ -f /var/www/documents/install.lock ]; then
 	log "Updating Dolibarr installed version..."
-	echo "$image_version" > /var/www/documents/install.version
+	echo "$image_version" > /var/www/documents/.docker-container-version
 fi
 
 log "Serving Dolibarr..."

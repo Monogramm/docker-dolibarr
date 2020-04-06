@@ -65,7 +65,7 @@ if [ ! -f /srv/dolibarr/documents/install.lock ]; then
     fi
 
 else
-    log 'Dolibarr already installed: $(cat /srv/dolibarr/documents/install.lock)'
+    log "Dolibarr already installed: $(cat /srv/dolibarr/documents/install.lock)"
 fi
 
 # Success
