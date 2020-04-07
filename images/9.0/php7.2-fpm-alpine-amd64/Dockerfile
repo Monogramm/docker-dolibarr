@@ -16,6 +16,7 @@ RUN set -ex; \
 		rsync \
 		ssmtp \
 		shadow \
+		zip \
 	; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
@@ -40,8 +41,9 @@ RUN set -ex; \
 		zlib-dev \
 	; \
 	docker-php-ext-configure ldap; \
-	docker-php-ext-configure gd; \
+	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-configure intl; \
+	docker-php-ext-configure zip --with-libzip; \
 	docker-php-ext-install -j "$(nproc)" \
 		calendar \
 		gd \
