@@ -9,7 +9,7 @@ branches:
 before_install:
   - env | sort
   - export home=$(pwd)
-  - export travis_dir="images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}"
+  - export travis_dir="${home}/images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}"
   - export TAG=${VERSION}-php${PHP_VERSION}-${VARIANT}-${ARCHI}
   - export VCS_REF=`git rev-parse --short HEAD`
   - export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
