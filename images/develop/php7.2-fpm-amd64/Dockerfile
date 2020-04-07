@@ -9,7 +9,6 @@ RUN set -ex; \
 	apt-get install -y --no-install-recommends \
 		default-mysql-client \
 		cron \
-		libzip \
 		rsync \
 		sendmail \
 	; \
