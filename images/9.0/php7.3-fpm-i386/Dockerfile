@@ -9,6 +9,7 @@ RUN set -ex; \
 	apt-get install -y --no-install-recommends \
 		default-mysql-client \
 		cron \
+		libzip \
 		rsync \
 		sendmail \
 	; \
@@ -33,6 +34,7 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-configure intl; \
 	docker-php-ext-install -j "$(nproc)" \
+		calendar \
 		gd \
         intl \
 		ldap \

@@ -11,6 +11,7 @@ RUN set -ex; \
 		libldap \
 		libpq \
 		libpng \
+		libzip \
 		mysql-client \
 		rsync \
 		ssmtp \
@@ -42,6 +43,7 @@ RUN set -ex; \
 	docker-php-ext-configure gd; \
     docker-php-ext-configure intl; \
 	docker-php-ext-install -j "$(nproc)" \
+		calendar \
 		gd \
         intl \
 		ldap \
