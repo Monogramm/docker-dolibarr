@@ -1,4 +1,4 @@
-FROM %%ARCHI%%/php:%%PHP_VERSION%%-%%VARIANT%%
+FROM amd64/php:7.3-fpm
 
 # Install the packages we need
 # Install the PHP extensions we need
@@ -33,7 +33,6 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-configure intl; \
 	docker-php-ext-install -j "$(nproc)" \
-		calendar \
 		gd \
         intl \
 		ldap \
@@ -93,7 +92,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ARG DOLI_VERSION=%%VERSION%%
+ARG DOLI_VERSION=11.0.3
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -114,7 +113,7 @@ RUN set -ex; \
 	chmod 755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["%%CMD%%"]
+CMD ["php-fpm"]
 
 # Arguments to label built container
 ARG VCS_REF
