@@ -49,7 +49,7 @@ function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
-php_versions=( "7.3" )
+php_versions=( "7.2" )
 
 dockerRepo="monogramm/docker-dolibarr"
 latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
