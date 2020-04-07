@@ -11,7 +11,6 @@ RUN set -ex; \
 		libldap \
 		libpq \
 		libpng \
-		libzip \
 		mysql-client \
 		rsync \
 		ssmtp \
