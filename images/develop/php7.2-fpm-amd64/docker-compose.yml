@@ -1,9 +1,27 @@
 version: "2"
 
 services:
+  # https://docs.docker.com/docker-hub/builds/automated-testing/
+  sut:
+    build:
+      context: ./test
+      dockerfile: Dockerfile
+    depends_on:
+      - dolibarr_db
+      - dolibarr
+      - dolibarr_nginx
+    volumes_from:
+      - dolibarr
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      - DOLI_TEST_HOSTNAME=dolibarr_nginx
+      - DOLI_DB_NAME=${DOLIBARR_DB_NAME}
+      - DOLI_DB_USER=${DOLIBARR_DB_USER}
+      - DOLI_DB_PASSWORD=${DOLIBARR_DB_PASSWORD}
+
   dolibarr:
-    #image: dolibarr/docker-dolibarr:fpm
-    #image: dolibarr/docker-dolibarr:alpine
     build:
       context: ./
       dockerfile: Dockerfile
@@ -11,12 +29,13 @@ services:
         - TAG=${TAG}
         - VCS_REF=${VCS_REF}
         - BUILD_DATE=${BUILD_DATE}
+    image: ${IMAGE_NAME}
     container_name: dolibarr
     #restart: always
     depends_on:
-      - dolibarrdb
+      - dolibarr_db
     links:
-      - dolibarrdb
+      - dolibarr_db
     ports:
       - 9000:9000
     volumes:
@@ -25,28 +44,28 @@ services:
       - /srv/dolibarr/scripts:/var/www/scripts
     environment:
       - DOLI_DB_TYPE=pgsql
-      - DOLI_DB_HOST=dolibarrdb # same as pgsql container name
+      - DOLI_DB_HOST=dolibarr_db # same as pgsql container name
       - DOLI_DB_PORT=5432
-      - DOLI_DB_NAME=dolibarr # same as pgsql POSTGRES_DB env name
-      - DOLI_DB_USER=dolibarr # same as pgsql POSTGRES_USER env name
-      - DOLI_DB_PASSWORD=dolibarr # same as pgsql POSTGRES_PASSWORD env name
+      - DOLI_DB_NAME=${DOLIBARR_DB_NAME}
+      - DOLI_DB_USER=${DOLIBARR_DB_USER}
+      - DOLI_DB_PASSWORD=${DOLIBARR_DB_PASSWORD}
 
-  dolibarrdb:
+  dolibarr_db:
     image: postgres:latest
-    container_name: dolibarrdb
+    container_name: dolibarr_db
     #restart: always
     ports:
       - 5432:5432
     volumes:
       - /srv/dolibarr/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=dolibarr
-      - POSTGRES_USER=dolibarr
-      - POSTGRES_PASSWORD=dolibarr
+      - POSTGRES_DB=${DOLIBARR_DB_NAME}
+      - POSTGRES_USER=${DOLIBARR_DB_USER}
+      - POSTGRES_PASSWORD=${DOLIBARR_DB_PASSWORD}
 
-  dolinginx:
+  dolibarr_nginx:
     image: nginx:latest
-    container_name: dolibarrnginx
+    container_name: dolibarr_nginx
     #restart: always
     ports:
       - 80:80

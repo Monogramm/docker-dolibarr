@@ -6,6 +6,7 @@ FROM i386/php:7.2-fpm-alpine
 # Prepare folders
 RUN set -ex; \
 	apk add --no-cache \
+		icu-libs \
 		imagemagick \
 		libldap \
 		libpq \
@@ -14,6 +15,7 @@ RUN set -ex; \
 		rsync \
 		ssmtp \
 		shadow \
+		zip \
 	; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
@@ -35,10 +37,12 @@ RUN set -ex; \
 		postgresql-dev \
 		postgresql-libs \
 		unzip \
+		zlib-dev \
 	; \
 	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-configure intl; \
+	docker-php-ext-configure zip; \
 	docker-php-ext-install -j "$(nproc)" \
 		calendar \
 		gd \
@@ -56,6 +60,7 @@ RUN set -ex; \
     pecl install imagick; \
     docker-php-ext-enable imagick; \
 	apk --purge del .build-deps; \
+    rm -rf /var/lib/apt/lists/*; \
     mkdir -p /var/www/documents; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www
@@ -100,7 +105,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ENV DOLI_VERSION=11.0.2
+ARG DOLI_VERSION=11.0.3
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -113,22 +118,25 @@ RUN set -ex; \
 	mkdir -p /usr/src/dolibarr; \
 	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
 	rm -rf /tmp/dolibarr; \
-	chmod +x /usr/src/dolibarr/scripts/*
+	chmod +x /usr/src/dolibarr/scripts/*; \
+	echo "${DOLI_VERSION}" > /usr/src/dolibarr/.docker-image-version
 
 COPY entrypoint.sh /
 RUN set -ex; \
 	chmod 755 /entrypoint.sh
 
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["php-fpm"]
+
 # Arguments to label built container
 ARG VCS_REF
 ARG BUILD_DATE
-ARG VERSION=11.0.2
 
 # Container labels (http://label-schema.org/)
 # Container annotations (https://github.com/opencontainers/image-spec)
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
       product="Dolibarr" \
-      version=$VERSION \
+      version=$DOLI_VERSION \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/Monogramm/docker-dolibarr" \
       org.label-schema.build-date=$BUILD_DATE \
@@ -136,7 +144,7 @@ LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
       org.label-schema.description="Open Source ERP & CRM for Business" \
       org.label-schema.url="https://www.dolibarr.org/" \
       org.label-schema.vendor="Dolibarr" \
-      org.label-schema.version=$VERSION \
+      org.label-schema.version=$DOLI_VERSION \
       org.label-schema.schema-version="1.0" \
       org.opencontainers.image.revision=$VCS_REF \
       org.opencontainers.image.source="https://github.com/Monogramm/docker-dolibarr" \
@@ -145,8 +153,5 @@ LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
       org.opencontainers.image.description="Open Source ERP & CRM for Business" \
       org.opencontainers.image.url="https://www.dolibarr.org/" \
       org.opencontainers.image.vendor="Dolibarr" \
-      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.version=$DOLI_VERSION \
       org.opencontainers.image.authors="Monogramm maintainers <opensource at monogramm dot io>"
-
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["php-fpm"]

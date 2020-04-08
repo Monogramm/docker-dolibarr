@@ -1,8 +1,26 @@
 version: "2"
 
 services:
+  # https://docs.docker.com/docker-hub/builds/automated-testing/
+  sut:
+    build:
+      context: ./test
+      dockerfile: Dockerfile
+    depends_on:
+      - dolibarr_db
+      - dolibarr
+    volumes_from:
+      - dolibarr
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      - DOLI_TEST_HOSTNAME=dolibarr
+      - DOLI_DB_NAME=${DOLIBARR_DB_NAME}
+      - DOLI_DB_USER=${DOLIBARR_DB_USER}
+      - DOLI_DB_PASSWORD=${DOLIBARR_DB_PASSWORD}
+
   dolibarr:
-    #image: dolibarr/docker-dolibarr:apache
     build:
       context: ./
       dockerfile: Dockerfile
@@ -10,12 +28,13 @@ services:
         - TAG=${TAG}
         - VCS_REF=${VCS_REF}
         - BUILD_DATE=${BUILD_DATE}
+    image: ${IMAGE_NAME}
     container_name: dolibarr
     #restart: always
     depends_on:
-      - dolibarrdb
+      - dolibarr_db
     links:
-      - dolibarrdb
+      - dolibarr_db
     ports:
       - 80:80
     volumes:
@@ -23,14 +42,14 @@ services:
       - /srv/dolibarr/documents:/var/www/documents
       - /srv/dolibarr/scripts:/var/www/scripts
     environment:
-      - DOLI_DB_HOST=dolibarrdb # same as mysql container name
-      - DOLI_DB_NAME=dolibarr # same as mysql MYSQL_DATABASE env name
-      - DOLI_DB_USER=dolibarr # same as mysql MYSQL_USER env name
-      - DOLI_DB_PASSWORD=dolibarrdbpass # same as mysql MYSQL_PASSWORD env name
+      - DOLI_DB_HOST=dolibarr_db # same as mysql container name
+      - DOLI_DB_NAME=${DOLIBARR_DB_NAME}
+      - DOLI_DB_USER=${DOLIBARR_DB_USER}
+      - DOLI_DB_PASSWORD=${DOLIBARR_DB_PASSWORD}
 
-  dolibarrdb:
+  dolibarr_db:
     image: mariadb:latest
-    container_name: dolibarrdb
+    container_name: dolibarr_db
     #restart: always
     command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
     ports:
@@ -39,6 +58,6 @@ services:
       - /srv/dolibarr/db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=mysqlrootpassword
-      - MYSQL_DATABASE=dolibarr
-      - MYSQL_USER=dolibarr
-      - MYSQL_PASSWORD=dolibarrdbpass
+      - MYSQL_DATABASE=${DOLIBARR_DB_NAME}
+      - MYSQL_USER=${DOLIBARR_DB_USER}
+      - MYSQL_PASSWORD=${DOLIBARR_DB_PASSWORD}

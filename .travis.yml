@@ -6,34 +6,50 @@ branches:
   only:
     - master
 
-before_script:
+before_install:
   - env | sort
-  - dir="images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}"
-  - export TAG=travis
+  - export home=$(pwd)
+  - export travis_dir="${home}/images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}"
+  - export TAG=${VERSION}-php${PHP_VERSION}-${VARIANT}-${ARCHI}
   - export VCS_REF=`git rev-parse --short HEAD`
   - export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
-  - export IMAGE_NAME=docker-dolibarr
+  - export IMAGE_NAME=monogramm/docker-dolibarr:${TAG}
+
+install:
+  - echo "Changing to travis test directory ($travis_dir)"
+  - cd "$travis_dir"
+  # Test container build
+  - travis_retry docker-compose build
+
+before_script:
+  - docker images
 
 script:
-  - cd "$dir"
-  # Test container build
-  - docker-compose build
-  - docker images
+  - echo "Changing to travis test directory ($travis_dir)"
+  - cd "$travis_dir"
   # Test container run
   - travis_retry docker-compose up -d && sleep 90
   - docker-compose ps
-  - docker-compose logs "dolibarrdb"
-  - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose logs "dolibarr_db"
+  - docker-compose ps "dolibarr_db" | grep "Up"
   - docker-compose logs "dolibarr"
   - docker-compose ps "dolibarr" | grep "Up"
+  - echo 'Wait until containers init and tests are over' && sleep 300
+  - docker-compose logs "sut"
+  - docker-compose ps "sut" | grep "Exit 0"
+  - docker-compose logs
   # Test container restart
   - docker-compose down
   - travis_retry docker-compose up -d && sleep 90
   - docker-compose ps
-  - docker-compose logs "dolibarrdb"
-  - docker-compose ps "dolibarrdb" | grep "Up"
+  - docker-compose logs "dolibarr_db"
+  - docker-compose ps "dolibarr_db" | grep "Up"
   - docker-compose logs "dolibarr"
   - docker-compose ps "dolibarr" | grep "Up"
+  - echo 'Wait until containers init and tests are over' && sleep 300
+  - docker-compose logs "sut"
+  - docker-compose ps "sut" | grep "Exit 0"
+  - docker-compose logs
 
 notifications:
   email: false
@@ -43,6 +59,9 @@ matrix:
     - os: linux
       # Ref: https://docs.travis-ci.com/user/reference/linux
       dist: xenial
+    #- os: osx
+    #  # Ref: https://docs.travis-ci.com/user/reference/osx
+    #  osx_image: xcode11.3
   allow_failures:
     - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=i386
     - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=amd64

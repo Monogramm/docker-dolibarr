@@ -1,8 +1,10 @@
 [![License: AGPL v3][uri_license_image]][uri_license]
 [![Build Status](https://travis-ci.org/Monogramm/docker-dolibarr.svg)](https://travis-ci.org/Monogramm/docker-dolibarr)
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
+[![Docker Automated buid](https://img.shields.io/docker/cloud/build/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
-[![Docker layers](https://images.microbadger.com/badges/image/monogramm/docker-dolibarr.svg)](https://microbadger.com/images/monogramm/docker-dolibarr)
+[![Docker Version](https://images.microbadger.com/badges/version/monogramm/docker-dolibarr.svg)](https://microbadger.com/images/monogramm/docker-dolibarr)
+[![Docker Size](https://images.microbadger.com/badges/image/monogramm/docker-dolibarr.svg)](https://microbadger.com/images/monogramm/docker-dolibarr)
+[![GitHub stars](https://img.shields.io/github/stars/Monogramm/docker-dolibarr?style=social)](https://github.com/Monogramm/docker-dolibarr)
 
 # Dolibarr on Docker
 

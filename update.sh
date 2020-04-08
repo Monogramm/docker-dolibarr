@@ -92,6 +92,9 @@ for latest in "${latests[@]}"; do
 					template="template/Dockerfile.${base[$variant]}.template"
 					cp "$template" "$dir/Dockerfile"
 
+					cp -r "template/hooks" "$dir/"
+					cp -r "template/test" "$dir/"
+					cp "template/.env" "$dir/.env"
 					cp "template/.dockerignore" "$dir/.dockerignore"
 					cp "template/docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
 
@@ -113,7 +116,7 @@ for latest in "${latests[@]}"; do
 					if [[ $1 == 'build' ]]; then
 						tag="$version-$php_version-$variant"
 						echo "Build Dockerfile for ${tag}"
-						docker build -t ${dockerRepo}:${tag} $dir
+						docker build -t "${dockerRepo}:${tag}" "$dir"
 					fi
 				done
 
