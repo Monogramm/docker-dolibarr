@@ -41,12 +41,12 @@ RUN set -ex; \
 	; \
 	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
-    docker-php-ext-configure intl; \
+	docker-php-ext-configure intl; \
 	docker-php-ext-configure zip; \
 	docker-php-ext-install -j "$(nproc)" \
 		calendar \
 		gd \
-        intl \
+		intl \
 		ldap \
 		mbstring \
 		mysqli \
@@ -57,13 +57,13 @@ RUN set -ex; \
 		soap \
 		zip \
 	; \
-    pecl install imagick; \
-    docker-php-ext-enable imagick; \
+	pecl install imagick; \
+	docker-php-ext-enable imagick; \
 	apk --purge del .build-deps; \
-    rm -rf /var/lib/apt/lists/*; \
-    mkdir -p /var/www/documents; \
-    chown -R www-data:root /var/www; \
-    chmod -R g=u /var/www
+	rm -rf /var/lib/apt/lists/*; \
+	mkdir -p /var/www/documents; \
+	chown -R www-data:root /var/www; \
+	chmod -R g=u /var/www
 
 VOLUME /var/www/html /var/www/documents /var/www/scripts
 
@@ -112,7 +112,7 @@ ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/doliba
 
 # Install Dolibarr from tag archive
 RUN set -ex; \
-    mkdir -p /tmp/dolibarr; \
+	mkdir -p /tmp/dolibarr; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
 	mkdir -p /usr/src/dolibarr; \
@@ -135,23 +135,23 @@ ARG BUILD_DATE
 # Container labels (http://label-schema.org/)
 # Container annotations (https://github.com/opencontainers/image-spec)
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
-      product="Dolibarr" \
-      version=$DOLI_VERSION \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/Monogramm/docker-dolibarr" \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.name="Dolibarr" \
-      org.label-schema.description="Open Source ERP & CRM for Business" \
-      org.label-schema.url="https://www.dolibarr.org/" \
-      org.label-schema.vendor="Dolibarr" \
-      org.label-schema.version=$DOLI_VERSION \
-      org.label-schema.schema-version="1.0" \
-      org.opencontainers.image.revision=$VCS_REF \
-      org.opencontainers.image.source="https://github.com/Monogramm/docker-dolibarr" \
-      org.opencontainers.image.created=$BUILD_DATE \
-      org.opencontainers.image.title="Dolibarr" \
-      org.opencontainers.image.description="Open Source ERP & CRM for Business" \
-      org.opencontainers.image.url="https://www.dolibarr.org/" \
-      org.opencontainers.image.vendor="Dolibarr" \
-      org.opencontainers.image.version=$DOLI_VERSION \
-      org.opencontainers.image.authors="Monogramm maintainers <opensource at monogramm dot io>"
+	  product="Dolibarr" \
+	  version=${DOLI_VERSION} \
+	  org.label-schema.vcs-ref=${VCS_REF} \
+	  org.label-schema.vcs-url="https://github.com/Monogramm/docker-dolibarr" \
+	  org.label-schema.build-date=$BUILD_DATE \
+	  org.label-schema.name="Dolibarr" \
+	  org.label-schema.description="Open Source ERP & CRM for Business" \
+	  org.label-schema.url="https://www.dolibarr.org/" \
+	  org.label-schema.vendor="Dolibarr" \
+	  org.label-schema.version=${DOLI_VERSION} \
+	  org.label-schema.schema-version="1.0" \
+	  org.opencontainers.image.revision=${VCS_REF} \
+	  org.opencontainers.image.source="https://github.com/Monogramm/docker-dolibarr" \
+	  org.opencontainers.image.created=${BUILD_DATE} \
+	  org.opencontainers.image.title="Dolibarr" \
+	  org.opencontainers.image.description="Open Source ERP & CRM for Business" \
+	  org.opencontainers.image.url="https://www.dolibarr.org/" \
+	  org.opencontainers.image.vendor="Dolibarr" \
+	  org.opencontainers.image.version=${DOLI_VERSION} \
+	  org.opencontainers.image.authors="Monogramm maintainers <opensource at monogramm dot io>"
