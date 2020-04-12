@@ -45,8 +45,8 @@ if [ ! -d /var/www/documents ]; then
 fi
 
 log "Updating Dolibarr users and group..."
-usermod -u $WWW_USER_ID www-data
-groupmod -g $WWW_GROUP_ID www-data
+usermod -u "$WWW_USER_ID" www-data
+groupmod -g "$WWW_GROUP_ID" www-data
 
 log "Updating Dolibarr folder ownership..."
 chown -R www-data:www-data /var/www
@@ -173,8 +173,8 @@ if version_greater "$image_version" "$installed_version"; then
 			rm /var/www/documents/install.lock
 		fi
 
-		base_version=`echo "${installed_version}" | sed -e 's|\(.*\..*\)\..*|\1|g'`
-		target_version=`echo "${image_version}" | sed -e 's|\(.*\..*\)\..*|\1|g'`
+		base_version=$(echo "${installed_version}" | sed -e 's|\(.*\..*\)\..*|\1|g')
+		target_version=$(echo "${image_version}" | sed -e 's|\(.*\..*\)\..*|\1|g')
 
 		run_as "cd /var/www/html/install/ && php upgrade.php ${base_version}.0 ${target_version}.0"
 		run_as "cd /var/www/html/install/ && php upgrade2.php ${base_version}.0 ${target_version}.0"

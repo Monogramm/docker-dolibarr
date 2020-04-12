@@ -1,4 +1,5 @@
 [![License: AGPL v3][uri_license_image]][uri_license]
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2da2a49afafc46b19275d1f8eb849f8e)](https://www.codacy.com/gh/Monogramm/docker-dolibarr?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Monogramm/docker-dolibarr&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/Monogramm/docker-dolibarr.svg)](https://travis-ci.org/Monogramm/docker-dolibarr)
 [![Docker Automated buid](https://img.shields.io/docker/cloud/build/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/monogramm/docker-dolibarr.svg)](https://hub.docker.com/r/monogramm/docker-dolibarr/)
@@ -12,7 +13,7 @@ Docker image for Dolibarr.
 
 Provides full database configuration, production mode, HTTPS enforcer (SSL must be provided by reverse proxy), handles upgrades, and so on...
 
-## What is Dolibarr ?
+## What is Dolibarr
 
 Dolibarr ERP & CRM is a modern software package to manage your organization's activity (contacts, suppliers, invoices, orders, stocks, agenda, ...).
 
@@ -24,22 +25,27 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 
 -   Dolibarr develop branch (:construction: potentially unstable)
     -   [`develop`: /images/develop/php7.2-apache](/images/develop/php7.2-apache-amd64/Dockerfile)
+
 -   Dolibarr 11
     -   [`11.0-apache` `apache` `latest`: /images/11.0/php7.2-apache](/images/11.0/php7.2-apache-amd64/Dockerfile)
     -   [`11.0-fpm` `fpm`: /images/11.0/php7.2-fpm](/images/11.0/php7.2-fpm-amd64/Dockerfile)
     -   [`11.0-alpine` `alpine`: /images/11.0/php7.2-alpine](/images/11.0/php7.2-alpine-amd64/Dockerfile)
+
 -   Dolibarr 10
     -   [`10.0-apache`: /images/10.0/php7.2-apache](/images/10.0/php7.2-apache-amd64/Dockerfile)
     -   [`10.0-fpm`: /images/10.0/php7.2-fpm](/images/10.0/php7.2-fpm-amd64/Dockerfile)
     -   [`10.0-alpine`: /images/10.0/php7.2-alpine](/images/10.0/php7.2-alpine-amd64/Dockerfile)
+
 -   Dolibarr 9.0
     -   [`9.0-apache`: /images/9.0/php7.2-apache](/images/9.0/php7.2-apache-amd64/Dockerfile)
     -   [`9.0-fpm`: /images/9.0/php7.2-fpm](/images/9.0/php7.2-fpm-amd64/Dockerfile)
     -   [`9.0-alpine`: /images/9.0/php7.2-alpine](/images/9.0/php7.2-alpine-amd64/Dockerfile)
+
 -   Dolibarr 8.0
     -   [`8.0-apache`: /images/8.0/php7.2-apache](/images/8.0/php7.2-apache-amd64/Dockerfile)
     -   [`8.0-fpm`: /images/8.0/php7.2-fpm](/images/8.0/php7.2-fpm-amd64/Dockerfile)
     -   [`8.0-alpine`: /images/8.0/php7.2-alpine](/images/8.0/php7.2-alpine-amd64/Dockerfile)
+
 -   Dolibarr 7.0
     -   [`7.0-apache`: /images/7.0/php7.2-apache](/images/7.0/php7.2-apache-amd64/Dockerfile)
     -   [`7.0-fpm`: /images/7.0/php7.2-fpm](/images/7.0/php7.2-fpm-amd64/Dockerfile)
@@ -58,7 +64,7 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
     -   [`ppc64le`](https://hub.docker.com/r/ppc64le/php/)
 -->
 
-## How to run this image ?
+## How to run this image
 
 This image is based on the [officiel PHP repository](https://registry.hub.docker.com/_/php/).
 It is inspired from [nextcloud](https://github.com/nextcloud/docker) and [tuxgasy/docker-dolibarr](https://github.com/tuxgasy/docker-dolibarr).
@@ -75,7 +81,7 @@ The second option is a `fpm` container. It is based on the [php-fpm](https://hub
 
 The apache image contains a webserver and exposes port 80. To start the container type:
 
-```console
+```shell
 $ docker run -d -e DOLI_AUTO_CONFIGURE='' -p 8080:80 monogramm/docker-dolibarr
 ```
 
@@ -87,7 +93,7 @@ To use the fpm image you need an additional web server that can proxy http-reque
 If you use your host you can address your Dolibarr container directly on port 9000. If you use another container, make sure that you add them to the same docker network (via `docker run --network <NAME> ...` or a `docker-compose` file).
 In both cases you don't want to map the fpm port to you host.
 
-```console
+```shell
 $ docker run -d -e DOLI_AUTO_CONFIGURE='' monogramm/docker-dolibarr:fpm
 ```
 
@@ -110,7 +116,7 @@ Dolibarr:
 -   `/var/www/html/` folder where all Dolibarr data lives
 -   `/var/www/documents/` folder where all Dolibarr documents lives
 
-```console
+```shell
 $ docker run -d \
     -v dolibarr_html:/var/www/html \
     -v dolibarr_docs:/var/www/documents \
@@ -123,7 +129,7 @@ Database:
 -   `/var/lib/mysql` MySQL / MariaDB Data
 -   `/var/lib/postgresql/data` PostgreSQL Data
 
-```console
+```shell
 $ docker run -d \
     -v db:/var/lib/mysql \
     mariadb \
@@ -142,7 +148,7 @@ Overview of the folders that can be mounted as volumes:
 
 If you want to use named volumes for all of these it would look like this
 
-```console
+```shell
 $ docker run -d \
     -v dolibarr:/var/www/html \
     -v apps:/var/www/html/custom \
@@ -167,9 +173,10 @@ _Possible values_: `1`, `''`
 This parameter triggers the Dolibarr default configuration generation based on environment variables.
 
 Examples:
-
+```
     DOLI_AUTO_CONFIGURE=1
     DOLI_AUTO_CONFIGURE=''
+```
 
 ### DOLI_DB_TYPE
 
@@ -180,9 +187,10 @@ _Possible values_: `mysqli`, `pgsql`
 This parameter contains the name of the driver used to access your Dolibarr database.
 
 Examples:
-
+```
     DOLI_DB_TYPE=mysqli
     DOLI_DB_TYPE=pgsql
+```
 
 ### DOLI_DB_HOST
 
@@ -191,11 +199,12 @@ _Default value_:
 This parameter contains host name or ip address of Dolibarr database server.
 
 Examples:
-
+```
     DOLI_DB_HOST=localhost
     DOLI_DB_HOST=127.0.2.1
     DOLI_DB_HOST=192.168.0.10
     DOLI_DB_HOST=mysql.myserver.com
+```
 
 ### DOLI_DB_PORT
 
@@ -204,9 +213,10 @@ _Default value_: `3306`
 This parameter contains the port of the Dolibarr database.
 
 Examples:
-
+```
     DOLI_DB_PORT=3306
     DOLI_DB_PORT=5432
+```
 
 ### DOLI_DB_NAME
 
@@ -215,9 +225,10 @@ _Default value_: `dolibarr`
 This parameter contains name of Dolibarr database.
 
 Examples:
-
+```
     DOLI_DB_NAME=dolibarr
     DOLI_DB_NAME=mydatabase
+```
 
 ### DOLI_DB_USER
 
@@ -226,9 +237,10 @@ _Default value_: `dolibarr`
 This parameter contains user name used to read and write into Dolibarr database.
 
 Examples:
-
+```
     DOLI_DB_USER=admin
     DOLI_DB_USER=dolibarruser
+```
 
 ### DOLI_DB_PASSWORD
 
@@ -237,9 +249,10 @@ _Default value_:
 This parameter contains password used to read and write into Dolibarr database.
 
 Examples:
-
+```
     DOLI_DB_PASSWORD=myadminpass
     DOLI_DB_PASSWORD=myuserpassword
+```
 
 ### DOLI_DB_PREFIX
 
@@ -248,8 +261,9 @@ _Default value_: `llx_`
 This parameter contains prefix of Dolibarr database.
 
 Examples:
-
+```
     DOLI_DB_PREFIX=llx_
+```
 
 ### DOLI_DB_CHARACTER_SET
 
@@ -259,8 +273,9 @@ Database character set used to store data (forced during database creation. valu
 Depends on database driver used. See `DOLI_DB_TYPE`.
 
 Examples:
-
+```
     DOLI_DB_CHARACTER_SET=utf8
+```
 
 ### DOLI_DB_COLLATION
 
@@ -270,8 +285,9 @@ Database collation used to sort data (forced during database creation. value of 
 Depends on database driver used. See `DOLI_DB_TYPE`.
 
 Examples:
-
+```
     DOLI_DB_COLLATION=utf8_unicode_ci
+```
 
 ### DOLI_DB_ROOT_LOGIN
 
@@ -282,9 +298,10 @@ This parameter contains the database server root username used to create the Dol
 If this parameter is set, the container will automatically tell Dolibarr to create the database on first install with the root account.
 
 Examples:
-
+```
     DOLI_DB_ROOT_LOGIN=root
     DOLI_DB_ROOT_LOGIN=dolibarruser
+```
 
 ### DOLI_DB_ROOT_PASSWORD
 
@@ -293,8 +310,9 @@ _Default value_:
 This parameter contains the database server root password used to create the Dolibarr database.
 
 Examples:
-
+```
     DOLI_DB_ROOT_PASSWORD=myrootpass
+```
 
 ### DOLI_ADMIN_LOGIN
 
@@ -303,8 +321,9 @@ _Default value_: `admin`
 This parameter contains the admin's login used in the first install.
 
 Examples:
-
+```
     DOLI_ADMIN_LOGIN=admin
+```
 
 ### DOLI_MODULES
 
@@ -313,9 +332,10 @@ _Default value_:
 This parameter contains the list (comma separated) of modules to enable in the first install.
 
 Examples:
-
+```
     DOLI_MODULES=modSociete
     DOLI_MODULES=modSociete,modPropale,modFournisseur,modContrat,modLdap
+```
 
 ### DOLI_URL_ROOT
 
@@ -330,11 +350,12 @@ In most cases, this is autodetected but it's still required
 -   or when using nginx (autodetect fails)
 
 Examples:
-
+```
     DOLI_URL_ROOT=http://localhost
     DOLI_URL_ROOT=http://mydolibarrvirtualhost
     DOLI_URL_ROOT=http://myserver/dolibarr/htdocs
     DOLI_URL_ROOT=http://myserver/dolibarralias
+```
 
 ### DOLI_AUTH
 
@@ -348,11 +369,12 @@ This parameter contains the way authentication is done.
 If value `ldap` is used, you must also set parameters `DOLI_LDAP_*` and `DOLI_MODULES` must contain `modLdap`.
 
 Examples:
-
+```
     DOLI_AUTH=http
     DOLI_AUTH=dolibarr
     DOLI_AUTH=ldap
     DOLI_AUTH=openid,dolibarr
+```
 
 ### DOLI_LDAP_HOST
 
@@ -361,10 +383,11 @@ _Default value_:
 You can define several servers here separated with a comma.
 
 Examples:
-
+```
     DOLI_LDAP_HOST=localhost
     DOLI_LDAP_HOST=ldap.company.com
     DOLI_LDAP_HOST=ldaps://ldap.company.com:636,ldap://ldap.company.com:389
+```
 
 ### DOLI_LDAP_PORT
 
@@ -384,8 +407,9 @@ _Possible values_: `openldap`, `activedirectory` or `egroupware`
 _Default value_:
 
 Examples:
-
+```
     DOLI_LDAP_DN=ou=People,dc=company,dc=com
+```
 
 ### DOLI_LDAP_LOGIN_ATTRIBUTE
 
@@ -400,9 +424,10 @@ _Default value_:
 If defined, the two previous parameters are not used to find a user into LDAP.
 
 Examples:
-
+```
     DOLI_LDAP_FILTER=(uid=%1%)
     DOLI_LDAP_FILTER=(&(uid=%1%)(isMemberOf=cn=Sales,ou=Groups,dc=company,dc=com))
+```
 
 ### DOLI_LDAP_ADMIN_LOGIN
 
@@ -411,8 +436,9 @@ _Default value_:
 Required only if anonymous bind disabled.
 
 Examples:
-
+```
     DOLI_LDAP_ADMIN_LOGIN=cn=admin,dc=company,dc=com
+```
 
 ### DOLI_LDAP_ADMIN_PASS
 
@@ -421,8 +447,9 @@ _Default value_:
 Required only if anonymous bind disabled. Ex:
 
 Examples:
-
+```
     DOLI_LDAP_ADMIN_PASS=secret
+```
 
 ### DOLI_LDAP_DEBUG
 
@@ -438,9 +465,10 @@ When this parameter is defined, all errors messages are not reported.
 This feature exists for production usage to avoid to give any information to hackers.
 
 Examples:
-
+```
     DOLI_PROD=0
     DOLI_PROD=1
+```
 
 ### DOLI_HTTPS
 
@@ -461,11 +489,12 @@ According to your web server setup, some values may work and other not. Try
 different values (1,2 or '<https://my.domain.com'>) if you experience problems.
 
 Examples:
-
+```
     DOLI_HTTPS=0
     DOLI_HTTPS=1
     DOLI_HTTPS=2
     DOLI_HTTPS=https://my.domain.com
+```
 
 ### DOLI_NO_CSRF_CHECK
 
@@ -478,9 +507,10 @@ This parameter can be used to disable CSRF protection.
 This might be required if you access Dolibarr behind a proxy that make URL rewriting, to avoid false alarms.
 
 Examples:
-
+```
     DOLI_NO_CSRF_CHECK=0
     DOLI_NO_CSRF_CHECK=1
+```
 
 ### PHP_INI_DATE_TIMEZONE
 
@@ -518,9 +548,9 @@ _Default value_: `33`
 
 ID of group www-data. ID will not change if left empty.
 
-# Running this image with docker-compose
+## Running this image with docker-compose
 
-## Base version - apache with MariaDB/MySQL
+### Base version - apache with MariaDB/MySQL
 
 This version will use the apache image and add a [MariaDB](https://hub.docker.com/_/mariadb/) container (you can also use [MySQL](https://hub.docker.com/_/mysql/) if you prefer). The volumes are set to keep your data persistent. This setup provides **no ssl encryption** and is intended to run behind a proxy.
 
@@ -548,7 +578,7 @@ Make sure to set the variables `POSTGRES_PASSWORD` and `DOLI_DB_PASSWORD` before
 Create `docker-compose.yml` file using [docker-compose_fpm.yml](docker-compose_fpm.yml) as template.
 
 Here is a sample `nginx.conf` file expected to be in the same folder:
-
+```nginx
     server {
         listen 80;
         server_name ${NGINX_HOST};
@@ -580,22 +610,23 @@ Here is a sample `nginx.conf` file expected to be in the same folder:
         }
 
     }
+```
 
 Then run all services `docker-compose up -d`. Now, go to <http://localhost:80/install> to access the new Dolibarr installation wizard.
 In this example, the Dolibarr scripts, documents, HTML and database will all be stored in Docker's default location.
 Feel free to edit this as you see fit.
 
-# Make your Dolibarr available from the internet
+## Make your Dolibarr available from the internet
 
 Until here your Dolibarr is just available from you docker host. If you want you Dolibarr available from the internet adding SSL encryption is mandatory.
 
-## HTTPS - SSL encryption
+### HTTPS - SSL encryption
 
 There are many different possibilities to introduce encryption depending on your setup.
 
 We recommend using a reverse proxy in front of our Dolibarr installation. Your Dolibarr will only be reachable through the proxy, which encrypts all traffic to the clients. You can mount your manually generated certificates to the proxy or use a fully automated solution, which generates and renews the certificates for you.
 
-# First use
+## First use
 
 When you first access your Dolibarr, you need to access the install wizard at `http://localhost/install/`.
 The setup wizard will appear and ask you to choose an administrator account, password and the database connection. For the database use the name of your database container as host and `dolibarr` as table and user name. Also enter the database password you chose in your `docker-compose.yml` file.
@@ -604,11 +635,11 @@ Most of the fields of the wizard can be initialized with the environment variabl
 
 You should note though that some environment variables will be ignored during install wizard (`DOLI_AUTH` and `DOLI_LDAP_*` for instance). An initial `conf.php` was generated by the container on the first start with the Dolibarr environment variables you set through Docker. To use the container generated configuration, you can skip the first step of install and go directly to <http://localhost:8080/install/step2.php>.
 
-# Update to a newer version
+## Update to a newer version
 
 Updating the Dolibarr container is done by pulling the new image, throwing away the old container and starting the new one. Since all data is stored in volumes, nothing gets lost. The startup script will check for the version in your volume and the installed docker version. If it finds a mismatch, it automatically starts the upgrade process. Don't forget to add all the volumes to your new container, so it works as expected. Also, we advised you do not skip major versions during your upgrade. For instance, upgrade from 5.0 to 6.0, then 6.0 to 7.0, not directly from 5.0 to 7.0.
 
-```console
+```shell
 $ docker pull monogramm/docker-dolibarr
 $ docker stop <your_dolibarr_container>
 $ docker rm <your_dolibarr_container>
@@ -619,17 +650,17 @@ Beware that you have to run the same command with the options that you used to i
 
 When using docker-compose your compose file takes care of your configuration, so you just have to run:
 
-```console
+```shell
 $ docker-compose pull
 $ docker-compose up -d
 ```
 
-# Adding Features
+## Adding Features
 
 If the image does not include the packages you need, you can easily build your own image on top of it.
 Start your derived image with the `FROM` statement and add whatever you like.
 
-```yaml
+```Dockerfile
 FROM monogramm/docker-dolibarr:apache
 
 RUN ...
@@ -646,7 +677,7 @@ versions=( "develop" )
 
 Then simply call [update.sh](update.sh) script.
 
-```console
+```shell
 bash update.sh
 ```
 
@@ -668,21 +699,21 @@ If you use your own Dockerfile you need to configure your docker-compose file ac
 
 **Updating** your own derived image is also very simple. When a new version of the Dolibarr image is available run:
 
-```console
+```shell
 docker build -t your-name --pull .
 docker run -d your-name
 ```
 
 or for docker-compose:
 
-```console
+```shell
 docker-compose build --pull
 docker-compose up -d
 ```
 
 The `--pull` option tells docker to look for new versions of the base image. Then the build instructions inside your `Dockerfile` are run on top of the new image.
 
-# Questions / Issues
+## Questions / Issues
 
 If you got any questions or problems using the image, please visit our [Github Repository](https://github.com/Monogramm/docker-dolibarr) and write an issue.  
 
