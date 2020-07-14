@@ -1,4 +1,4 @@
-FROM i386/php:7.2-apache
+FROM amd64/php:7.2-fpm
 
 # Install the packages we need
 # Install the PHP extensions we need
@@ -96,7 +96,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ARG DOLI_VERSION=7.0.5
+ARG DOLI_VERSION=12.0.1
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -117,7 +117,7 @@ RUN set -ex; \
 	chmod 755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]
 
 # Arguments to label built container
 ARG VCS_REF
