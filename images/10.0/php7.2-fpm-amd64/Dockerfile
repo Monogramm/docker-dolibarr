@@ -107,7 +107,7 @@ RUN set -ex; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
 	mkdir -p /usr/src/dolibarr; \
-	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
+	cp -r "/tmp/dolibarr/dolibarr-${DOLI_VERSION}"/* /usr/src/dolibarr; \
 	rm -rf /tmp/dolibarr; \
 	chmod +x /usr/src/dolibarr/scripts/*; \
 	echo "${DOLI_VERSION}" > /usr/src/dolibarr/.docker-image-version

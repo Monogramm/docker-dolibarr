@@ -96,7 +96,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ARG DOLI_VERSION=12.0.1
+ARG DOLI_VERSION=12.0.3
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -107,7 +107,7 @@ RUN set -ex; \
 	unzip -q /tmp/dolibarr.zip -d /tmp/dolibarr; \
 	rm /tmp/dolibarr.zip; \
 	mkdir -p /usr/src/dolibarr; \
-	cp -r /tmp/dolibarr/dolibarr-${DOLI_VERSION}/* /usr/src/dolibarr; \
+	cp -r "/tmp/dolibarr/dolibarr-${DOLI_VERSION}"/* /usr/src/dolibarr; \
 	rm -rf /tmp/dolibarr; \
 	chmod +x /usr/src/dolibarr/scripts/*; \
 	echo "${DOLI_VERSION}" > /usr/src/dolibarr/.docker-image-version
