@@ -60,7 +60,7 @@ RUN set -ex; \
 	pecl install imagick; \
 	docker-php-ext-enable imagick; \
 	apk --purge del .build-deps; \
-	rm -rf /var/lib/apt/lists/*; \
+	rm -rf /var/cache/apk/*; \
 	mkdir -p /var/www/documents; \
 	chown -R www-data:root /var/www; \
 	chmod -R g=u /var/www
