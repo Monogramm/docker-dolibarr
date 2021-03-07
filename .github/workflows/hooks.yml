@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ['1.4']
+        version: ['10.0', '11.0', '12.0', '13.0']
+        php: ['1.4']
+        archi: ['i386']
         variant: ['apache', 'fpm', 'fpm-alpine']
 
     steps:
@@ -23,7 +25,7 @@ jobs:
       - name: Execute CI hooks
         id: docker_hooks
         run: |
-          cd images/${{ matrix.version }}-${{ matrix.variant }}
+          cd images/${{ matrix.version }}/php${{ matrix.php }}-${{ matrix.variant }}-${{ matrix.archi }}
           ./hooks/run
 
       - name: Display docker images

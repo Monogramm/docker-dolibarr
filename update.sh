@@ -42,7 +42,7 @@ archis=(
 )
 
 min_version='10.0'
-dockerLatest='12.0'
+dockerLatest='13.0'
 
 
 # version_greater_or_equal A B returns whether A >= B
@@ -113,7 +113,7 @@ for latest in "${latests[@]}"; do
 					' "$dir/hooks/run"
 
 					# Create a list of "alias" tags for DockerHub post_push
-					if [ "$latest" = "$dockerLatest" ]; then
+					if [ "$version" = "$dockerLatest" ]; then
 						if [ "$variant" = 'apache' ]; then
 							echo "$latest-$variant $version-$variant $variant $latest $version latest " > "$dir/.dockertags"
 						else
