@@ -7,10 +7,12 @@ FROM %%ARCHI%%/php:%%PHP_VERSION%%-%%VARIANT%%
 RUN set -ex; \
 	apt-get update -q; \
 	apt-get install -y --no-install-recommends \
+		bzip2 \
 		default-mysql-client \
 		cron \
 		rsync \
 		sendmail \
+		unzip \
 		zip \
 	; \
 	apt-get install -y --no-install-recommends \

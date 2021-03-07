@@ -6,6 +6,7 @@ FROM %%ARCHI%%/php:%%PHP_VERSION%%-%%VARIANT%%
 # Prepare folders
 RUN set -ex; \
 	apk add --no-cache \
+		bzip2 \
 		icu-libs \
 		imagemagick \
 		libldap \
@@ -15,6 +16,7 @@ RUN set -ex; \
 		rsync \
 		ssmtp \
 		shadow \
+		unzip \
 		zip \
 	; \
 	apk add --no-cache --virtual .build-deps \
@@ -32,6 +34,7 @@ RUN set -ex; \
 		libpng-dev \
 		libtool \
 		libxml2-dev \
+		libzip-dev \
 		make \
 		openldap-dev \
 		postgresql-dev \

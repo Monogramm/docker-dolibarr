@@ -9,8 +9,8 @@ declare -A cmd=(
 
 declare -A conf=(
 	[apache]=''
-	[fpm]='nginx.conf'
-	[fpm-alpine]='nginx.conf'
+	[fpm]='nginx'
+	[fpm-alpine]='nginx'
 )
 
 declare -A compose=(
@@ -41,7 +41,8 @@ archis=(
 	#ppc64le
 )
 
-min_version='8.0'
+min_version='10.0'
+dockerLatest='12.0'
 
 
 # version_greater_or_equal A B returns whether A >= B
@@ -49,7 +50,7 @@ function version_greater_or_equal() {
 	[[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
-php_versions=( "7.2" )
+php_versions=( "7.3" )
 
 dockerRepo="monogramm/docker-dolibarr"
 latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |tac|tac| \
@@ -59,8 +60,7 @@ latests=( $( curl -fsSL 'https://api.github.com/repos/dolibarr/dolibarr/tags' |t
 
 # Remove existing images
 echo "reset docker images"
-rm -rf ./images/
-mkdir -p ./images
+rm -rf ./images/*
 
 echo "update docker images"
 travisEnv=
@@ -84,22 +84,18 @@ for latest in "${latests[@]}"; do
 					mkdir -p "$dir"
 
 					# Copy the files
-					for name in entrypoint; do
-						cp "template/$name.sh" "$dir/$name.sh"
-						chmod 755 "$dir/$name.sh"
-					done
-
 					template="template/Dockerfile.${base[$variant]}.template"
 					cp "$template" "$dir/Dockerfile"
+					cp "template/entrypoint.sh" "$dir/entrypoint.sh"
 
 					cp -r "template/hooks" "$dir/"
 					cp -r "template/test" "$dir/"
 					cp "template/.env" "$dir/.env"
 					cp "template/.dockerignore" "$dir/.dockerignore"
-					cp "template/docker-compose_${compose[$variant]}.yml" "$dir/docker-compose.yml"
+					cp "template/docker-compose.${compose[$variant]}.test.yml" "$dir/docker-compose.test.yml"
 
-					if [ -f "template/${conf[$variant]}" ]; then
-						cp "template/${conf[$variant]}" "$dir/${conf[$variant]}"
+					if [ -n "${conf[$variant]}" ] && [ -d "template/${conf[$variant]}" ]; then
+						cp -r "template/${conf[$variant]}" "$dir/${conf[$variant]}"
 					fi
 
 					# Replace the variables.
@@ -111,6 +107,27 @@ for latest in "${latests[@]}"; do
 						s/%%CMD%%/'"${cmd[$variant]}"'/g;
 					' "$dir/Dockerfile"
 
+					sed -ri -e '
+						s|DOCKER_TAG=.*|DOCKER_TAG='"$version"'|g;
+						s|DOCKER_REPO=.*|DOCKER_REPO='"$dockerRepo"'|g;
+					' "$dir/hooks/run"
+
+					# Create a list of "alias" tags for DockerHub post_push
+					if [ "$latest" = "$dockerLatest" ]; then
+						if [ "$variant" = 'apache' ]; then
+							echo "$latest-$variant $version-$variant $variant $latest $version latest " > "$dir/.dockertags"
+						else
+							echo "$latest-$variant $version-$variant $variant " > "$dir/.dockertags"
+						fi
+					else
+						if [ "$variant" = 'apache' ]; then
+							echo "$latest-$variant $version-$variant $latest $version " > "$dir/.dockertags"
+						else
+							echo "$latest-$variant $version-$variant " > "$dir/.dockertags"
+						fi
+					fi
+
+					# Add Travis-CI env var
 					travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant"' ARCHI='"$archi$travisEnv"
 
 					if [[ $1 == 'build' ]]; then
