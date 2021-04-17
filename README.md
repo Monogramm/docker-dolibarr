@@ -551,7 +551,7 @@ This version will use the apache image and add a [MariaDB](https://hub.docker.co
 
 Make sure to set the variables `MYSQL_ROOT_PASSWORD`, `MYSQL_PASSWORD`, `DOLI_DB_PASSWORD` before you run this setup.
 
-Create `docker-compose.yml` file using [docker-compose_apache.yml](docker-compose_apache.yml) as template.
+Create `docker-compose.yml` file using [docker-compose_apache.yml](/template/docker-compose.apache.test.yml) as template.
 
 Then run all services `docker-compose up -d`. Now, go to <http://localhost:80/install> to access the new Dolibarr installation wizard.
 In this example, the Dolibarr scripts, documents, HTML and database will all be stored locally in the following folders:
@@ -569,7 +569,7 @@ As this setup does **not include encryption** it should to be run behind a proxy
 
 Make sure to set the variables `POSTGRES_PASSWORD` and `DOLI_DB_PASSWORD` before you run this setup.
 
-Create `docker-compose.yml` file using [docker-compose_fpm.yml](docker-compose_fpm.yml) as template.
+Create `docker-compose.yml` file using [docker-compose_fpm.yml](/template/docker-compose.fpm.test.yml) as template.
 
 Here is a sample `nginx.conf` file expected to be in the same folder:
 ```nginx
