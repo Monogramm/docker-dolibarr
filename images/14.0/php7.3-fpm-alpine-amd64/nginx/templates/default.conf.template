@@ -1,0 +1,60 @@
+server {
+	listen 80;
+	listen [::]:80;
+
+	add_header Referrer-Policy origin; # make sure outgoing links don't show the URL to the Matomo instance
+	root /var/www/html;
+	index index.php index.html;
+	try_files $uri $uri/ =404;
+
+	## only allow accessing the following php files
+	location ~ \.php$ {
+		# regex to split $uri to $fastcgi_script_name and $fastcgi_path
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_index index.php;
+
+		# Check that the PHP script exists before passing it
+		try_files $fastcgi_script_name =404;
+
+		proxy_connect_timeout       3600;
+		proxy_send_timeout          3600;
+		proxy_read_timeout          3600;
+		send_timeout                3600;
+
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_param HTTP_PROXY ""; # prohibit httpoxy: https://httpoxy.org/
+		fastcgi_pass ${NGINX_PHP_CGI};
+	}
+
+	## disable all access to the following directories
+	location ~ /\.ht {
+		deny all;
+		return 403;
+	}
+	location ~ /\.git {
+		deny all;
+	}
+
+	location ~ \.(gif|ico|jpg|png|svg|js|css|htm|html|mp3|mp4|wav|ogg|avi|ttf|eot|woff|woff2|json)$ {
+		allow all;
+		## Cache images,CSS,JS and webfonts for an hour
+		## Increasing the duration may improve the load-time, but may cause old files to show after an Matomo upgrade
+		expires 1h;
+		add_header Pragma public;
+		add_header Cache-Control "public";
+	}
+
+	location ~ /(libs|vendor|plugins|misc/user) {
+		deny all;
+		return 403;
+	}
+
+	## properly display textfiles in root directory
+	location ~/(.*\.md|LEGALNOTICE|LICENSE) {
+		default_type text/plain;
+	}
+}
+
+# vim: filetype=nginx
