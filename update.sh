@@ -31,16 +31,6 @@ variants=(
 	fpm-alpine
 )
 
-archis=(
-	amd64
-	#arm32v5
-	#arm32v6
-	#arm32v7
-	#arm64v8
-	i386
-	#ppc64le
-)
-
 min_version='10.0'
 dockerLatest='13.0'
 
@@ -73,69 +63,65 @@ for latest in "${latests[@]}"; do
 		for php_version in "${php_versions[@]}"; do
 
 			for variant in "${variants[@]}"; do
+				# Create the version+php_version+variant directory with a Dockerfile.
+				dir="images/$version/php$php_version-$variant"
+				if [ -d "$dir" ]; then
+					continue
+				fi
+				echo "generating $latest [$version] php$php_version-$variant"
+				mkdir -p "$dir"
 
-				for archi in "${archis[@]}"; do
-					# Create the version+php_version+variant directory with a Dockerfile.
-					dir="images/$version/php$php_version-$variant-$archi"
-					if [ -d "$dir" ]; then
-						continue
-					fi
-					echo "generating $latest [$version] php$php_version-$variant-$archi"
-					mkdir -p "$dir"
+				# Copy the files
+				template="template/Dockerfile.${base[$variant]}.template"
+				cp "$template" "$dir/Dockerfile"
+				cp "template/entrypoint.sh" "$dir/entrypoint.sh"
 
-					# Copy the files
-					template="template/Dockerfile.${base[$variant]}.template"
-					cp "$template" "$dir/Dockerfile"
-					cp "template/entrypoint.sh" "$dir/entrypoint.sh"
+				cp -r "template/hooks" "$dir/"
+				cp -r "template/test" "$dir/"
+				cp "template/.env" "$dir/.env"
+				cp "template/.dockerignore" "$dir/.dockerignore"
+				cp "template/docker-compose.${compose[$variant]}.test.yml" "$dir/docker-compose.test.yml"
 
-					cp -r "template/hooks" "$dir/"
-					cp -r "template/test" "$dir/"
-					cp "template/.env" "$dir/.env"
-					cp "template/.dockerignore" "$dir/.dockerignore"
-					cp "template/docker-compose.${compose[$variant]}.test.yml" "$dir/docker-compose.test.yml"
+				if [ -n "${conf[$variant]}" ] && [ -d "template/${conf[$variant]}" ]; then
+					cp -r "template/${conf[$variant]}" "$dir/${conf[$variant]}"
+				fi
 
-					if [ -n "${conf[$variant]}" ] && [ -d "template/${conf[$variant]}" ]; then
-						cp -r "template/${conf[$variant]}" "$dir/${conf[$variant]}"
-					fi
+				# Replace the variables.
+				sed -ri -e '
+					s/%%PHP_VERSION%%/'"$php_version"'/g;
+					s/%%VARIANT%%/'"$variant"'/g;
+					s/%%VERSION%%/'"$latest"'/g;
+					s/%%CMD%%/'"${cmd[$variant]}"'/g;
+				' "$dir/Dockerfile"
 
-					# Replace the variables.
-					sed -ri -e '
-						s/%%PHP_VERSION%%/'"$php_version"'/g;
-						s/%%VARIANT%%/'"$variant"'/g;
-						s/%%ARCHI%%/'"$archi"'/g;
-						s/%%VERSION%%/'"$latest"'/g;
-						s/%%CMD%%/'"${cmd[$variant]}"'/g;
-					' "$dir/Dockerfile"
+				sed -ri -e '
+					s|DOCKER_TAG=.*|DOCKER_TAG='"$version"'|g;
+					s|DOCKER_REPO=.*|DOCKER_REPO='"$dockerRepo"'|g;
+				' "$dir/hooks/run"
 
-					sed -ri -e '
-						s|DOCKER_TAG=.*|DOCKER_TAG='"$version"'|g;
-						s|DOCKER_REPO=.*|DOCKER_REPO='"$dockerRepo"'|g;
-					' "$dir/hooks/run"
-
-					# Create a list of "alias" tags for DockerHub post_push
-					if [ "$version" = "$dockerLatest" ]; then
-						if [ "$variant" = 'apache' ]; then
-							echo "$latest-$variant $version-$variant $variant $latest $version latest " > "$dir/.dockertags"
-						else
-							echo "$latest-$variant $version-$variant $variant " > "$dir/.dockertags"
-						fi
+				# Create a list of "alias" tags for DockerHub post_push
+				if [ "$version" = "$dockerLatest" ]; then
+					if [ "$variant" = 'apache' ]; then
+						echo "$latest-$variant $version-$variant $variant $latest $version latest " > "$dir/.dockertags"
 					else
-						if [ "$variant" = 'apache' ]; then
-							echo "$latest-$variant $version-$variant $latest $version " > "$dir/.dockertags"
-						else
-							echo "$latest-$variant $version-$variant " > "$dir/.dockertags"
-						fi
+						echo "$latest-$variant $version-$variant $variant " > "$dir/.dockertags"
 					fi
-
-					# Add Travis-CI env var
-					travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant"' ARCHI='"$archi$travisEnv"
-
-					if [[ $1 == 'build' ]]; then
-						tag="$version-$php_version-$variant"
-						echo "Build Dockerfile for ${tag}"
-						docker build -t "${dockerRepo}:${tag}" "$dir"
+				else
+					if [ "$variant" = 'apache' ]; then
+						echo "$latest-$variant $version-$variant $latest $version " > "$dir/.dockertags"
+					else
+						echo "$latest-$variant $version-$variant " > "$dir/.dockertags"
 					fi
-				done
+				fi
+
+				# Add Travis-CI env var
+				travisEnv="$travisEnv"'\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant"
+
+				if [[ $1 == 'build' ]]; then
+					tag="$version-$php_version-$variant"
+					echo "Build Dockerfile for ${tag}"
+					docker build -t "${dockerRepo}:${tag}" "$dir"
+				fi
 
 			done
 

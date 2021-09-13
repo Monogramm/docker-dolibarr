@@ -1,4 +1,4 @@
-FROM %%ARCHI%%/php:%%PHP_VERSION%%-%%VARIANT%%
+FROM php:%%PHP_VERSION%%-%%VARIANT%%
 
 # Install the packages we need
 # Install the PHP extensions we need

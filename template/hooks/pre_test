@@ -10,6 +10,9 @@ if [ ! -f '.env' ]; then
     mv .env.tmp .env
 fi
 
+export VCS_REF=$(git rev-parse --short HEAD)
+export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
 #echo 'Preparing persisted data...'
 #mkdir -p "${APP_HOME:-/srv/dolibarr}"
 #chown 777 "${APP_HOME:-/srv/dolibarr}"

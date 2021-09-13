@@ -15,17 +15,22 @@ jobs:
       matrix:
         version: ['10.0', '11.0', '12.0', '13.0']
         php: ['7.3']
-        archi: ['amd64']
         variant: ['apache', 'fpm', 'fpm-alpine']
 
     steps:
       - name: Check Out Repo
         uses: actions/checkout@v2
 
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Execute CI hooks
         id: docker_hooks
         run: |
-          cd images/${{ matrix.version }}/php${{ matrix.php }}-${{ matrix.variant }}-${{ matrix.archi }}
+          cd images/${{ matrix.version }}/php${{ matrix.php }}-${{ matrix.variant }}
           ./hooks/run
 
       - name: Display docker images

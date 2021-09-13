@@ -1,0 +1,43 @@
+
+name: Docker Image Push
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Image version to push (only specify one)'
+        required: true
+        default: '14.0'
+      platform:
+        description: 'Comma-separated list of platforms'
+        required: true
+        default: 'linux/arm/v7,linux/arm64,linux/386,linux/amd64'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['7.3']
+        variant: ['apache', 'fpm', 'fpm-alpine']
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Execute push hook
+        id: docker_push_hook
+        env:
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+          DOCKER_PLATFORM: ${{ github.event.inputs.platform }}
+        run: |
+          cd images/${{ github.event.inputs.version }}/php${{ matrix.php }}-${{ matrix.variant }}
+          ./hooks/run_push

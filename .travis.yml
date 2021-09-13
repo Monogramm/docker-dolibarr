@@ -9,8 +9,8 @@ branches:
 before_install:
   - env | sort
   - export home=$(pwd)
-  - export travis_dir="${home}/images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}"
-  - export TAG=${VERSION}-php${PHP_VERSION}-${VARIANT}-${ARCHI}
+  - export travis_dir="${home}/images/${VERSION}/php${PHP_VERSION}-${VARIANT}"
+  - export TAG=${VERSION}-php${PHP_VERSION}-${VARIANT}
   - export VCS_REF=`git rev-parse --short HEAD`
   - export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
   - export IMAGE_NAME=monogramm/docker-dolibarr:${TAG}
@@ -63,47 +63,26 @@ matrix:
     #  # Ref: https://docs.travis-ci.com/user/reference/osx
     #  osx_image: xcode11.3
   allow_failures:
-    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=i386
-    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine ARCHI=amd64
-    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm ARCHI=i386
-    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm ARCHI=amd64
-    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=apache ARCHI=i386
-    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=apache ARCHI=amd64
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm-alpine
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=fpm
+    - env: VERSION=develop PHP_VERSION=7.2 VARIANT=apache
 
 env: # Environments
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm ARCHI=amd64
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=apache ARCHI=i386
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=apache ARCHI=amd64
-    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
-    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
-    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386
-    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=amd64
-    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=i386
-    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=amd64
-    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
-    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
-    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386
-    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=amd64
-    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=i386
-    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=amd64
-    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
-    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
-    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386
-    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=amd64
-    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=i386
-    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=amd64
-    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
-    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
-    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386
-    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=amd64
-    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=i386
-    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=amd64
-    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
-    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
-    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386
-    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=amd64
-    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=i386
-    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=apache ARCHI=amd64
+    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=apache
+    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=fpm
+    - VERSION=14.0 PHP_VERSION=7.3 VARIANT=fpm-alpine
+    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=apache
+    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=fpm
+    - VERSION=13.0 PHP_VERSION=7.3 VARIANT=fpm-alpine
+    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=apache
+    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=fpm
+    - VERSION=12.0 PHP_VERSION=7.3 VARIANT=fpm-alpine
+    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=apache
+    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm
+    - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm-alpine
+    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=apache
+    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=fpm
+    - VERSION=10.0 PHP_VERSION=7.3 VARIANT=fpm-alpine
+    - VERSION=develop PHP_VERSION=7.3 VARIANT=apache
+    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm
+    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm-alpine

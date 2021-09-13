@@ -35,7 +35,6 @@ services:
       context: ./
       dockerfile: Dockerfile
       args: 
-        - TAG=${TAG}
         - VCS_REF=${VCS_REF}
         - BUILD_DATE=${BUILD_DATE}
     image: ${IMAGE_NAME}
