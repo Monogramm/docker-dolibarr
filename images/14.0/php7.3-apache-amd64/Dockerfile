@@ -1,4 +1,4 @@
-FROM amd64/php:7.3-apache
+FROM amd64/php:7.3-apache-buster
 
 # Install the packages we need
 # Install the PHP extensions we need

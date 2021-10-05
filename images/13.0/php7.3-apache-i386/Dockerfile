@@ -1,4 +1,4 @@
-FROM i386/php:7.3-apache
+FROM i386/php:7.3-apache-buster
 
 # Install the packages we need
 # Install the PHP extensions we need
