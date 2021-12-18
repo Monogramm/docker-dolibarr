@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ['10.0', '11.0', '12.0', '13.0']
+        version: ['10.0', '11.0', '12.0', '13.0', '14.0']
         php: ['7.3']
         archi: ['amd64']
         variant: ['apache', 'fpm', 'fpm-alpine']
