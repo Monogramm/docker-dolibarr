@@ -10,3 +10,5 @@
 *.yml text eol=lf
 *.conf text eol=lf
 Dockerfile text eol=lf
+
+**/hooks text eol=lf
