@@ -42,7 +42,7 @@ archis=(
 )
 
 min_version='10.0'
-dockerLatest='13.0'
+dockerLatest='16.0'
 
 
 # version_greater_or_equal A B returns whether A >= B
@@ -63,12 +63,19 @@ echo "reset docker images"
 rm -rf ./images/*
 
 echo "update docker images"
+readmeTags=
+githubEnv=
 travisEnv=
 for latest in "${latests[@]}"; do
 	version=$(echo "$latest" | cut -d. -f1-2)
 
 	# Only add versions >= "$min_version"
 	if version_greater_or_equal "$version" "$min_version"; then
+
+		if [ ! -d "images/$version" ]; then
+			# Add GitHub Actions env var
+			githubEnv="'$version', $githubEnv"
+		fi
 
 		for php_version in "${php_versions[@]}"; do
 
@@ -115,17 +122,21 @@ for latest in "${latests[@]}"; do
 					# Create a list of "alias" tags for DockerHub post_push
 					if [ "$version" = "$dockerLatest" ]; then
 						if [ "$variant" = 'apache' ]; then
-							echo "$latest-$variant $version-$variant $variant $latest $version latest " > "$dir/.dockertags"
+							export DOCKER_TAGS="$latest-$variant $version-$variant $variant $latest $version latest "
 						else
-							echo "$latest-$variant $version-$variant $variant " > "$dir/.dockertags"
+							export DOCKER_TAGS="$latest-$variant $version-$variant $variant "
 						fi
 					else
 						if [ "$variant" = 'apache' ]; then
-							echo "$latest-$variant $version-$variant $latest $version " > "$dir/.dockertags"
+							export DOCKER_TAGS="$latest-$variant $version-$variant $latest $version "
 						else
-							echo "$latest-$variant $version-$variant " > "$dir/.dockertags"
+							export DOCKER_TAGS="$latest-$variant $version-$variant "
 						fi
 					fi
+					echo "${DOCKER_TAGS} " > "$dir/.dockertags"
+
+					# Add README.md 
+					readmeTags="$readmeTags\n-   ${DOCKER_TAGS} (\`$dir/Dockerfile\`)"
 
 					# Add Travis-CI env var
 					travisEnv='\n    - VERSION='"$version"' PHP_VERSION='"$php_version"' VARIANT='"$variant"' ARCHI='"$archi$travisEnv"
@@ -143,6 +154,14 @@ for latest in "${latests[@]}"; do
 	fi
 
 done
+
+# update README.md
+sed '/^<!-- >Docker Tags -->/,/^<!-- <Docker Tags -->/{/^<!-- >Docker Tags -->/!{/^<!-- <Docker Tags -->/!d}}' README.md > README.md.tmp
+sed -e "s|<!-- >Docker Tags -->|<!-- >Docker Tags -->\n$readmeTags\n|g" README.md.tmp > README.md
+rm README.md.tmp
+
+# update .github workflows
+sed -i -e "s|version: \[.*\]|version: [${githubEnv}]|g" .github/workflows/hooks.yml
 
 # update .travis.yml
 travis="$(awk -v 'RS=\n\n' '$1 == "env:" && $2 == "#" && $3 == "Environments" { $0 = "env: # Environments'"$travisEnv"'" } { printf "%s%s", $0, RS }' .travis.yml)"

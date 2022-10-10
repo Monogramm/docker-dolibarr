@@ -23,28 +23,54 @@ Dolibarr ERP & CRM is a modern software package to manage your organization's ac
 
 [Dockerhub monogramm/docker-dolibarr/](https://hub.docker.com/r/monogramm/docker-dolibarr/)
 
--   Dolibarr develop branch (:construction: potentially unstable)
-    -   [`develop`: /images/develop/php7.3-apache](/images/develop/php7.3-apache-amd64/Dockerfile)
+Tags:
 
--   Dolibarr 13
-    -   [`13.0-apache` `apache` `latest`: /images/13.0/php7.3-apache](/images/13.0/php7.3-apache-amd64/Dockerfile)
-    -   [`13.0-fpm` `fpm`: /images/13.0/php7.3-fpm](/images/13.0/php7.3-fpm-amd64/Dockerfile)
-    -   [`13.0-alpine` `alpine`: /images/13.0/php7.3-alpine](/images/13.0/php7.3-alpine-amd64/Dockerfile)
+<!-- >Docker Tags -->
 
--   Dolibarr 12
-    -   [`12.0-apache`: /images/12.0/php7.3-apache](/images/12.0/php7.3-apache-amd64/Dockerfile)
-    -   [`12.0-fpm`: /images/12.0/php7.3-fpm](/images/12.0/php7.3-fpm-amd64/Dockerfile)
-    -   [`12.0-alpine`: /images/12.0/php7.3-alpine](/images/12.0/php7.3-alpine-amd64/Dockerfile)
+-   16.0.1-apache 16.0-apache apache 16.0.1 16.0 latest  (`images/16.0/php7.3-apache-amd64/Dockerfile`)
+-   16.0.1-apache 16.0-apache apache 16.0.1 16.0 latest  (`images/16.0/php7.3-apache-i386/Dockerfile`)
+-   16.0.1-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-amd64/Dockerfile`)
+-   16.0.1-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-i386/Dockerfile`)
+-   16.0.1-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   16.0.1-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-i386/Dockerfile`)
+-   15.0.3-apache 15.0-apache 15.0.3 15.0  (`images/15.0/php7.3-apache-amd64/Dockerfile`)
+-   15.0.3-apache 15.0-apache 15.0.3 15.0  (`images/15.0/php7.3-apache-i386/Dockerfile`)
+-   15.0.3-fpm 15.0-fpm  (`images/15.0/php7.3-fpm-amd64/Dockerfile`)
+-   15.0.3-fpm 15.0-fpm  (`images/15.0/php7.3-fpm-i386/Dockerfile`)
+-   15.0.3-fpm-alpine 15.0-fpm-alpine  (`images/15.0/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   15.0.3-fpm-alpine 15.0-fpm-alpine  (`images/15.0/php7.3-fpm-alpine-i386/Dockerfile`)
+-   14.0.5-apache 14.0-apache 14.0.5 14.0  (`images/14.0/php7.3-apache-amd64/Dockerfile`)
+-   14.0.5-apache 14.0-apache 14.0.5 14.0  (`images/14.0/php7.3-apache-i386/Dockerfile`)
+-   14.0.5-fpm 14.0-fpm  (`images/14.0/php7.3-fpm-amd64/Dockerfile`)
+-   14.0.5-fpm 14.0-fpm  (`images/14.0/php7.3-fpm-i386/Dockerfile`)
+-   14.0.5-fpm-alpine 14.0-fpm-alpine  (`images/14.0/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   14.0.5-fpm-alpine 14.0-fpm-alpine  (`images/14.0/php7.3-fpm-alpine-i386/Dockerfile`)
+-   13.0.5-apache 13.0-apache 13.0.5 13.0  (`images/13.0/php7.3-apache-amd64/Dockerfile`)
+-   13.0.5-apache 13.0-apache 13.0.5 13.0  (`images/13.0/php7.3-apache-i386/Dockerfile`)
+-   13.0.5-fpm 13.0-fpm  (`images/13.0/php7.3-fpm-amd64/Dockerfile`)
+-   13.0.5-fpm 13.0-fpm  (`images/13.0/php7.3-fpm-i386/Dockerfile`)
+-   13.0.5-fpm-alpine 13.0-fpm-alpine  (`images/13.0/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   13.0.5-fpm-alpine 13.0-fpm-alpine  (`images/13.0/php7.3-fpm-alpine-i386/Dockerfile`)
+-   12.0.5-apache 12.0-apache 12.0.5 12.0  (`images/12.0/php7.3-apache-amd64/Dockerfile`)
+-   12.0.5-apache 12.0-apache 12.0.5 12.0  (`images/12.0/php7.3-apache-i386/Dockerfile`)
+-   12.0.5-fpm 12.0-fpm  (`images/12.0/php7.3-fpm-amd64/Dockerfile`)
+-   12.0.5-fpm 12.0-fpm  (`images/12.0/php7.3-fpm-i386/Dockerfile`)
+-   12.0.5-fpm-alpine 12.0-fpm-alpine  (`images/12.0/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   12.0.5-fpm-alpine 12.0-fpm-alpine  (`images/12.0/php7.3-fpm-alpine-i386/Dockerfile`)
+-   11.0.5-apache 11.0-apache 11.0.5 11.0  (`images/11.0/php7.3-apache-amd64/Dockerfile`)
+-   11.0.5-apache 11.0-apache 11.0.5 11.0  (`images/11.0/php7.3-apache-i386/Dockerfile`)
+-   11.0.5-fpm 11.0-fpm  (`images/11.0/php7.3-fpm-amd64/Dockerfile`)
+-   11.0.5-fpm 11.0-fpm  (`images/11.0/php7.3-fpm-i386/Dockerfile`)
+-   11.0.5-fpm-alpine 11.0-fpm-alpine  (`images/11.0/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   11.0.5-fpm-alpine 11.0-fpm-alpine  (`images/11.0/php7.3-fpm-alpine-i386/Dockerfile`)
+-   develop-apache develop-apache develop develop  (`images/develop/php7.3-apache-amd64/Dockerfile`)
+-   develop-apache develop-apache develop develop  (`images/develop/php7.3-apache-i386/Dockerfile`)
+-   develop-fpm develop-fpm  (`images/develop/php7.3-fpm-amd64/Dockerfile`)
+-   develop-fpm develop-fpm  (`images/develop/php7.3-fpm-i386/Dockerfile`)
+-   develop-fpm-alpine develop-fpm-alpine  (`images/develop/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   develop-fpm-alpine develop-fpm-alpine  (`images/develop/php7.3-fpm-alpine-i386/Dockerfile`)
 
--   Dolibarr 11
-    -   [`11.0-apache`: /images/11.0/php7.3-apache](/images/11.0/php7.3-apache-amd64/Dockerfile)
-    -   [`11.0-fpm`: /images/11.0/php7.3-fpm](/images/11.0/php7.3-fpm-amd64/Dockerfile)
-    -   [`11.0-alpine`: /images/11.0/php7.3-alpine](/images/11.0/php7.3-alpine-amd64/Dockerfile)
-
--   Dolibarr 10
-    -   [`10.0-apache`: /images/10.0/php7.3-apache](/images/10.0/php7.3-apache-amd64/Dockerfile)
-    -   [`10.0-fpm`: /images/10.0/php7.3-fpm](/images/10.0/php7.3-fpm-amd64/Dockerfile)
-    -   [`10.0-alpine`: /images/10.0/php7.3-alpine](/images/10.0/php7.3-alpine-amd64/Dockerfile)
+<!-- <Docker Tags -->
 
 <!--
 ## Quick reference
