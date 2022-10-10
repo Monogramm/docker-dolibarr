@@ -5,8 +5,29 @@
 # overriding patterns
 
 # Definitively text files
+*.txt text
+*.svg text
 *.md text
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.conf text eol=lf
 *.sh text eol=lf
 *.yml text eol=lf
-*.conf text eol=lf
+*.xml text eol=lf
 Dockerfile text eol=lf
+Dockerfile.* text eol=lf
+/hooks/* text eol=lf
+
+*.html text
+*.js text
+*.json text
+*.ts text
+*.css text
+*.scss text
+*.php text eol=lf
+
+# Ensure those won't be messed up with
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.data binary

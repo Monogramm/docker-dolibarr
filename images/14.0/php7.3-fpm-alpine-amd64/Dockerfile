@@ -108,7 +108,7 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ARG DOLI_VERSION=14.0.1
+ARG DOLI_VERSION=14.0.5
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
