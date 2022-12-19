@@ -5,38 +5,47 @@ FROM i386/php:7.3-fpm
 # see https://wiki.dolibarr.org/index.php/Dependencies_and_external_libraries
 # Prepare folders
 RUN set -ex; \
-	apt-get update -q; \
-	apt-get install -y --no-install-recommends \
+	apk add --no-cache \
 		bzip2 \
-		default-mysql-client \
-		cron \
+		icu-libs \
+		imagemagick \
+		libldap \
+		libpq \
+		libpng \
+		mysql-client \
 		rsync \
-		sendmail \
+		ssmtp \
+		shadow \
 		unzip \
 		zip \
 	; \
-	apt-get install -y --no-install-recommends \
+	apk add --no-cache --virtual .build-deps \
+		$PHPIZE_DEPS \
+		autoconf \
+		curl-dev \
+		freetype-dev \
+		gcc \
 		g++ \
-		libcurl4-openssl-dev \
-		libfreetype6-dev \
-		libicu-dev \
-		libjpeg-dev \
-		libldap2-dev \
-		libmagickcore-dev \
-		libmagickwand-dev \
+		icu-dev \
+		libjpeg-turbo-dev \
+		imagemagick-dev \
+		imagemagick-libs \
 		libmcrypt-dev \
 		libpng-dev \
-		libpq-dev \
+		libtool \
 		libxml2-dev \
 		libzip-dev \
+		make \
+		openldap-dev \
+		postgresql-dev \
+		postgresql-libs \
 		unzip \
-		zlib1g-dev \
+		zlib-dev \
 	; \
-	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
-	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
+	docker-php-ext-configure ldap; \
 	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-configure intl; \
-	docker-php-ext-configure zip --with-libzip; \
+	docker-php-ext-configure zip; \
 	docker-php-ext-install -j "$(nproc)" \
 		calendar \
 		gd \
@@ -53,7 +62,8 @@ RUN set -ex; \
 	; \
 	pecl install imagick; \
 	docker-php-ext-enable imagick; \
-	rm -rf /var/lib/apt/lists/*; \
+	apk --purge del .build-deps; \
+	rm -rf /var/cache/apk/*; \
 	mkdir -p /var/www/documents; \
 	chown -R www-data:root /var/www; \
 	chmod -R g=u /var/www
@@ -90,15 +100,15 @@ ENV DOLI_AUTO_CONFIGURE=1 \
 	DOLI_HTTPS=0 \
 	DOLI_PROD=0 \
 	DOLI_NO_CSRF_CHECK=0 \
-	WWW_USER_ID=33 \
-	WWW_GROUP_ID=33 \
+	WWW_USER_ID=82 \
+	WWW_GROUP_ID=82 \
 	PHP_INI_DATE_TIMEZONE='UTC' \
 	PHP_MEMORY_LIMIT=256M \
 	PHP_MAX_UPLOAD=20M \
 	PHP_MAX_EXECUTION_TIME=300
 
 # Build time env var
-ARG DOLI_VERSION=16.0.1
+ARG DOLI_VERSION=16.0.3
 
 # Get Dolibarr
 ADD https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.zip /tmp/dolibarr.zip
@@ -132,12 +142,12 @@ LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
 	  version=${DOLI_VERSION} \
 	  org.label-schema.vcs-ref=${VCS_REF} \
 	  org.label-schema.vcs-url="https://github.com/Monogramm/docker-dolibarr" \
-	  org.label-schema.build-date=${BUILD_DATE} \
+	  org.label-schema.build-date=$BUILD_DATE \
 	  org.label-schema.name="Dolibarr" \
 	  org.label-schema.description="Open Source ERP & CRM for Business" \
 	  org.label-schema.url="https://www.dolibarr.org/" \
 	  org.label-schema.vendor="Dolibarr" \
-	  org.label-schema.version=$DOLI_VERSION \
+	  org.label-schema.version=${DOLI_VERSION} \
 	  org.label-schema.schema-version="1.0" \
 	  org.opencontainers.image.revision=${VCS_REF} \
 	  org.opencontainers.image.source="https://github.com/Monogramm/docker-dolibarr" \
