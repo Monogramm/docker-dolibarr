@@ -71,12 +71,6 @@ matrix:
     - env: VERSION=develop PHP_VERSION=7.2 VARIANT=apache ARCHI=amd64
 
 env: # Environments
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=fpm ARCHI=amd64
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=apache ARCHI=i386
-    - VERSION=develop PHP_VERSION=7.3 VARIANT=apache ARCHI=amd64
     - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=i386
     - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm-alpine ARCHI=amd64
     - VERSION=11.0 PHP_VERSION=7.3 VARIANT=fpm ARCHI=i386

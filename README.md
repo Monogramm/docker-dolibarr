@@ -27,12 +27,12 @@ Tags:
 
 <!-- >Docker Tags -->
 
--   16.0.3-apache 16.0-apache apache 16.0.3 16.0 latest  (`images/16.0/php7.3-apache-amd64/Dockerfile`)
--   16.0.3-apache 16.0-apache apache 16.0.3 16.0 latest  (`images/16.0/php7.3-apache-i386/Dockerfile`)
--   16.0.3-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-amd64/Dockerfile`)
--   16.0.3-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-i386/Dockerfile`)
--   16.0.3-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-amd64/Dockerfile`)
--   16.0.3-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-i386/Dockerfile`)
+-   16.0.4-apache 16.0-apache apache 16.0.4 16.0 latest  (`images/16.0/php7.3-apache-amd64/Dockerfile`)
+-   16.0.4-apache 16.0-apache apache 16.0.4 16.0 latest  (`images/16.0/php7.3-apache-i386/Dockerfile`)
+-   16.0.4-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-amd64/Dockerfile`)
+-   16.0.4-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-i386/Dockerfile`)
+-   16.0.4-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-amd64/Dockerfile`)
+-   16.0.4-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-i386/Dockerfile`)
 -   15.0.3-apache 15.0-apache 15.0.3 15.0  (`images/15.0/php7.3-apache-amd64/Dockerfile`)
 -   15.0.3-apache 15.0-apache 15.0.3 15.0  (`images/15.0/php7.3-apache-i386/Dockerfile`)
 -   15.0.3-fpm 15.0-fpm  (`images/15.0/php7.3-fpm-amd64/Dockerfile`)
@@ -63,12 +63,6 @@ Tags:
 -   11.0.5-fpm 11.0-fpm  (`images/11.0/php7.3-fpm-i386/Dockerfile`)
 -   11.0.5-fpm-alpine 11.0-fpm-alpine  (`images/11.0/php7.3-fpm-alpine-amd64/Dockerfile`)
 -   11.0.5-fpm-alpine 11.0-fpm-alpine  (`images/11.0/php7.3-fpm-alpine-i386/Dockerfile`)
--   develop-apache develop-apache develop develop  (`images/develop/php7.3-apache-amd64/Dockerfile`)
--   develop-apache develop-apache develop develop  (`images/develop/php7.3-apache-i386/Dockerfile`)
--   develop-fpm develop-fpm  (`images/develop/php7.3-fpm-amd64/Dockerfile`)
--   develop-fpm develop-fpm  (`images/develop/php7.3-fpm-i386/Dockerfile`)
--   develop-fpm-alpine develop-fpm-alpine  (`images/develop/php7.3-fpm-alpine-amd64/Dockerfile`)
--   develop-fpm-alpine develop-fpm-alpine  (`images/develop/php7.3-fpm-alpine-i386/Dockerfile`)
 
 <!-- <Docker Tags -->
 
