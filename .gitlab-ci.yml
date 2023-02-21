@@ -32,6 +32,7 @@ stages:
   script:
     - ls -al
     - *docker_buildx
+    - ls -al ./hooks
 
 develop:docker:build:
   extends: .docker:build
