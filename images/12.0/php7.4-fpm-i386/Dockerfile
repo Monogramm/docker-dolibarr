@@ -122,26 +122,26 @@ ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
 
 # Arguments to label built container
-ARG VCS_REF
-ARG BUILD_DATE
+# ARG VCS_REF
+# ARG BUILD_DATE
 
 # Container labels (http://label-schema.org/)
 # Container annotations (https://github.com/opencontainers/image-spec)
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>" \
 	  product="Dolibarr" \
 	  version=${DOLI_VERSION} \
-	  org.label-schema.vcs-ref=${VCS_REF} \
+	#   org.label-schema.vcs-ref=${VCS_REF} \
 	  org.label-schema.vcs-url="https://github.com/Monogramm/docker-dolibarr" \
-	  org.label-schema.build-date=${BUILD_DATE} \
+	#   org.label-schema.build-date=${BUILD_DATE} \
 	  org.label-schema.name="Dolibarr" \
 	  org.label-schema.description="Open Source ERP & CRM for Business" \
 	  org.label-schema.url="https://www.dolibarr.org/" \
 	  org.label-schema.vendor="Dolibarr" \
 	  org.label-schema.version=$DOLI_VERSION \
 	  org.label-schema.schema-version="1.0" \
-	  org.opencontainers.image.revision=${VCS_REF} \
+	#   org.opencontainers.image.revision=${VCS_REF} \
 	  org.opencontainers.image.source="https://github.com/Monogramm/docker-dolibarr" \
-	  org.opencontainers.image.created=${BUILD_DATE} \
+	#   org.opencontainers.image.created=${BUILD_DATE} \
 	  org.opencontainers.image.title="Dolibarr" \
 	  org.opencontainers.image.description="Open Source ERP & CRM for Business" \
 	  org.opencontainers.image.url="https://www.dolibarr.org/" \
