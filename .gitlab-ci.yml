@@ -25,7 +25,7 @@ stages:
 
 .docker:build:
   stage: build
-  image: jdrouet/docker-with-buildx:stable
+  image: docker:latest
   services:
     - docker:dind
   before_script:

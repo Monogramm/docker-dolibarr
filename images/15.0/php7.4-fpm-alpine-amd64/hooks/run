@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Custom script to run locally DockerHub hooks
 # See documentation for details:
