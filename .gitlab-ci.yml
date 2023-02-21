@@ -20,7 +20,7 @@ docker:build:
   parallel:
     matrix:
       - VERSION: ['11.0', '12.0', '13.0']
-        PHP_VERSION: ['7.3', '7.4', '7.5']
+        PHP_VERSION: ['7.3']
         VARIANT: ['fpm-alpine', 'fpm', 'apache']
         ARCHI: ['i386', 'amd64']
 
