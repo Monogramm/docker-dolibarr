@@ -15,7 +15,7 @@ stages:
         VARIANT: ['fpm-alpine', 'fpm', 'apache']
         ARCHI: ['i386', 'amd64']
 
-.docker:buildx: &docker_buildx
+.docker:build: &docker_build
   - chmod -R +x ./hooks
   - chmod +x ./hooks/run
   - ls -al ./hooks
@@ -23,7 +23,7 @@ stages:
   - docker images
   - ./hooks/run test
 
-.docker:build:
+.base:project:
   stage: build
   image: docker:latest
   services:
@@ -33,19 +33,22 @@ stages:
     - cd images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}
     - /bin/sh -c "echo 'test'"
     - /bin/bash -c "echo 'test'"
-  script:
-    - ls -al
-    - *docker_buildx
 
-develop:docker:build:
-  extends: .docker:build
+develop:docker:
+  extends: .base:project
   <<: *matrix_versions_variants
+  script:
+    - *docker_build
   rules:
     - if: $CI_COMMIT_BRANCH == 'develop'
 
-main:docker:build:
-  extends: .docker:build
+main:docker:
+  extends: .base:project
   <<: *matrix_versions_variants
+  script:
+    - *docker_build
+    # ne pas oublier de mettre les identifiants docker
+    - ./hooks/run push
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
