@@ -14,9 +14,6 @@ docker_repo = 'mlaplanche/dolibarr-docker'
 # Versions of Dolibarr to build Docker images for
 versions = []
 
-# PHP version to use
-php_version = "7.3"
-
 # Minimum version of Dolibarr to build Docker images for
 min_version = "11.0.0"
 
@@ -64,6 +61,15 @@ archis = [
     "i386"
 ]
 
+php_version_by_dolibarr_version = {
+    "11.0": "7.4",
+    "12.0": "7.4",
+    "13.0": "7.4",
+    "14.0": "7.4",
+    "15.0": "7.4",
+    "16.0": "8.1",
+}
+
 # Fetch the tags for Dolibarr from GitHub API
 dolibarr_tags = requests.get("https://api.github.com/repos/dolibarr/dolibarr/tags").text
 dolibarr_tags_obj = json.loads(dolibarr_tags)
@@ -101,7 +107,7 @@ for version in versions:
         for archi in archis:
             # Initialize variables and directories for the Docker image
             docker_tags = ''
-            directory_name = f"images/{major_version}/php{php_version}-{variant}-{archi}"
+            directory_name = f"images/{major_version}/php{php_version_by_dolibarr_version[major_version]}-{variant}-{archi}"
 
             # If the directory for the Docker image already exists, skip it
             if os.path.exists(directory_name):
@@ -128,7 +134,7 @@ for version in versions:
             with fileinput.FileInput(directory_name+'/Dockerfile', inplace=True) as file:
                 for line in file:
                     print(
-                        line.replace("%%PHP_VERSION%%", php_version)
+                        line.replace("%%PHP_VERSION%%", php_version_by_dolibarr_version[major_version])
                         .replace("%%VARIANT%%", variant)
                         .replace("%%ARCHI%%", archi)
                         .replace("%%VERSION%%", version)
@@ -163,8 +169,8 @@ for version in versions:
 # Update readme
 # Define the table header for the Docker tags
 readme_table_tags = """
-|Version|Tags|Architecture|
-|---|---|---|
+|Version|Tags|Architecture|PHP|
+|---|---|---|---|
 """
 
 # Initialize the variable to keep track of the last major version processed
@@ -206,7 +212,7 @@ for version in versions:
       # Add the Docker tags and the architectures to the table row
       readme_table_tags += f"|{docker_tags}|"
       readme_table_tags += ", ".join(archis)
-      readme_table_tags += "|\n"
+      readme_table_tags += f"|{php_version_by_dolibarr_version[major_version]}|\n"
 
 # Open the README file for reading and writing
 with open('README.md', 'r+') as file:
@@ -236,7 +242,6 @@ with open('README.md', 'r+') as file:
     
     # If the Docker tags section is found in the file,
     if (start_index_tags != -1 and end_index_tags != -1) and (start_index_summary != -1 and end_index_summary != -1):
-        print("here")
         # Extract the old content of the Docker tags section
         old_content_tags = content[start_index_tags:end_index_tags]
         old_content_summmary = content[start_index_summary:end_index_summary]
@@ -245,7 +250,7 @@ with open('README.md', 'r+') as file:
         # table of Docker tags
         new_content_tags = f"<!-- >Docker Tags -->\n{readme_table_tags}\n"
         
-        new_content_summary=f"\n"
+        new_content_summary=f"<!-- >Summary -->\n"
         # Afficher les titres
         for title, level in headers:
             # Ajouter des espaces pour l'indentation en fonction du niveau de la balise
