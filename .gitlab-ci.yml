@@ -15,6 +15,11 @@ stages:
         VARIANT: ['fpm-alpine', 'fpm', 'apache']
         ARCHI: ['i386', 'amd64']
 
+.docker:buildx: &docker_buildx
+  - ./hooks/run build
+  - docker images
+  - ./hooks/run test
+
 .docker:build:
   stage: build
   image: jdrouet/docker-with-buildx:stable
@@ -25,15 +30,19 @@ stages:
     - cd images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}
   script:
     - ls -al
-    # - docker buildx build --platform linux/amd64,linux/arm64 -t jdrouet/docker-with-buildx:stable .
+    - *docker_buildx
 
 develop:docker:build:
   extends: .docker:build
   <<: *matrix_versions_variants
   rules:
     - if: $CI_COMMIT_BRANCH == 'develop'
+
+main:docker:build:
+  extends: .docker:build
+  <<: *matrix_versions_variants
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
         - images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}/Dockerfile
-
-
   
