@@ -31,8 +31,8 @@ stages:
     - cd images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}
   script:
     - ls -al
-    - *docker_buildx
     - ls -al ./hooks
+    - *docker_buildx
 
 develop:docker:build:
   extends: .docker:build
