@@ -31,6 +31,7 @@ stages:
   before_script:
     - docker info
     - cd images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}
+    - /bin/sh echo 'test'
   script:
     - ls -al
     - *docker_buildx
