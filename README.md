@@ -13,6 +13,62 @@ Docker image for Dolibarr.
 
 Provides full database configuration, production mode, HTTPS enforcer (SSL must be provided by reverse proxy), handles upgrades, and so on...
 
+<!-- >Summary -->
+- [Dolibarr on Docker](#dolibarr-on-docker)
+  - [What is Dolibarr](#what-is-dolibarr)
+  - [Supported tags and respective ](#supported-tags-and-respective-)
+  - [How to run this image](#how-to-run-this-image)
+  - [Using the apache image](#using-the-apache-image)
+  - [Using the fpm image](#using-the-fpm-image)
+  - [Using an external database](#using-an-external-database)
+  - [Persistent data](#persistent-data)
+  - [Auto configuration via environment variables](#auto-configuration-via-environment-variables)
+    - [DOLI_AUTO_CONFIGURE](#doli_auto_configure)
+    - [DOLI_DB_TYPE](#doli_db_type)
+    - [DOLI_DB_HOST](#doli_db_host)
+    - [DOLI_DB_PORT](#doli_db_port)
+    - [DOLI_DB_NAME](#doli_db_name)
+    - [DOLI_DB_USER](#doli_db_user)
+    - [DOLI_DB_PASSWORD](#doli_db_password)
+    - [DOLI_DB_PREFIX](#doli_db_prefix)
+    - [DOLI_DB_CHARACTER_SET](#doli_db_character_set)
+    - [DOLI_DB_COLLATION](#doli_db_collation)
+    - [DOLI_DB_ROOT_LOGIN](#doli_db_root_login)
+    - [DOLI_DB_ROOT_PASSWORD](#doli_db_root_password)
+    - [DOLI_ADMIN_LOGIN](#doli_admin_login)
+    - [DOLI_MODULES](#doli_modules)
+    - [DOLI_URL_ROOT](#doli_url_root)
+    - [DOLI_AUTH](#doli_auth)
+    - [DOLI_LDAP_HOST](#doli_ldap_host)
+    - [DOLI_LDAP_PORT](#doli_ldap_port)
+    - [DOLI_LDAP_VERSION](#doli_ldap_version)
+    - [DOLI_LDAP_SERVERTYPE](#doli_ldap_servertype)
+    - [DOLI_LDAP_DN](#doli_ldap_dn)
+    - [DOLI_LDAP_LOGIN_ATTRIBUTE](#doli_ldap_login_attribute)
+    - [DOLI_LDAP_FILTER](#doli_ldap_filter)
+    - [DOLI_LDAP_ADMIN_LOGIN](#doli_ldap_admin_login)
+    - [DOLI_LDAP_ADMIN_PASS](#doli_ldap_admin_pass)
+    - [DOLI_LDAP_DEBUG](#doli_ldap_debug)
+    - [DOLI_PROD](#doli_prod)
+    - [DOLI_HTTPS](#doli_https)
+    - [DOLI_NO_CSRF_CHECK](#doli_no_csrf_check)
+    - [PHP_INI_DATE_TIMEZONE](#php_ini_date_timezone)
+    - [PHP_MEMORY_LIMIT](#php_memory_limit)
+    - [PHP_MAX_UPLOAD](#php_max_upload)
+    - [PHP_MAX_EXECUTION_TIME](#php_max_execution_time)
+    - [WWW_USER_ID](#www_user_id)
+    - [WWW_GROUP_ID](#www_group_id)
+  - [Running this image with docker-compose](#running-this-image-with-docker-compose)
+    - [Base version - apache with MariaDB/MySQL](#base-version---apache-with-mariadb/mysql)
+  - [Base version - FPM with PostgreSQL](#base-version---fpm-with-postgresql)
+  - [Make your Dolibarr available from the internet](#make-your-dolibarr-available-from-the-internet)
+    - [HTTPS - SSL encryption](#https---ssl-encryption)
+  - [First use](#first-use)
+  - [Update to a newer version](#update-to-a-newer-version)
+  - [Adding Features](#adding-features)
+  - [Questions / Issues](#questions-/-issues)
+<!-- <Summary -->
+
 ## What is Dolibarr
 
 Dolibarr ERP & CRM is a modern software package to manage your organization's activity (contacts, suppliers, invoices, orders, stocks, agenda, ...).
@@ -27,42 +83,26 @@ Tags:
 
 <!-- >Docker Tags -->
 
--   16.0.4-apache 16.0-apache apache 16.0.4 16.0 latest  (`images/16.0/php7.3-apache-amd64/Dockerfile`)
--   16.0.4-apache 16.0-apache apache 16.0.4 16.0 latest  (`images/16.0/php7.3-apache-i386/Dockerfile`)
--   16.0.4-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-amd64/Dockerfile`)
--   16.0.4-fpm 16.0-fpm fpm  (`images/16.0/php7.3-fpm-i386/Dockerfile`)
--   16.0.4-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-amd64/Dockerfile`)
--   16.0.4-fpm-alpine 16.0-fpm-alpine fpm-alpine  (`images/16.0/php7.3-fpm-alpine-i386/Dockerfile`)
--   15.0.3-apache 15.0-apache 15.0.3 15.0  (`images/15.0/php7.3-apache-amd64/Dockerfile`)
--   15.0.3-apache 15.0-apache 15.0.3 15.0  (`images/15.0/php7.3-apache-i386/Dockerfile`)
--   15.0.3-fpm 15.0-fpm  (`images/15.0/php7.3-fpm-amd64/Dockerfile`)
--   15.0.3-fpm 15.0-fpm  (`images/15.0/php7.3-fpm-i386/Dockerfile`)
--   15.0.3-fpm-alpine 15.0-fpm-alpine  (`images/15.0/php7.3-fpm-alpine-amd64/Dockerfile`)
--   15.0.3-fpm-alpine 15.0-fpm-alpine  (`images/15.0/php7.3-fpm-alpine-i386/Dockerfile`)
--   14.0.5-apache 14.0-apache 14.0.5 14.0  (`images/14.0/php7.3-apache-amd64/Dockerfile`)
--   14.0.5-apache 14.0-apache 14.0.5 14.0  (`images/14.0/php7.3-apache-i386/Dockerfile`)
--   14.0.5-fpm 14.0-fpm  (`images/14.0/php7.3-fpm-amd64/Dockerfile`)
--   14.0.5-fpm 14.0-fpm  (`images/14.0/php7.3-fpm-i386/Dockerfile`)
--   14.0.5-fpm-alpine 14.0-fpm-alpine  (`images/14.0/php7.3-fpm-alpine-amd64/Dockerfile`)
--   14.0.5-fpm-alpine 14.0-fpm-alpine  (`images/14.0/php7.3-fpm-alpine-i386/Dockerfile`)
--   13.0.5-apache 13.0-apache 13.0.5 13.0  (`images/13.0/php7.3-apache-amd64/Dockerfile`)
--   13.0.5-apache 13.0-apache 13.0.5 13.0  (`images/13.0/php7.3-apache-i386/Dockerfile`)
--   13.0.5-fpm 13.0-fpm  (`images/13.0/php7.3-fpm-amd64/Dockerfile`)
--   13.0.5-fpm 13.0-fpm  (`images/13.0/php7.3-fpm-i386/Dockerfile`)
--   13.0.5-fpm-alpine 13.0-fpm-alpine  (`images/13.0/php7.3-fpm-alpine-amd64/Dockerfile`)
--   13.0.5-fpm-alpine 13.0-fpm-alpine  (`images/13.0/php7.3-fpm-alpine-i386/Dockerfile`)
--   12.0.5-apache 12.0-apache 12.0.5 12.0  (`images/12.0/php7.3-apache-amd64/Dockerfile`)
--   12.0.5-apache 12.0-apache 12.0.5 12.0  (`images/12.0/php7.3-apache-i386/Dockerfile`)
--   12.0.5-fpm 12.0-fpm  (`images/12.0/php7.3-fpm-amd64/Dockerfile`)
--   12.0.5-fpm 12.0-fpm  (`images/12.0/php7.3-fpm-i386/Dockerfile`)
--   12.0.5-fpm-alpine 12.0-fpm-alpine  (`images/12.0/php7.3-fpm-alpine-amd64/Dockerfile`)
--   12.0.5-fpm-alpine 12.0-fpm-alpine  (`images/12.0/php7.3-fpm-alpine-i386/Dockerfile`)
--   11.0.5-apache 11.0-apache 11.0.5 11.0  (`images/11.0/php7.3-apache-amd64/Dockerfile`)
--   11.0.5-apache 11.0-apache 11.0.5 11.0  (`images/11.0/php7.3-apache-i386/Dockerfile`)
--   11.0.5-fpm 11.0-fpm  (`images/11.0/php7.3-fpm-amd64/Dockerfile`)
--   11.0.5-fpm 11.0-fpm  (`images/11.0/php7.3-fpm-i386/Dockerfile`)
--   11.0.5-fpm-alpine 11.0-fpm-alpine  (`images/11.0/php7.3-fpm-alpine-amd64/Dockerfile`)
--   11.0.5-fpm-alpine 11.0-fpm-alpine  (`images/11.0/php7.3-fpm-alpine-i386/Dockerfile`)
+|Version|Tags|Architecture|PHP|
+|---|---|---|---|
+|[16.0](./images/16.0)|`16.0.4-apache` `16.0-apache` `apache` `16.0.4` `16.0` **`latest`**|amd64, i386|8.1|
+|[16.0](./images/16.0)|`16.0.4-fpm` `16.0-fpm` `fpm`|amd64, i386|8.1|
+|[16.0](./images/16.0)|`16.0.4-fpm-alpine` `16.0-fpm-alpine` `fpm-alpine`|amd64, i386|8.1|
+|[15.0](./images/15.0)|`15.0.3-apache` `15.0-apache` `15.0.3` `15.0`|amd64, i386|7.4|
+|[15.0](./images/15.0)|`15.0.3-fpm` `15.0-fpm`|amd64, i386|7.4|
+|[15.0](./images/15.0)|`15.0.3-fpm-alpine` `15.0-fpm-alpine`|amd64, i386|7.4|
+|[14.0](./images/14.0)|`14.0.5-apache` `14.0-apache` `14.0.5` `14.0`|amd64, i386|7.4|
+|[14.0](./images/14.0)|`14.0.5-fpm` `14.0-fpm`|amd64, i386|7.4|
+|[14.0](./images/14.0)|`14.0.5-fpm-alpine` `14.0-fpm-alpine`|amd64, i386|7.4|
+|[13.0](./images/13.0)|`13.0.5-apache` `13.0-apache` `13.0.5` `13.0`|amd64, i386|7.4|
+|[13.0](./images/13.0)|`13.0.5-fpm` `13.0-fpm`|amd64, i386|7.4|
+|[13.0](./images/13.0)|`13.0.5-fpm-alpine` `13.0-fpm-alpine`|amd64, i386|7.4|
+|[12.0](./images/12.0)|`12.0.5-apache` `12.0-apache` `12.0.5` `12.0`|amd64, i386|7.4|
+|[12.0](./images/12.0)|`12.0.5-fpm` `12.0-fpm`|amd64, i386|7.4|
+|[12.0](./images/12.0)|`12.0.5-fpm-alpine` `12.0-fpm-alpine`|amd64, i386|7.4|
+|[11.0](./images/11.0)|`11.0.5-apache` `11.0-apache` `11.0.5` `11.0`|amd64, i386|7.4|
+|[11.0](./images/11.0)|`11.0.5-fpm` `11.0-fpm`|amd64, i386|7.4|
+|[11.0](./images/11.0)|`11.0.5-fpm-alpine` `11.0-fpm-alpine`|amd64, i386|7.4|
 
 <!-- <Docker Tags -->
 
