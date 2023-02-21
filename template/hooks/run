@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Custom script to run locally DockerHub hooks
 # See documentation for details:
@@ -28,8 +28,10 @@ fi
 IFS=',' read -ra STEPS <<< "${1:-build,test}"
 for step in "${STEPS[@]}"
 do
-    for hook in "pre_${step}" "${step}" "post_${step}"; do
-        if [ -f "./hooks/${hook}" ]; then
+    for hook in "pre_${step}" "${step}" "post_${step}"
+    do
+        if [ -f "./hooks/${hook}" ]
+        then
             echo "Executing ${hook} hook..."
             "./hooks/${hook}"
         fi

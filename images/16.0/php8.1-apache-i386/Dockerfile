@@ -16,7 +16,7 @@ RUN set -ex; \
 		zip \
 	; \
 	apt-get install -y --no-install-recommends \
-		g++ \ 
+		g++ \
 		libcurl4-openssl-dev \
 		libfreetype6-dev \
 		libicu-dev \
