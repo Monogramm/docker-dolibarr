@@ -3,6 +3,18 @@ stages:
   - test
   - deploy
 
+.matrix:versions:variants: &matrix_versions_variants
+  parallel:
+    matrix:
+      - VERSION: ['11.0', '12.0', '13.0', '14.0', '15.0']
+        PHP_VERSION: ['7.4']
+        VARIANT: ['fpm-alpine', 'fpm', 'apache']
+        ARCHI: ['i386', 'amd64']
+      - VERSION: ['16.0']
+        PHP_VERSION: ['8.1']
+        VARIANT: ['fpm-alpine', 'fpm', 'apache']
+        ARCHI: ['i386', 'amd64']
+
 .docker:build:
   stage: build
   image: jdrouet/docker-with-buildx:stable
@@ -14,24 +26,14 @@ stages:
   script:
     - ls -al
     # - docker buildx build --platform linux/amd64,linux/arm64 -t jdrouet/docker-with-buildx:stable .
-  parallel:
-    matrix:
-      - VERSION: ['11.0', '12.0', '13.0', '14.0', '15.0']
-        PHP_VERSION: ['7.4']
-        VARIANT: ['fpm-alpine', 'fpm', 'apache']
-        ARCHI: ['i386', 'amd64']
-      - VERSION: ['16.0']
-        PHP_VERSION: ['8.1']
-        VARIANT: ['fpm-alpine', 'fpm', 'apache']
-        ARCHI: ['i386', 'amd64']
-  rules:
-    - changes:
-      - images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}/Dockerfile
 
 develop:docker:build:
   extends: .docker:build
-  # rules:
-  #   - if: $CI_COMMIT_BRANCH == 'develop'
+  <<: *matrix_versions_variants
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'develop'
+      changes:
+        - images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}/Dockerfile
 
 
   
