@@ -18,6 +18,7 @@ stages:
 .docker:buildx: &docker_buildx
   - chmod -R +x ./hooks
   - chmod +x ./hooks/run
+  - ls -al ./hooks
   - ./hooks/run build
   - docker images
   - ./hooks/run test
@@ -32,7 +33,6 @@ stages:
     - cd images/${VERSION}/php${PHP_VERSION}-${VARIANT}-${ARCHI}
   script:
     - ls -al
-    - ls -al ./hooks
     - *docker_buildx
 
 develop:docker:build:
