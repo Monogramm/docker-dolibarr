@@ -17,6 +17,7 @@ stages:
 
 .docker:buildx: &docker_buildx
   - chmod -R +x ./hooks
+  - chmod +x ./hooks/run
   - ./hooks/run build
   - docker images
   - ./hooks/run test
