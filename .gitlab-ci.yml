@@ -30,8 +30,8 @@ stages:
 
 develop:docker:build:
   extends: .docker:build
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'develop'
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH == 'develop'
 
 
   
