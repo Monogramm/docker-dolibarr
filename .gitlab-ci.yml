@@ -16,7 +16,7 @@ stages:
         ARCHI: ['i386', 'amd64']
 
 .docker:buildx: &docker_buildx
-  - chmod +x -R ./hooks
+  - chmod -R +x ./hooks
   - ./hooks/run build
   - docker images
   - ./hooks/run test
